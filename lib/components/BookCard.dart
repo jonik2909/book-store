@@ -1,0 +1,99 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+import 'package:flutter/material.dart';
+
+class BookCard extends StatelessWidget {
+  const BookCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 130,
+      margin: EdgeInsets.only(right: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 130,
+            height: 194,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.04),
+                  spreadRadius: 0,
+                  blurRadius: 1,
+                  offset: Offset(0, 0),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.asset(
+                'lib/assets/book.jpg',
+                width: double.infinity,
+                height: 194,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          SizedBox(height: 15),
+          Row(
+            children: [
+              Icon(
+                Icons.star,
+                size: 15,
+                color: Color(0xffFF9E00),
+              ),
+              Icon(
+                Icons.star,
+                size: 15,
+                color: Color(0xffFF9E00),
+              ),
+              Icon(
+                Icons.star,
+                size: 15,
+                color: Color(0xffFF9E00),
+              ),
+              Icon(
+                Icons.star,
+                size: 15,
+                color: Color(0xffFF9E00),
+              ),
+              Icon(
+                Icons.star,
+                size: 15,
+                color: Color(0xffCED4DA),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Text(
+            "Displacement",
+            style: TextStyle(
+              fontSize: 16,
+              color: Color(0xff151E47),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          SizedBox(height: 7),
+          Text(
+            "Kiku Hughes",
+            style: TextStyle(
+              fontSize: 12,
+              color: Color(0xff151E47),
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(height: 7),
+          Text(
+            "\$ 16.55",
+            style: TextStyle(
+              color: Color(0xffEB5757),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

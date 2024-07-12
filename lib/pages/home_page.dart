@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/components/BookCard.dart';
 import 'package:book_store/components/Category_card.dart';
 import 'package:book_store/controller/controller.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,19 @@ class HomePage extends StatelessWidget {
                   )
                 ],
               ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: SizedBox(
+              height: 310,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return BookCard();
+                  }),
             ),
           )
         ],
