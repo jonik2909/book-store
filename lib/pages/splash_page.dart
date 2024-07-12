@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:book_store/components/MyElevatedButton.dart';
+import 'package:book_store/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -61,7 +62,7 @@ class SplashPage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () => Get.to(LoginPage()),
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(color: Colors.white),
                     shape: RoundedRectangleBorder(
