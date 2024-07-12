@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/pages/home_page.dart';
 import 'package:book_store/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -82,7 +83,7 @@ class LoginPage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Get.to(HomePage()),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xffEB5757),
                     shape: RoundedRectangleBorder(
