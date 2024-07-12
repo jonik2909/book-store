@@ -60,6 +60,9 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
                 child: TextField(
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
