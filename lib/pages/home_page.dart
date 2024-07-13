@@ -128,6 +128,7 @@ class HomePage extends StatelessWidget {
                           bookPrice: 16,
                           width: 130,
                           height: 194,
+                          imageNetwork: false,
                         );
                       }),
                 ),
@@ -187,6 +188,7 @@ class HomePage extends StatelessWidget {
                         bookPrice: 16,
                         width: 130,
                         height: 194,
+                        imageNetwork: false,
                       );
                     },
                   ),

@@ -2,6 +2,7 @@
 
 import 'package:book_store/components/BookCard.dart';
 import 'package:book_store/components/Category_card.dart';
+import 'package:book_store/controller/book.controller.dart';
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/pages/chosen_book_page.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,9 @@ class ExplorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Controller controller = Get.put(Controller());
+    final bookController = Get.put(BookController());
+
+    bookController.getBooks();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -79,49 +83,25 @@ class ExplorePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    Wrap(
-                      direction: Axis.horizontal,
-                      alignment: WrapAlignment.start,
-                      spacing: 10,
-                      runSpacing: 20,
-                      children: [
-                        BookCard(
-                          onTap: () => Get.to(ChosenBookPage()),
-                          imagePath: "lib/assets/book.jpg",
-                          bookName: 'Displacement',
-                          bookAuthor: 'Kiku Hughes',
-                          bookPrice: 16,
-                          width: 160,
-                          height: 194,
-                        ),
-                        BookCard(
-                          onTap: () => Get.to(ChosenBookPage()),
-                          imagePath: "lib/assets/book.jpg",
-                          bookName: 'Displacement',
-                          bookAuthor: 'Kiku Hughes',
-                          bookPrice: 16,
-                          width: 160,
-                          height: 194,
-                        ),
-                        BookCard(
-                          onTap: () => Get.to(ChosenBookPage()),
-                          imagePath: "lib/assets/book.jpg",
-                          bookName: 'Displacement',
-                          bookAuthor: 'Kiku Hughes',
-                          bookPrice: 16,
-                          width: 160,
-                          height: 194,
-                        ),
-                        BookCard(
-                          onTap: () => Get.to(ChosenBookPage()),
-                          imagePath: "lib/assets/book.jpg",
-                          bookName: 'Displacement',
-                          bookAuthor: 'Kiku Hughes',
-                          bookPrice: 16,
-                          width: 160,
-                          height: 194,
-                        ),
-                      ],
+                    Obx(
+                      () => Wrap(
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.start,
+                        spacing: 10,
+                        runSpacing: 20,
+                        children: bookController.bookList.map((book) {
+                          return BookCard(
+                            onTap: () => Get.to(ChosenBookPage()),
+                            imagePath: book.bookImage,
+                            bookName: book.bookName,
+                            bookAuthor: book.bookAuthor,
+                            bookPrice: book.bookPrice,
+                            width: 160,
+                            height: 194,
+                            imageNetwork: true,
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ],
                 ),

@@ -10,6 +10,7 @@ class BookCard extends StatelessWidget {
   final int bookPrice;
   final double width;
   final double height;
+  final bool imageNetwork;
 
   const BookCard({
     super.key,
@@ -20,6 +21,7 @@ class BookCard extends StatelessWidget {
     required this.bookPrice,
     required this.width,
     required this.height,
+    required this.imageNetwork,
   });
 
   @override
@@ -47,12 +49,19 @@ class BookCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  imagePath,
-                  width: double.infinity,
-                  height: 194,
-                  fit: BoxFit.fill,
-                ),
+                child: imageNetwork
+                    ? Image.network(
+                        imagePath,
+                        width: double.infinity,
+                        height: 194,
+                        fit: BoxFit.fill,
+                      )
+                    : Image.asset(
+                        imagePath,
+                        width: double.infinity,
+                        height: 194,
+                        fit: BoxFit.fill,
+                      ),
               ),
             ),
             SizedBox(height: 15),
