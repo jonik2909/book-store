@@ -117,7 +117,12 @@ class HomePage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 10,
                     itemBuilder: (context, index) {
-                      return BookCard();
+                      return BookCard(
+                        imagePath: "lib/assets/book.jpg",
+                        bookName: 'Displacement',
+                        bookAuthor: 'Kiku Hughes',
+                        bookPrice: 16,
+                      );
                     }),
               ),
             ),
@@ -165,11 +170,17 @@ class HomePage extends StatelessWidget {
               child: SizedBox(
                 height: 310,
                 child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return BookCard();
-                    }),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return BookCard(
+                      imagePath: "lib/assets/book.jpg",
+                      bookName: 'Displacement',
+                      bookAuthor: 'Kiku Hughes',
+                      bookPrice: 16,
+                    );
+                  },
+                ),
               ),
             ),
           ],
