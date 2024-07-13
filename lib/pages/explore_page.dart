@@ -28,7 +28,7 @@ class ExplorePage extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: false,
         title: Text(
-          'Book Store',
+          'Explore',
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
         actions: [
@@ -82,7 +82,7 @@ class ExplorePage extends StatelessWidget {
                     Wrap(
                       direction: Axis.horizontal,
                       alignment: WrapAlignment.start,
-                      spacing: 15,
+                      spacing: 10,
                       runSpacing: 20,
                       children: [
                         BookCard(
@@ -91,7 +91,7 @@ class ExplorePage extends StatelessWidget {
                           bookName: 'Displacement',
                           bookAuthor: 'Kiku Hughes',
                           bookPrice: 16,
-                          width: 150,
+                          width: 160,
                           height: 194,
                         ),
                         BookCard(
@@ -100,7 +100,7 @@ class ExplorePage extends StatelessWidget {
                           bookName: 'Displacement',
                           bookAuthor: 'Kiku Hughes',
                           bookPrice: 16,
-                          width: 150,
+                          width: 160,
                           height: 194,
                         ),
                         BookCard(
@@ -109,7 +109,7 @@ class ExplorePage extends StatelessWidget {
                           bookName: 'Displacement',
                           bookAuthor: 'Kiku Hughes',
                           bookPrice: 16,
-                          width: 150,
+                          width: 160,
                           height: 194,
                         ),
                         BookCard(
@@ -118,7 +118,7 @@ class ExplorePage extends StatelessWidget {
                           bookName: 'Displacement',
                           bookAuthor: 'Kiku Hughes',
                           bookPrice: 16,
-                          width: 150,
+                          width: 160,
                           height: 194,
                         ),
                       ],
