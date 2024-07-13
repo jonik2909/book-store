@@ -91,7 +91,8 @@ class ExplorePage extends StatelessWidget {
                         runSpacing: 20,
                         children: bookController.bookList.map((book) {
                           return BookCard(
-                            onTap: () => Get.to(ChosenBookPage()),
+                            onTap: () =>
+                                Get.to(ChosenBookPage(), arguments: book),
                             imagePath: book.bookImage,
                             bookName: book.bookName,
                             bookAuthor: book.bookAuthor,

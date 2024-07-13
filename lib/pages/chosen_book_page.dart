@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/models/Book.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ChosenBookPage extends StatelessWidget {
-  const ChosenBookPage({super.key});
+  ChosenBookPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final BookModel book = Get.arguments as BookModel;
+    print("arguments $book");
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -48,8 +52,8 @@ class ChosenBookPage extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset(
-                      "lib/assets/book.jpg",
+                    child: Image.network(
+                      book.bookImage.toString(),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -60,7 +64,8 @@ class ChosenBookPage extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Catcher in the Rye",
+                      "${book.bookName}",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xff19191B),
                         fontSize: 18,
@@ -68,7 +73,7 @@ class ChosenBookPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "J.D. Salinger",
+                      "${book.bookAuthor}",
                       style: TextStyle(
                         color: Color(0xff9D9D9D),
                         fontSize: 16,
@@ -129,7 +134,7 @@ class ChosenBookPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine",
+                    "${book.bookAuthorDesc}",
                     style: TextStyle(
                       color: Color(0xff9D9D9D),
                     ),
@@ -150,7 +155,7 @@ class ChosenBookPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "J.D. Salinger was an American writer, J.D. Salinger was an American writer,  , J.D. Salinger was an American writer,  J.D. Salinger was an American writer,  J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine J.D. Salinger was an American writer, J.D. Salinger was an American writer,  , J.D. Salinger was an American writer,  J.D. Salinger was an American writer,  J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine J.D. Salinger was an American writer, J.D. Salinger was an American writer,  , J.D. Salinger was an American writer,  J.D. Salinger was an American writer,  J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine J.D. Salinger was an American writer, J.D. Salinger was an American writer,  , J.D. Salinger was an American writer,  J.D. Salinger was an American writer,  J.D. Salinger was an American writer, best known for his 1951 novel The Catcher in the Rye. Before its publi cation, Salinger published several short stories in Story magazine ",
+                    "${book.bookDesc}",
                     style: TextStyle(
                       color: Color(0xff9D9D9D),
                     ),

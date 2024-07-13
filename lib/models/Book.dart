@@ -5,6 +5,7 @@ class BookModel {
   String? bookDesc;
   String? bookImage;
   String? bookAuthor;
+  String? bookAuthorDesc;
 
   BookModel({
     required this.id,
@@ -13,6 +14,7 @@ class BookModel {
     required this.bookDesc,
     required this.bookImage,
     required this.bookAuthor,
+    required this.bookAuthorDesc,
   });
 
   BookModel.fromJson(Map<String, dynamic> json) {
@@ -22,5 +24,6 @@ class BookModel {
     bookDesc = json['bookDesc'];
     bookImage = json['bookImage']['url'];
     bookAuthor = json['bookAuthor'];
+    bookAuthorDesc = json['bookAuthorDesc'];
   }
 }
