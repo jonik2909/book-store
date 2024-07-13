@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/controller/controller.dart';
+import 'package:book_store/pages/explore_page.dart';
+import 'package:book_store/pages/favorite_page.dart';
 import 'package:book_store/pages/home_page.dart';
+import 'package:book_store/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,9 +18,11 @@ class MainPage extends StatelessWidget {
     'Humor',
   ];
 
-  int _currentIndex = 0;
   final List<Widget> _screens = [
     HomePage(),
+    ExplorePage(),
+    FavoritePage(),
+    ProfilePage(),
   ];
 
   @override
@@ -27,34 +32,35 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: Drawer(),
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        showUnselectedLabels: true,
-        elevation: 0,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'HOME',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'EXPLORE',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'FAVORITE',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'PROFILE',
-          ),
-        ],
-        currentIndex: _currentIndex,
-        selectedItemColor: Color(0xffEB5757),
-        unselectedItemColor: Color(0xff959CB0),
-      ),
+      body: Obx(() => _screens[controller.currentScreen.value]),
+      bottomNavigationBar: Obx(() => BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            showUnselectedLabels: true,
+            elevation: 0,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'HOME',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.category),
+                label: 'EXPLORE',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: 'FAVORITE',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'PROFILE',
+              ),
+            ],
+            currentIndex: controller.currentScreen.value,
+            selectedItemColor: Color(0xffEB5757),
+            unselectedItemColor: Color(0xff959CB0),
+            onTap: (value) => controller.changeScreen(value),
+          )),
     );
   }
 }
