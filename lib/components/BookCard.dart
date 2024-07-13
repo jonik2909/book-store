@@ -8,6 +8,8 @@ class BookCard extends StatelessWidget {
   final String bookName;
   final String bookAuthor;
   final int bookPrice;
+  final double width;
+  final double height;
 
   const BookCard({
     super.key,
@@ -16,6 +18,8 @@ class BookCard extends StatelessWidget {
     required this.bookName,
     required this.bookAuthor,
     required this.bookPrice,
+    required this.width,
+    required this.height,
   });
 
   @override
@@ -23,14 +27,14 @@ class BookCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 130,
+        width: width,
         margin: EdgeInsets.only(right: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 130,
-              height: 194,
+              width: width,
+              height: height,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(

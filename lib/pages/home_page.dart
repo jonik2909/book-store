@@ -126,6 +126,8 @@ class HomePage extends StatelessWidget {
                           bookName: 'Displacement',
                           bookAuthor: 'Kiku Hughes',
                           bookPrice: 16,
+                          width: 130,
+                          height: 194,
                         );
                       }),
                 ),
@@ -183,6 +185,8 @@ class HomePage extends StatelessWidget {
                         bookName: 'Displacement',
                         bookAuthor: 'Kiku Hughes',
                         bookPrice: 16,
+                        width: 130,
+                        height: 194,
                       );
                     },
                   ),
