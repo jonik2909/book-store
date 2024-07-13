@@ -11,13 +11,6 @@ import 'package:get/get.dart';
 class MainPage extends StatelessWidget {
   MainPage({super.key});
 
-  final List<String> _categories = [
-    'Fantasy',
-    'History',
-    'Horror',
-    'Humor',
-  ];
-
   final List<Widget> _screens = [
     HomePage(),
     ExplorePage(),
