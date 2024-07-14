@@ -5,10 +5,6 @@ import 'package:image_picker/image_picker.dart';
 
 class Controller extends GetxController {
   // category
-  var selectedCategory = 0.obs;
-  void changeCategory(int index) {
-    selectedCategory.value = index;
-  }
 
   // current screen
   var currentScreen = 0.obs;

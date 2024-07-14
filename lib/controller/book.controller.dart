@@ -6,19 +6,25 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class BookController extends GetxController {
+  // category
+  var selectedCategory = 0.obs;
+  void changeCategory(int index) {
+    selectedCategory.value = index;
+  }
+
   var bookList = [].obs;
   var isLoading = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    getBooks();
+    getBooksByCategory('HISTORY');
   }
 
-  Future<void> getBooks() async {
+  Future<void> getBooksByCategory(category) async {
     try {
       isLoading(true);
-      var books = await Bookservice.getBooks();
+      var books = await Bookservice.getBooksByCategory(category);
       if (books != null) {
         bookList.value = books;
       }

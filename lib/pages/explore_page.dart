@@ -12,18 +12,16 @@ class ExplorePage extends StatelessWidget {
   ExplorePage({super.key});
 
   final List<String> _categories = [
-    'Fantasy',
-    'History',
-    'Horror',
-    'Humor',
+    'HISTORY',
+    'HORROR',
+    'FANTASY',
+    'OTHER',
   ];
 
   @override
   Widget build(BuildContext context) {
     final Controller controller = Get.put(Controller());
     final bookController = Get.put(BookController());
-
-    bookController.getBooks();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -65,11 +63,15 @@ class ExplorePage extends StatelessWidget {
                       itemCount: _categories.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () => controller.changeCategory(index),
+                          onTap: () => {
+                            bookController
+                                .getBooksByCategory(_categories[index]),
+                            bookController.changeCategory(index)
+                          },
                           child: Obx(() => CategoryCard(
                                 name: _categories[index],
-                                selected:
-                                    index == controller.selectedCategory.value,
+                                selected: index ==
+                                    bookController.selectedCategory.value,
                               )),
                         );
                       },
