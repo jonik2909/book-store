@@ -21,7 +21,7 @@ class ExplorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Controller controller = Get.put(Controller());
-    final bookController = Get.put(BookController());
+    final BookController bookController = Get.put(BookController());
 
     return Scaffold(
       backgroundColor: Colors.white,

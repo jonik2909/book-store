@@ -18,7 +18,6 @@ class Memberservice {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      print("response. failed");
       throw Exception('Failed to login');
     }
   }
@@ -57,7 +56,7 @@ class Memberservice {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Failed to fetch user details');
+      throw jsonDecode(response.body);
     }
   }
 }

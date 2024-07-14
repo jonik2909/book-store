@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/controller/book.controller.dart';
 import 'package:book_store/controller/controller.dart';
+import 'package:book_store/controller/member.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +12,12 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Controller controller = Get.put(Controller());
+    final MemberController memberController = Get.put(MemberController());
+
+    final TextEditingController nickController =
+        TextEditingController(text: memberController.member.value.nick);
+    final TextEditingController emailController =
+        TextEditingController(text: memberController.member.value.email);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -78,7 +86,7 @@ class ProfilePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Username",
+                  "Member nick",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 10),
@@ -95,10 +103,11 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                   child: TextField(
+                    controller: nickController,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      hintText: 'Username',
+                      hintText: 'Member nick',
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                         color: Color(0xff8E8E93),
@@ -111,7 +120,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "Phone",
+                  "Member email",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
                 SizedBox(height: 10),
@@ -123,15 +132,16 @@ class ProfilePage extends StatelessWidget {
                         color: Color.fromRGBO(0, 0, 0, 0.04),
                         spreadRadius: 5,
                         blurRadius: 10,
-                        offset: Offset(0, 1), // changes position of shadow
+                        offset: Offset(0, 1),
                       ),
                     ],
                   ),
                   child: TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      hintText: 'Phone',
+                      hintText: 'Member email',
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                         color: Color(0xff8E8E93),
