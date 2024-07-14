@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/controller/book.controller.dart';
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
+import 'package:book_store/helper/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,11 +13,17 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Controller controller = Get.put(Controller());
     final MemberController memberController = Get.put(MemberController());
+    final _focusNode = FocusNode();
 
     final TextEditingController nickController =
         TextEditingController(text: memberController.member.value.nick);
     final TextEditingController emailController =
         TextEditingController(text: memberController.member.value.email);
+
+    void _removeFocus() {
+      // Unfocus the TextField
+      _focusNode.unfocus();
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -137,6 +143,7 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                   child: TextField(
+                    focusNode: _focusNode,
                     controller: emailController,
                     decoration: InputDecoration(
                       filled: true,
@@ -156,7 +163,21 @@ class ProfilePage extends StatelessWidget {
                 Container(
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      try {
+                        await memberController.updateUserData(
+                          memberController.authToken.value,
+                          memberController.member.value.id,
+                          nickController.text,
+                          emailController.text,
+                        );
+                        _removeFocus();
+                        alertDialog(context, "Success",
+                            "Member information updated successfully!");
+                      } catch (err) {
+                        alertDialog(context, "Success", err.toString());
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xffEB5757),
                       shape: RoundedRectangleBorder(

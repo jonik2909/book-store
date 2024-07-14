@@ -59,4 +59,28 @@ class Memberservice {
       throw jsonDecode(response.body);
     }
   }
+
+  static Future<Map<String, dynamic>> updateUserData(
+      String token, int id, String nick, String email) async {
+    final response = await http.post(
+      Uri.parse(
+          'https://x8ki-letl-twmt.n7.xano.io/api:ESj5Rwpj/members/{members_id}'),
+      headers: <String, String>{
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        "id": id,
+        'nick': nick,
+        'email': email,
+      }),
+    );
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      final errorResponse = jsonDecode(response.body);
+      final errorMessage = errorResponse['message'];
+      throw Exception(errorMessage);
+    }
+  }
 }

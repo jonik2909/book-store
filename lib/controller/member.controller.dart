@@ -1,4 +1,3 @@
-import 'package:book_store/models/Auth.dart';
 import 'package:book_store/models/User.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/services/MemberService.dart';
@@ -50,6 +49,17 @@ class MemberController extends GetxController {
       member.value = Member.fromJson(response);
     } catch (e) {
       print("error >> $e");
+    }
+  }
+
+  Future<void> updateUserData(
+      String token, int id, String nick, String email) async {
+    try {
+      var response = await Memberservice.updateUserData(token, id, nick, email);
+      member.value = Member.fromJson(response);
+    } catch (e) {
+      print("error >> $e");
+      throw e;
     }
   }
 }
