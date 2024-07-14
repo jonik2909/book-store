@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/pages/main_page.dart';
+import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+  final MemberController memberController = Get.put(MemberController());
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +36,12 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
                 child: TextField(
+                  controller: emailController,
                   autofocus: true,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
-                    hintText: 'Username',
+                    hintText: 'Email',
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                       color: Color(0xff8E8E93),
@@ -61,6 +66,7 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
                 child: TextField(
+                  controller: passwordController,
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
@@ -78,12 +84,22 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 10),
+              Obx(() => Text(
+                    memberController.errorMessage.value,
+                    style: TextStyle(color: Colors.red),
+                  )),
+              SizedBox(height: 30),
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(MainPage()),
+                  onPressed: () {
+                    memberController.login(
+                      emailController.text,
+                      passwordController.text,
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xffEB5757),
                     shape: RoundedRectangleBorder(

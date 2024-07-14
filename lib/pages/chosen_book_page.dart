@@ -9,7 +9,7 @@ class ChosenBookPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BookModel book = Get.arguments as BookModel;
+    final Book book = Get.arguments as Book;
     print("arguments $book");
     return Scaffold(
       backgroundColor: Colors.white,

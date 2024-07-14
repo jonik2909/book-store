@@ -1,4 +1,4 @@
-class BookModel {
+class Book {
   String? id;
   String? bookName;
   int? bookPrice;
@@ -7,7 +7,7 @@ class BookModel {
   String? bookAuthor;
   String? bookAuthorDesc;
 
-  BookModel({
+  Book({
     required this.id,
     required this.bookName,
     required this.bookPrice,
@@ -17,7 +17,7 @@ class BookModel {
     required this.bookAuthorDesc,
   });
 
-  BookModel.fromJson(Map<String, dynamic> json) {
+  Book.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     bookName = json['bookName'];
     bookPrice = json['bookPrice'];
