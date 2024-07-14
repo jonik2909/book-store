@@ -86,7 +86,7 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Obx(() => Text(
-                    memberController.errorMessage.value,
+                    memberController.loginErrorMessage.value,
                     style: TextStyle(color: Colors.red),
                   )),
               SizedBox(height: 30),

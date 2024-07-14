@@ -15,14 +15,34 @@ class Memberservice {
       }),
     );
 
-    print("response $response");
-    print("response.body ${response.body}");
-    print("response.statusCode ${response.statusCode}");
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
       print("response. failed");
       throw Exception('Failed to login');
+    }
+  }
+
+  static Future<Map<String, dynamic>> signup(
+      String nick, String email, String password) async {
+    final response = await http.post(
+      Uri.parse('https://x8ki-letl-twmt.n7.xano.io/api:ESj5Rwpj/auth/signup'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'nick': nick,
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      final errorResponse = jsonDecode(response.body);
+      final errorMessage = errorResponse['message'];
+      throw Exception(errorMessage);
     }
   }
 
