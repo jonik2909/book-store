@@ -22,40 +22,40 @@ class Books extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
-      body: Visibility(
-        // visible: items.isNotEmpty,
-        replacement: Center(
-          child: Text(
-            'No Items',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-        ),
-        child: ListView.builder(
-            itemCount: bookController.bookList.length,
-            padding: EdgeInsets.all(8),
-            itemBuilder: (context, index) {
-              var book = bookController.bookList[index];
+      body: Obx(() => Visibility(
+            visible: bookController.bookList.isNotEmpty,
+            replacement: Center(
+              child: Text(
+                'No Items',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ),
+            child: ListView.builder(
+                itemCount: bookController.bookList.length,
+                padding: EdgeInsets.all(8),
+                itemBuilder: (context, index) {
+                  var book = bookController.bookList[index];
 
-              return Card(
-                child: ListTile(
-                  leading: CircleAvatar(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50.0),
-                      child: Image.asset(
-                        "lib/assets/book.jpg",
-                        fit: BoxFit.cover,
-                        width: 50.0, // Adjust the width as needed
-                        height: 50.0,
+                  return Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50.0),
+                          child: Image.network(
+                            book.bookImage.toString(),
+                            fit: BoxFit.cover,
+                            width: 50.0, // Adjust the width as needed
+                            height: 50.0,
+                          ),
+                        ),
                       ),
+                      title: Text(book.bookName.toString()),
+                      subtitle: Text(book.bookAuthor.toString()),
+                      trailing: Icon(Icons.delete),
                     ),
-                  ),
-                  title: Text(book.bookName.toString()),
-                  subtitle: Text(book.bookAuthor.toString()),
-                  trailing: Icon(Icons.delete),
-                ),
-              );
-            }),
-      ),
+                  );
+                }),
+          )),
     );
   }
 }

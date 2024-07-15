@@ -14,11 +14,13 @@ class AdminController extends GetxController {
   final ImagePicker _picker = ImagePicker();
 
   var bookList = [].obs;
+  var memberList = [].obs;
 
   @override
   void onInit() {
     super.onInit();
     getAdminBooks();
+    getAdminMembers();
   }
 
   void pickImage() async {
@@ -32,9 +34,17 @@ class AdminController extends GetxController {
     try {
       var books = await AdminService.getAdminBooks();
       bookList.value = books;
-      print('books');
     } catch (err) {
       print("getAdminBooks $err");
+    }
+  }
+
+  Future<void> getAdminMembers() async {
+    try {
+      var members = await AdminService.getAdminMembers();
+      memberList.value = members;
+    } catch (err) {
+      print("memberList $err");
     }
   }
 }
