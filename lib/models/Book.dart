@@ -3,6 +3,7 @@ class Book {
   String? bookName;
   int? bookPrice;
   String? bookDesc;
+  String? bookCategory;
   String? bookImage;
   String? bookAuthor;
   String? bookAuthorDesc;
@@ -12,6 +13,7 @@ class Book {
     required this.bookName,
     required this.bookPrice,
     required this.bookDesc,
+    required this.bookCategory,
     required this.bookImage,
     required this.bookAuthor,
     required this.bookAuthorDesc,
@@ -22,6 +24,7 @@ class Book {
     bookName = json['bookName'];
     bookPrice = json['bookPrice'];
     bookDesc = json['bookDesc'];
+    bookDesc = json['bookCategory'];
     bookImage = json['bookImage']['url'];
     bookAuthor = json['bookAuthor'];
     bookAuthorDesc = json['bookAuthorDesc'];

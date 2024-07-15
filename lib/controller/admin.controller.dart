@@ -1,3 +1,4 @@
+import 'package:book_store/services/AdminService.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -12,10 +13,28 @@ class AdminController extends GetxController {
 
   final ImagePicker _picker = ImagePicker();
 
+  var bookList = [].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAdminBooks();
+  }
+
   void pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       bookImage.value = image.path;
+    }
+  }
+
+  Future<void> getAdminBooks() async {
+    try {
+      var books = await AdminService.getAdminBooks();
+      bookList.value = books;
+      print('books');
+    } catch (err) {
+      print("getAdminBooks $err");
     }
   }
 }
