@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class MemberController extends GetxController {
   var authToken = ''.obs;
-  var member = Member(id: 0, nick: '', email: '').obs;
+  var member = Member(id: 0, nick: '', email: '', type: '').obs;
   var loginErrorMessage = ''.obs;
   var signupErrorMessage = ''.obs;
 
@@ -46,6 +46,8 @@ class MemberController extends GetxController {
   Future<void> getUserDetails(String token) async {
     try {
       var response = await Memberservice.getUserDetails(token);
+      print("member >> $response");
+
       member.value = Member.fromJson(response);
     } catch (e) {
       print("error >> $e");

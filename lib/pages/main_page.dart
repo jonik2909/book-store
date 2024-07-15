@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/controller/controller.dart';
+import 'package:book_store/controller/member.controller.dart';
+import 'package:book_store/pages/admin_page.dart';
 import 'package:book_store/pages/explore_page.dart';
 import 'package:book_store/pages/favorite_page.dart';
 import 'package:book_store/pages/home_page.dart';
@@ -16,11 +18,13 @@ class MainPage extends StatelessWidget {
     ExplorePage(),
     FavoritePage(),
     ProfilePage(),
+    AdminPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     final Controller controller = Get.put(Controller());
+    final MemberController memberController = Get.put(MemberController());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -31,7 +35,7 @@ class MainPage extends StatelessWidget {
             backgroundColor: Colors.white,
             showUnselectedLabels: true,
             elevation: 0,
-            items: const <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'HOME',
@@ -48,6 +52,11 @@ class MainPage extends StatelessWidget {
                 icon: Icon(Icons.person),
                 label: 'PROFILE',
               ),
+              if (memberController.member.value.type == 'ADMIN')
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.admin_panel_settings),
+                  label: 'ADMIN',
+                ),
             ],
             currentIndex: controller.currentScreen.value,
             selectedItemColor: Color(0xffEB5757),
