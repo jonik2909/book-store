@@ -2,7 +2,7 @@
 
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
-import 'package:book_store/pages/admin_page.dart';
+import 'package:book_store/pages/admin/admin_page.dart';
 import 'package:book_store/pages/explore_page.dart';
 import 'package:book_store/pages/favorite_page.dart';
 import 'package:book_store/pages/home_page.dart';
