@@ -53,12 +53,12 @@ class AdminPage extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        leading: Icon(icon, color: Colors.blue),
+        leading: Icon(icon, color: Color(0xffEB5757)),
         title: Text(
           title,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        trailing: Icon(Icons.arrow_forward, color: Colors.blue),
+        trailing: Icon(Icons.arrow_forward, color: Color(0xffEB5757)),
         onTap: () {
           Get.to(() => route);
         },
