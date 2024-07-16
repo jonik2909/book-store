@@ -9,7 +9,7 @@ class Books extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AdminController bookController = Get.put(AdminController());
+    final AdminController adminController = Get.put(AdminController());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -23,7 +23,7 @@ class Books extends StatelessWidget {
         ),
       ),
       body: Obx(() => Visibility(
-            visible: bookController.bookList.isNotEmpty,
+            visible: adminController.bookList.isNotEmpty,
             replacement: Center(
               child: Text(
                 'No Items',
@@ -31,10 +31,10 @@ class Books extends StatelessWidget {
               ),
             ),
             child: ListView.builder(
-                itemCount: bookController.bookList.length,
+                itemCount: adminController.bookList.length,
                 padding: EdgeInsets.all(8),
                 itemBuilder: (context, index) {
-                  var book = bookController.bookList[index];
+                  var book = adminController.bookList[index];
 
                   return Card(
                     child: ListTile(
@@ -51,7 +51,13 @@ class Books extends StatelessWidget {
                       ),
                       title: Text(book.bookName.toString()),
                       subtitle: Text(book.bookAuthor.toString()),
-                      trailing: Icon(Icons.delete),
+                      trailing: GestureDetector(
+                        onTap: () async {
+                          await adminController.deleteBook(book.id);
+                          await adminController.getAdminBooks();
+                        },
+                        child: Icon(Icons.delete),
+                      ),
                     ),
                   );
                 }),

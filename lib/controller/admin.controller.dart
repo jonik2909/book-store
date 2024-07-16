@@ -1,8 +1,5 @@
 import 'dart:io';
 
-import 'package:book_store/models/Book.dart';
-import 'package:book_store/pages/admin/admin_page.dart';
-import 'package:book_store/pages/admin/books.dart';
 import 'package:book_store/services/AdminService.dart';
 import 'package:book_store/services/UploadService.dart';
 import 'package:get/get.dart';
@@ -58,6 +55,14 @@ class AdminController extends GetxController {
   Future<void> createBook(data) async {
     try {
       await AdminService.createBook(data);
+    } catch (err) {
+      print("createBook >> $err");
+    }
+  }
+
+  Future<void> deleteBook(String id) async {
+    try {
+      await AdminService.deleteBook(id);
     } catch (err) {
       print("createBook >> $err");
     }
