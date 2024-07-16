@@ -25,7 +25,7 @@ class Book {
     bookPrice = json['bookPrice'];
     bookDesc = json['bookDesc'];
     bookDesc = json['bookCategory'];
-    bookImage = json['bookImage']['url'];
+    bookImage = json['bookImage'];
     bookAuthor = json['bookAuthor'];
     bookAuthorDesc = json['bookAuthorDesc'];
   }

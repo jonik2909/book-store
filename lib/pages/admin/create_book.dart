@@ -94,7 +94,7 @@ class CreateBook extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Obx(
-                  () => adminController.bookImage.value.isEmpty
+                  () => adminController.imagePreview.value.isEmpty
                       ? GestureDetector(
                           onTap: adminController.pickImage,
                           child: Image.asset(
@@ -106,7 +106,7 @@ class CreateBook extends StatelessWidget {
                         )
                       : Image.file(
                           height: 250,
-                          File(adminController.bookImage.value),
+                          File(adminController.imagePreview.value),
                         ),
                 ),
                 SizedBox(height: 20),

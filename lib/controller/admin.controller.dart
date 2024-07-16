@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:book_store/services/AdminService.dart';
+import 'package:book_store/services/UploadService.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -6,10 +9,11 @@ class AdminController extends GetxController {
   var bookName = ''.obs;
   var bookPrice = 0.0.obs;
   var bookDesc = ''.obs;
-  var bookImage = ''.obs;
   var bookCategory = ''.obs;
   var bookAuthor = ''.obs;
   var bookAuthorDesc = ''.obs;
+  var bookImage = ''.obs;
+  var imagePreview = ''.obs;
 
   final ImagePicker _picker = ImagePicker();
 
@@ -25,8 +29,13 @@ class AdminController extends GetxController {
 
   void pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
     if (image != null) {
-      bookImage.value = image.path;
+      File file = File(image!.path);
+      final result = await UploadService.uploadImage(file);
+
+      imagePreview.value = image.path;
+      bookImage.value = result;
     }
   }
 
