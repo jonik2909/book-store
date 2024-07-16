@@ -34,21 +34,29 @@ class AdminController extends GetxController {
     }
   }
 
-  Future<void> getAdminBooks() async {
-    try {
-      var books = await AdminService.getAdminBooks();
-      bookList.value = books;
-    } catch (err) {
-      print("getAdminBooks $err");
-    }
-  }
-
   Future<void> getAdminMembers() async {
     try {
       var members = await AdminService.getAdminMembers();
       memberList.value = members;
     } catch (err) {
       print("memberList $err");
+    }
+  }
+
+  Future<void> deleteMember(int id) async {
+    try {
+      await AdminService.deleteMember(id);
+    } catch (err) {
+      print("deleteMember >> $err");
+    }
+  }
+
+  Future<void> getAdminBooks() async {
+    try {
+      var books = await AdminService.getAdminBooks();
+      bookList.value = books;
+    } catch (err) {
+      print("getAdminBooks $err");
     }
   }
 

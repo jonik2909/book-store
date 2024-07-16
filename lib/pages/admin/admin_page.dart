@@ -2,7 +2,7 @@
 
 import 'package:book_store/pages/admin/create_book.dart';
 import 'package:book_store/pages/admin/books.dart';
-import 'package:book_store/pages/admin/users.dart';
+import 'package:book_store/pages/admin/members.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +30,7 @@ class AdminPage extends StatelessWidget {
               _buildRouterTile(context, 'Books', Icons.store, Books()),
               _buildRouterTile(
                   context, 'Add new Book', Icons.add_box, CreateBook()),
-              _buildRouterTile(context, 'Users', Icons.people, Users()),
+              _buildRouterTile(context, 'Users', Icons.people, Members()),
             ],
           ),
         ));

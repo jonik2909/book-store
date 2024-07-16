@@ -4,12 +4,12 @@ import 'package:book_store/controller/admin.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Users extends StatelessWidget {
-  const Users({super.key});
+class Members extends StatelessWidget {
+  const Members({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final AdminController bookController = Get.put(AdminController());
+    final AdminController adminController = Get.put(AdminController());
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -18,12 +18,12 @@ class Users extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: false,
         title: Text(
-          'Users list',
+          'Members list',
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
       body: Obx(() => Visibility(
-            visible: bookController.memberList.isNotEmpty,
+            visible: adminController.memberList.isNotEmpty,
             replacement: Center(
               child: Text(
                 'No Users',
@@ -31,10 +31,10 @@ class Users extends StatelessWidget {
               ),
             ),
             child: ListView.builder(
-                itemCount: bookController.memberList.length,
+                itemCount: adminController.memberList.length,
                 padding: EdgeInsets.all(8),
                 itemBuilder: (context, index) {
-                  var member = bookController.memberList[index];
+                  var member = adminController.memberList[index];
                   return Card(
                     child: ListTile(
                       leading: CircleAvatar(
@@ -42,7 +42,12 @@ class Users extends StatelessWidget {
                       ),
                       title: Text(member.nick.toString()),
                       subtitle: Text(member.email.toString()),
-                      trailing: Icon(Icons.delete),
+                      trailing: GestureDetector(
+                          onTap: () async {
+                            await adminController.deleteMember(member.id);
+                            await adminController.getAdminMembers();
+                          },
+                          child: Icon(Icons.delete)),
                     ),
                   );
                 }),
