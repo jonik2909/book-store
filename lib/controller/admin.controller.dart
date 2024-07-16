@@ -1,17 +1,15 @@
 import 'dart:io';
 
+import 'package:book_store/models/Book.dart';
+import 'package:book_store/pages/admin/admin_page.dart';
+import 'package:book_store/pages/admin/books.dart';
 import 'package:book_store/services/AdminService.dart';
 import 'package:book_store/services/UploadService.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AdminController extends GetxController {
-  var bookName = ''.obs;
-  var bookPrice = 0.0.obs;
-  var bookDesc = ''.obs;
   var bookCategory = ''.obs;
-  var bookAuthor = ''.obs;
-  var bookAuthorDesc = ''.obs;
   var bookImage = ''.obs;
   var imagePreview = ''.obs;
 
@@ -54,6 +52,14 @@ class AdminController extends GetxController {
       memberList.value = members;
     } catch (err) {
       print("memberList $err");
+    }
+  }
+
+  Future<void> createBook(data) async {
+    try {
+      await AdminService.createBook(data);
+    } catch (err) {
+      print("createBook >> $err");
     }
   }
 }

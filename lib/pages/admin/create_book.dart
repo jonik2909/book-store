@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/controller/admin.controller.dart';
+import 'package:book_store/pages/admin/books.dart';
+import 'package:book_store/services/AdminService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:io';
@@ -13,6 +15,14 @@ class CreateBook extends StatelessWidget {
     final AdminController adminController = Get.put(AdminController());
 
     final items = <String>['HISTORY', 'HORROR', 'FANTASY', 'OTHER'];
+
+    // controller
+    final bookNameController = TextEditingController();
+    final bookPriceController = TextEditingController();
+    final bookDescController = TextEditingController();
+    final bookCategoryController = TextEditingController();
+    final bookAuthorController = TextEditingController();
+    final bookAuthorDescController = TextEditingController();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -35,26 +45,31 @@ class CreateBook extends StatelessWidget {
                 SizedBox(height: 20),
                 inputField(
                   label: 'Book Name',
+                  controller: bookNameController,
                   onChanged: (value) {},
                 ),
                 SizedBox(height: 20),
                 inputField(
                   label: 'Book Price',
+                  controller: bookPriceController,
                   onChanged: (value) {},
                 ),
                 SizedBox(height: 20),
                 inputField(
                   label: 'book Desc',
+                  controller: bookDescController,
                   onChanged: (value) {},
                 ),
                 SizedBox(height: 20),
                 inputField(
                   label: 'bookAuthor',
+                  controller: bookAuthorController,
                   onChanged: (value) {},
                 ),
                 SizedBox(height: 20),
                 inputField(
                   label: 'bookAuthorDesc',
+                  controller: bookAuthorDescController,
                   onChanged: (value) {},
                 ),
                 SizedBox(height: 20),
@@ -114,7 +129,18 @@ class CreateBook extends StatelessWidget {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await AdminService.createBook({
+                        'bookName': bookNameController.text,
+                        'bookPrice': bookPriceController.text,
+                        'bookDesc': bookDescController.text,
+                        'bookCategory': adminController.bookCategory.value,
+                        'bookAuthor': bookAuthorController.text,
+                        'bookAuthorDesc': bookAuthorDescController.text,
+                        'bookImage': adminController.bookImage.value,
+                      });
+                      Get.back();
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xffEB5757),
                       shape: RoundedRectangleBorder(
@@ -142,6 +168,7 @@ class CreateBook extends StatelessWidget {
 
   Widget inputField({
     required String label,
+    required TextEditingController controller,
     TextInputType keyboardType = TextInputType.text,
     int maxLines = 1,
     required Function(String) onChanged,
@@ -160,10 +187,7 @@ class CreateBook extends StatelessWidget {
         ],
       ),
       child: TextField(
-        // controller: controller,
-        obscureText: true,
-        enableSuggestions: false,
-        autocorrect: false,
+        controller: controller,
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
