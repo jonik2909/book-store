@@ -20,7 +20,6 @@ class ExplorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Controller controller = Get.put(Controller());
     final BookController bookController = Get.put(BookController());
 
     return Scaffold(
