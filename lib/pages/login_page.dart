@@ -9,7 +9,7 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final MemberController memberController = Get.put(MemberController());
 
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
@@ -37,12 +37,12 @@ class LoginPage extends StatelessWidget {
                     ],
                   ),
                   child: TextField(
-                    controller: emailController,
+                    controller: usernameController,
                     autofocus: true,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      hintText: 'Email',
+                      hintText: 'Username',
                       enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                         color: Color(0xff8E8E93),
@@ -97,7 +97,7 @@ class LoginPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       memberController.login(
-                        emailController.text,
+                        usernameController.text,
                         passwordController.text,
                       );
                     },

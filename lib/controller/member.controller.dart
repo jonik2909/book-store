@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:book_store/models/User.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/services/MemberService.dart';
@@ -15,23 +17,23 @@ class MemberController extends GetxController {
   //   getUserDetails(authToken.value.toString());
   // }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(String username, String password) async {
     try {
-      var response = await Memberservice.login(email, password);
-      authToken.value = response['authToken'];
+      var response = await Memberservice.login(username, password);
+      authToken.value = response['accessToken'];
 
-      await getUserDetails(response['authToken']);
+      // await getUserDetails(response['accessToken']);
 
       Get.to(MainPage());
     } catch (e) {
       print("error >> $e");
-      loginErrorMessage.value = 'Username or password incorrect!';
+      loginErrorMessage.value = e.toString();
     }
   }
 
-  Future<void> signup(String nick, String email, String password) async {
+  Future<void> signup(String nick, String username, String password) async {
     try {
-      var response = await Memberservice.signup(nick, email, password);
+      var response = await Memberservice.signup(nick, username, password);
       authToken.value = response['authToken'];
 
       await getUserDetails(response['authToken']);

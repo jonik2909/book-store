@@ -3,27 +3,33 @@ import 'package:http/http.dart' as http;
 
 class Memberservice {
   static Future<Map<String, dynamic>> login(
-      String email, String password) async {
+      String username, String password) async {
     final response = await http.post(
-      Uri.parse('https://x8ki-letl-twmt.n7.xano.io/api:ESj5Rwpj/auth/login'),
+      Uri.parse('http://localhost:3003/book/member/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'email': email,
-        'password': password,
+        'memberNick': username,
+        'memberPassword': password,
       }),
     );
+
+    print('Status Code: ${response.statusCode}');
+    print('Body: ${response.body}');
+    print('Headers: ${response.headers}');
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Failed to login');
+      final error = jsonDecode(response.body);
+      // throw Exception(error['message']); // Only throw the 'message'
+      throw (error['message']);
     }
   }
 
   static Future<Map<String, dynamic>> signup(
-      String nick, String email, String password) async {
+      String nick, String username, String password) async {
     final response = await http.post(
       Uri.parse('https://x8ki-letl-twmt.n7.xano.io/api:ESj5Rwpj/auth/signup'),
       headers: <String, String>{
@@ -31,7 +37,7 @@ class Memberservice {
       },
       body: jsonEncode(<String, String>{
         'nick': nick,
-        'email': email,
+        'email': username,
         'password': password,
       }),
     );
