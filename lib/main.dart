@@ -1,3 +1,6 @@
+import 'package:book_store/controller/member.controller.dart';
+import 'package:book_store/pages/home_page.dart';
+import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,12 +11,14 @@ void main() async {
   await dotenv.load();
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
-    home: const MyApp(),
+    home: MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final MemberController memberController = Get.put(MemberController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: SplashPage(),
+      home: Obx(() =>
+          memberController.isAuthenticated.value ? MainPage() : SplashPage()),
     );
   }
 }

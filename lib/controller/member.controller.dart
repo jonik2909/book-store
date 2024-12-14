@@ -1,10 +1,13 @@
 import 'dart:convert';
 
 import 'package:book_store/models/User.dart';
+import 'package:book_store/pages/home_page.dart';
 import 'package:book_store/pages/login_page.dart';
 import 'package:book_store/pages/main_page.dart';
+import 'package:book_store/pages/splash_page.dart';
 import 'package:book_store/services/MemberService.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MemberController extends GetxController {
   final memberService = MemberService();
@@ -13,19 +16,38 @@ class MemberController extends GetxController {
   var member = Member(id: 0, nick: '', email: '', type: '').obs;
   var loginErrorMessage = ''.obs;
   var signupErrorMessage = ''.obs;
+  var isAuthenticated = false.obs;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   getUserDetails(authToken.value.toString());
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    try {
+      final token = await getToken();
+      if (token != null && token.isNotEmpty) {
+        authToken.value = token;
+        await getUserDetails(token);
+        isAuthenticated.value = true;
+        Get.offAll(() => MainPage());
+      } else {
+        isAuthenticated.value = false;
+        Get.offAll(() => SplashPage());
+      }
+    } catch (e) {
+      isAuthenticated.value = false;
+      Get.offAll(() => SplashPage());
+    }
+  }
 
   Future<void> login(String username, String password) async {
     try {
       var response = await memberService.login(username, password);
       authToken.value = response['accessToken'];
 
-      // await getUserDetails(response['accessToken']);
+      await _saveToken(authToken.value);
 
       Get.to(MainPage());
     } catch (e) {
@@ -53,7 +75,9 @@ class MemberController extends GetxController {
       await memberService.logout(authToken.value);
       authToken.value = '';
 
-      Get.to(LoginPage());
+      await _clearStorage();
+
+      Get.to(SplashPage());
     } catch (e) {
       loginErrorMessage.value = e.toString();
     }
@@ -79,5 +103,21 @@ class MemberController extends GetxController {
       print("error >> $e");
       throw e;
     }
+  }
+
+  Future<void> _saveToken(String token) async {
+    print(token);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('accessToken', token);
+  }
+
+  Future<String?> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('accessToken');
+  }
+
+  Future<void> _clearStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('accessToken');
   }
 }
