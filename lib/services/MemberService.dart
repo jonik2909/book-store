@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Memberservice {
   static Future<Map<String, dynamic>> login(
       String username, String password) async {
     final response = await http.post(
-      Uri.parse('http://localhost:3003/book/member/login'),
+      Uri.parse('${dotenv.env['API_URL']}/member/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
