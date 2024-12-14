@@ -200,7 +200,39 @@ class ProfilePage extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      memberController.logout();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffEB5757),
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(10), // Border radius
+                      ),
+                    ),
+                    child: const Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Logout',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           )

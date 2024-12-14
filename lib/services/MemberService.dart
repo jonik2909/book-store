@@ -17,6 +17,7 @@ class MemberService {
 
   // Common headers
   Map<String, String> _getHeaders([String? token]) {
+    print("token $token");
     final headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
@@ -78,6 +79,20 @@ class MemberService {
       return _handleResponse(response);
     } catch (e) {
       throw Exception('Signup failed: ${e.toString()}');
+    }
+  }
+
+  // logout
+  Future<Map<String, dynamic>> logout(String token) async {
+    try {
+      final response = await _client.get(
+        Uri.parse('$_baseUrl/member/logout'),
+        headers: _getHeaders(token),
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      throw Exception('Login failed: ${e.toString()}');
     }
   }
 

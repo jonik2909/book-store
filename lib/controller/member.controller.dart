@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:book_store/models/User.dart';
+import 'package:book_store/pages/login_page.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/services/MemberService.dart';
 import 'package:get/get.dart';
@@ -44,6 +45,17 @@ class MemberController extends GetxController {
     } catch (e) {
       print("error >> $e");
       signupErrorMessage.value = e.toString();
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await memberService.logout(authToken.value);
+      authToken.value = '';
+
+      Get.to(LoginPage());
+    } catch (e) {
+      loginErrorMessage.value = e.toString();
     }
   }
 
