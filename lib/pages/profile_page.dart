@@ -43,10 +43,10 @@ class ProfilePage extends StatelessWidget {
           Center(
               child: Obx(
             () => GestureDetector(
-              onTap: () {
-                controller.picImage();
-              },
-              child: controller.thumnailImage.value == null
+              // onTap: () {
+              //   controller.picImage();
+              // },
+              child: null == null
                   ? Container(
                       width: 105,
                       height: 105,
