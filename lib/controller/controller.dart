@@ -9,6 +9,8 @@ class Controller extends GetxController {
   // current screen
   var currentScreen = 0.obs;
   void changeScreen(int index) {
+    print("index: $index");
+    print("currentScreen.value : ${currentScreen.value} ");
     currentScreen.value = index;
   }
 

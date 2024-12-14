@@ -40,51 +40,51 @@ class ProfilePage extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(height: 20),
-          Center(
-              child: Obx(
-            () => GestureDetector(
-              // onTap: () {
-              //   controller.picImage();
-              // },
-              child: null == null
-                  ? Container(
-                      width: 105,
-                      height: 105,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage('lib/assets/book.jpg'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Container(
-                          width: 28,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            color: Color(0xffD45555),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                            size: 15,
-                          ),
-                        ),
-                      ),
-                    )
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.file(
-                        controller.thumnailImage.value!,
-                        width: 105,
-                        height: 105,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-            ),
-          )),
+          // Center(
+          //     child: Obx(
+          //   () => GestureDetector(
+          //     // onTap: () {
+          //     //   controller.picImage();
+          //     // },
+          //     child: true
+          //         ? Container(
+          //             width: 105,
+          //             height: 105,
+          //             decoration: BoxDecoration(
+          //               shape: BoxShape.circle,
+          //               image: DecorationImage(
+          //                 image: AssetImage('lib/assets/book.jpg'),
+          //                 fit: BoxFit.cover,
+          //               ),
+          //             ),
+          //             child: Align(
+          //               alignment: Alignment.bottomRight,
+          //               child: Container(
+          //                 width: 28,
+          //                 height: 28,
+          //                 decoration: BoxDecoration(
+          //                   color: Color(0xffD45555),
+          //                   shape: BoxShape.circle,
+          //                 ),
+          //                 child: Icon(
+          //                   Icons.edit,
+          //                   color: Colors.white,
+          //                   size: 15,
+          //                 ),
+          //               ),
+          //             ),
+          //           )
+          //         : ClipRRect(
+          //             borderRadius: BorderRadius.circular(50),
+          //             child: Image.file(
+          //               controller.thumnailImage.value!,
+          //               width: 105,
+          //               height: 105,
+          //               fit: BoxFit.cover,
+          //             ),
+          //           ),
+          //   ),
+          // )),
           SizedBox(height: 25),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),

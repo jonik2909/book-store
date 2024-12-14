@@ -2,92 +2,120 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class Memberservice {
-  static Future<Map<String, dynamic>> login(
-      String username, String password) async {
-    final response = await http.post(
-      Uri.parse('${dotenv.env['API_URL']}/member/login'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'memberNick': username,
-        'memberPassword': password,
-      }),
-    );
+class MemberService {
+  final String _baseUrl;
+  final http.Client _client;
 
-    print('Status Code: ${response.statusCode}');
-    print('Body: ${response.body}');
-    print('Headers: ${response.headers}');
+  MemberService({http.Client? client})
+      : _baseUrl = dotenv.env['API_URL'] ?? 'http://localhost:3003/book',
+        _client = client ?? http.Client();
+
+  // Cleanup resources
+  void dispose() {
+    _client.close();
+  }
+
+  // Common headers
+  Map<String, String> _getHeaders([String? token]) {
+    final headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+
+    if (token != null) {
+      headers['Authorization'] = 'Bearer $token';
+    }
+
+    return headers;
+  }
+
+  // Handle API response
+  Future<Map<String, dynamic>> _handleResponse(http.Response response) async {
+    final body = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      return body;
     } else {
-      final error = jsonDecode(response.body);
-      // throw Exception(error['message']); // Only throw the 'message'
-      throw (error['message']);
+      final errorMessage = body['message'] ?? 'An error occurred';
+      throw errorMessage;
     }
   }
 
-  static Future<Map<String, dynamic>> signup(
-      String nick, String username, String password) async {
-    final response = await http.post(
-      Uri.parse('https://x8ki-letl-twmt.n7.xano.io/api:ESj5Rwpj/auth/signup'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'nick': nick,
-        'email': username,
-        'password': password,
-      }),
-    );
+  // Login
+  Future<Map<String, dynamic>> login(String username, String password) async {
+    try {
+      final response = await _client.post(
+        Uri.parse('$_baseUrl/member/login'),
+        headers: _getHeaders(),
+        body: jsonEncode({
+          'memberNick': username,
+          'memberPassword': password,
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      final errorResponse = jsonDecode(response.body);
-      final errorMessage = errorResponse['message'];
-      throw Exception(errorMessage);
+      return _handleResponse(response);
+    } catch (e) {
+      throw Exception('Login failed: ${e.toString()}');
     }
   }
 
-  static Future<Map<String, dynamic>> getUserDetails(String token) async {
-    final response = await http.get(
-      Uri.parse('https://x8ki-letl-twmt.n7.xano.io/api:ESj5Rwpj/auth/me'),
-      headers: <String, String>{
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw jsonDecode(response.body);
+  // Signup
+  Future<Map<String, dynamic>> signup({
+    required String username,
+    required String phone,
+    required String password,
+  }) async {
+    try {
+      final response = await _client.post(
+        Uri.parse('$_baseUrl/auth/signup'),
+        headers: _getHeaders(),
+        body: jsonEncode({
+          'nick': username,
+          'email': phone,
+          'password': password,
+        }),
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      throw Exception('Signup failed: ${e.toString()}');
     }
   }
 
-  static Future<Map<String, dynamic>> updateUserData(
-      String token, int id, String nick, String email) async {
-    final response = await http.post(
-      Uri.parse(
-          'https://x8ki-letl-twmt.n7.xano.io/api:ESj5Rwpj/members/{members_id}'),
-      headers: <String, String>{
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        "id": id,
-        'nick': nick,
-        'email': email,
-      }),
-    );
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      final errorResponse = jsonDecode(response.body);
-      final errorMessage = errorResponse['message'];
-      throw Exception(errorMessage);
+  // Get user details
+  Future<Map<String, dynamic>> getUserDetails(String token) async {
+    try {
+      final response = await _client.get(
+        Uri.parse('$_baseUrl/auth/me'),
+        headers: _getHeaders(token),
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      throw Exception('Failed to get user details: ${e.toString()}');
+    }
+  }
+
+  // Update user data
+  Future<Map<String, dynamic>> updateUserData({
+    required String token,
+    required int id,
+    required String nick,
+    required String email,
+  }) async {
+    try {
+      final response = await _client.post(
+        Uri.parse('$_baseUrl/members/$id'),
+        headers: _getHeaders(token),
+        body: jsonEncode({
+          'id': id,
+          'nick': nick,
+          'email': email,
+        }),
+      );
+
+      return _handleResponse(response);
+    } catch (e) {
+      throw Exception('Failed to update user data: ${e.toString()}');
     }
   }
 }

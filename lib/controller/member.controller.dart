@@ -6,6 +6,8 @@ import 'package:book_store/services/MemberService.dart';
 import 'package:get/get.dart';
 
 class MemberController extends GetxController {
+  final memberService = MemberService();
+
   var authToken = ''.obs;
   var member = Member(id: 0, nick: '', email: '', type: '').obs;
   var loginErrorMessage = ''.obs;
@@ -19,21 +21,21 @@ class MemberController extends GetxController {
 
   Future<void> login(String username, String password) async {
     try {
-      var response = await Memberservice.login(username, password);
+      var response = await memberService.login(username, password);
       authToken.value = response['accessToken'];
 
       // await getUserDetails(response['accessToken']);
 
       Get.to(MainPage());
     } catch (e) {
-      print("error >> $e");
       loginErrorMessage.value = e.toString();
     }
   }
 
-  Future<void> signup(String nick, String username, String password) async {
+  Future<void> signup(String username, String phone, String password) async {
     try {
-      var response = await Memberservice.signup(nick, username, password);
+      var response = await memberService.signup(
+          username: username, phone: phone, password: password);
       authToken.value = response['authToken'];
 
       await getUserDetails(response['authToken']);
@@ -47,7 +49,7 @@ class MemberController extends GetxController {
 
   Future<void> getUserDetails(String token) async {
     try {
-      var response = await Memberservice.getUserDetails(token);
+      var response = await memberService.getUserDetails(token);
       print("member >> $response");
 
       member.value = Member.fromJson(response);
@@ -59,8 +61,8 @@ class MemberController extends GetxController {
   Future<void> updateUserData(
       String token, int id, String nick, String email) async {
     try {
-      var response = await Memberservice.updateUserData(token, id, nick, email);
-      member.value = Member.fromJson(response);
+      // var response = await memberService.updateUserData(token, id, nick, email);
+      // member.value = Member.fromJson(response);
     } catch (e) {
       print("error >> $e");
       throw e;
