@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/models/Book.dart';
+import 'package:book_store/models/NewBook.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class ChosenBookPage extends StatelessWidget {
@@ -9,7 +11,7 @@ class ChosenBookPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Book book = Get.arguments as Book;
+    final NewBook book = Get.arguments as NewBook;
     print("arguments $book");
     return Scaffold(
       backgroundColor: Colors.white,
@@ -53,7 +55,7 @@ class ChosenBookPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
-                      book.bookImage.toString(),
+                      '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -73,7 +75,7 @@ class ChosenBookPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${book.bookAuthor}",
+                      "book.bookAuthor",
                       style: TextStyle(
                         color: Color(0xff9D9D9D),
                         fontSize: 16,
@@ -134,7 +136,7 @@ class ChosenBookPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "${book.bookAuthorDesc}",
+                    "book.bookAuthorDesc",
                     style: TextStyle(
                       color: Color(0xff9D9D9D),
                     ),

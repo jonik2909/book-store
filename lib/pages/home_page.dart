@@ -180,7 +180,8 @@ class HomePage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final book = bookController.trendBooks[index];
                         return BookCard(
-                          onTap: () => Get.to(ChosenBookPage()),
+                          onTap: () =>
+                              Get.to(ChosenBookPage(), arguments: book),
 
                           bookName: book.bookName,
                           bookAuthor:
