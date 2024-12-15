@@ -14,13 +14,6 @@ class HomePage extends StatelessWidget {
 
   final NewBookController bookController = Get.put(NewBookController());
 
-  final List<String> _categories = [
-    'Fantasy',
-    'History',
-    'Horror',
-    'Humor',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,28 +46,6 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 30),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: 20),
-              //   child: SizedBox(
-              //     height: 40,
-              //     child: ListView.separated(
-              //         scrollDirection: Axis.horizontal,
-              //         itemCount: _categories.length,
-              //         itemBuilder: (context, index) {
-              //           return GestureDetector(
-              //             onTap: () => controller.changeCategory(index),
-              //             child: Obx(() => CategoryCard(
-              //                   name: _categories[index],
-              //                   selected:
-              //                       index == controller.selectedCategory.value,
-              //                 )),
-              //           );
-              //         },
-              //         separatorBuilder: (context, index) {
-              //           return SizedBox(width: 10);
-              //         }),
-              //   ),
-              // ),
               SizedBox(height: 25),
               Container(
                 height: 50,
