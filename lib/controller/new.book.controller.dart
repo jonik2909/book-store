@@ -4,27 +4,35 @@ import 'package:get/get.dart';
 
 class NewBookController extends GetxController {
   final bookService = NewBookService();
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
 
   final RxList<NewBook> topBooks = <NewBook>[].obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
 
-  Future<void> fetchBooks(
+  @override
+  void onInit() {
+    super.onInit();
+    getBooks(
+      targetList: topBooks,
+      order: 'bookViews',
+      page: 1,
+      limit: 3,
+    );
+  }
+
+  Future<void> getBooks({
+    required RxList<NewBook> targetList,
     String? order,
     int? page,
     int? limit,
     BookCategory? bookCategory,
     String? search,
-  ) async {
+  }) async {
     isLoading.value = true;
     errorMessage.value = '';
 
     try {
-      final result = await bookService.getBooks(
+      final books = await bookService.getBooks(
         order: order,
         page: page,
         limit: limit,
@@ -32,14 +40,10 @@ class NewBookController extends GetxController {
         search: search,
       );
 
-      if (result['data'] is List) {
-        topBooks.value = (result['data'] as List)
-            .map((book) => NewBook.fromJson(book))
-            .toList();
-      }
+      targetList.assignAll(books);
     } catch (e) {
       errorMessage.value = e.toString();
-      print('Error fetching books: $e');
+      print('Controller error: $e');
     } finally {
       isLoading.value = false;
     }

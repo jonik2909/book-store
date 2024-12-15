@@ -4,18 +4,16 @@ import 'package:flutter/material.dart';
 
 class BookCard extends StatelessWidget {
   final Function() onTap;
-  final String imagePath;
   final String bookName;
   final String bookAuthor;
   final int bookPrice;
   final double width;
   final double height;
-  final bool imageNetwork;
+  final String imageNetwork;
 
   const BookCard({
     super.key,
     required this.onTap,
-    required this.imagePath,
     required this.bookName,
     required this.bookAuthor,
     required this.bookPrice,
@@ -49,15 +47,15 @@ class BookCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: imageNetwork
+                child: imageNetwork.isNotEmpty
                     ? Image.network(
-                        imagePath,
+                        imageNetwork,
                         width: double.infinity,
                         height: 194,
                         fit: BoxFit.fill,
                       )
                     : Image.asset(
-                        imagePath,
+                        "lib/assets/book.jpg",
                         width: double.infinity,
                         height: 194,
                         fit: BoxFit.fill,

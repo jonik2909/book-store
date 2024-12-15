@@ -91,17 +91,18 @@ class ExplorePage extends StatelessWidget {
                         spacing: 10,
                         runSpacing: 20,
                         children: bookController.bookList.map((book) {
-                          return BookCard(
-                            onTap: () =>
-                                Get.to(ChosenBookPage(), arguments: book),
-                            imagePath: book.bookImage,
-                            bookName: book.bookName,
-                            bookAuthor: book.bookAuthor,
-                            bookPrice: book.bookPrice,
-                            width: 160,
-                            height: 194,
-                            imageNetwork: true,
-                          );
+                          // return BookCard(
+                          //   onTap: () =>
+                          //       Get.to(ChosenBookPage(), arguments: book),
+                          //   imagePath: book.bookImage,
+                          //   bookName: book.bookName,
+                          //   bookAuthor: book.bookAuthor,
+                          //   bookPrice: book.bookPrice,
+                          //   width: 160,
+                          //   height: 194,
+                          //   imageNetwork: true,
+                          // );
+                          return Text("data");
                         }).toList(),
                       ),
                     ),

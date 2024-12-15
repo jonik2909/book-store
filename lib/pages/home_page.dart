@@ -3,12 +3,16 @@
 import 'package:book_store/components/BookCard.dart';
 import 'package:book_store/components/Category_card.dart';
 import 'package:book_store/controller/controller.dart';
+import 'package:book_store/controller/new.book.controller.dart';
 import 'package:book_store/pages/chosen_book_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
+
+  final NewBookController bookController = Get.put(NewBookController());
 
   final List<String> _categories = [
     'Fantasy',
@@ -81,7 +85,7 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Best selling books",
+                        "Top Books",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -114,21 +118,36 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: SizedBox(
                   height: 310,
-                  child: ListView.builder(
+                  child: Obx(() {
+                    if (bookController.isLoading.value) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    if (bookController.errorMessage.isNotEmpty) {
+                      return Center(
+                          child: Text(bookController.errorMessage.value));
+                    }
+
+                    return ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 10,
+                      itemCount: bookController.topBooks.length,
                       itemBuilder: (context, index) {
+                        final book = bookController.topBooks[index];
                         return BookCard(
                           onTap: () => Get.to(ChosenBookPage()),
-                          imagePath: "lib/assets/book.jpg",
-                          bookName: 'Displacement',
-                          bookAuthor: 'Kiku Hughes',
-                          bookPrice: 16,
+
+                          bookName: book.bookName,
+                          bookAuthor:
+                              'Author Name', // Add author field to your model if needed
+                          bookPrice: book.bookPrice,
                           width: 130,
                           height: 194,
-                          imageNetwork: false,
+                          imageNetwork:
+                              '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}', // true if using network image
                         );
-                      }),
+                      },
+                    );
+                  }),
                 ),
               ),
               SizedBox(height: 25),
@@ -170,28 +189,27 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: SizedBox(
-                  height: 310,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return BookCard(
-                        onTap: () => Get.to(ChosenBookPage()),
-                        imagePath: "lib/assets/book.jpg",
-                        bookName: 'Displacement',
-                        bookAuthor: 'Kiku Hughes',
-                        bookPrice: 16,
-                        width: 130,
-                        height: 194,
-                        imageNetwork: false,
-                      );
-                    },
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              //   child: SizedBox(
+              //     height: 310,
+              //     child: ListView.builder(
+              //       scrollDirection: Axis.horizontal,
+              //       itemCount: 10,
+              //       itemBuilder: (context, index) {
+              //         return BookCard(
+              //           onTap: () => Get.to(ChosenBookPage()),
+              //           bookName: 'Displacement',
+              //           bookAuthor: 'Kiku Hughes',
+              //           bookPrice: 16,
+              //           width: 130,
+              //           height: 194,
+              //           imageNetwork: "lib/assets/book.jpg",
+              //         );
+              //       },
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

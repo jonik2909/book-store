@@ -13,7 +13,7 @@ class NewBookService {
         _client = client ?? http.Client();
 
   // getBooks
-  Future getBooks({
+  Future<List<NewBook>> getBooks({
     String? order,
     int? page,
     int? limit,
@@ -25,7 +25,8 @@ class NewBookService {
         if (order != null) 'order': order,
         if (page != null) 'page': page.toString(),
         if (limit != null) 'limit': limit.toString(),
-        if (bookCategory != null) 'collection': bookCategory,
+        if (bookCategory != null)
+          'collection': bookCategory.toString().split('.').last,
         if (search != null) 'search': search,
       };
 
@@ -33,13 +34,14 @@ class NewBookService {
           .replace(queryParameters: queryParams);
 
       final response = await _client.get(uri);
-      return await handleResponse(response);
+      final List<dynamic> jsonData = jsonDecode(response.body);
+
+      return jsonData.map((book) => NewBook.fromJson(book)).toList();
     } catch (e) {
+      print('Service error: $e');
       throw Exception('Failed to fetch books: ${e.toString()}');
     }
-  }
-  // getBook
-  // updateBook
+  } // updateBook
   // deleteBook
   // likeTargetBook
 }

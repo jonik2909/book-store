@@ -1,23 +1,19 @@
 // Enum definitions
+import 'dart:ffi';
+
 enum BookCategory {
-  fiction,
-  nonFiction,
-  science,
-  history,
-  // Add other categories as per your BookCategory enum
+  FANTASY,
+  HISTORY,
+  HORROR,
+  OTHER,
 }
 
-enum BookStatus {
-  process,
-  approved,
-  rejected,
-  // Add other statuses as per your BookStatus enum
-}
+enum BookStatus { PROCESS, PAUSE }
 
 class NewBook {
   final String? id;
   final String bookName;
-  final double bookPrice;
+  final int bookPrice;
   final String bookDesc;
   final List<String> bookImages;
   final BookCategory bookCategory;
@@ -35,7 +31,7 @@ class NewBook {
     required this.bookDesc,
     required this.bookImages,
     required this.bookCategory,
-    this.bookStatus = BookStatus.process,
+    required this.bookStatus,
     required this.memberId,
     this.bookViews = 0,
     this.bookLikes = 0,
@@ -43,7 +39,6 @@ class NewBook {
     this.updatedAt,
   });
 
-  // Convert from JSON
   factory NewBook.fromJson(Map<String, dynamic> json) {
     return NewBook(
       id: json['_id'],
@@ -51,16 +46,41 @@ class NewBook {
       bookPrice: json['bookPrice'],
       bookDesc: json['bookDesc'],
       bookImages: List<String>.from(json['bookImages']),
-      bookCategory: BookCategory.values[json['bookCategory']],
-      bookStatus: BookStatus.values[json['bookStatus']],
+      bookCategory:
+          _parseBookCategory(json['bookCategory']), // Parse string to enum
+      bookStatus: _parseBookStatus(json['bookStatus']), // Parse string to enum
       memberId: json['memberId'],
-      bookViews: json['bookViews'],
-      bookLikes: json['bookLikes'],
+      bookViews: json['bookViews'] ?? 0,
+      bookLikes: json['bookLikes'] ?? 0,
       createdAt:
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt:
           json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
     );
+  }
+
+  // Helper method to parse BookCategory
+  static BookCategory _parseBookCategory(String category) {
+    try {
+      return BookCategory.values.firstWhere(
+        (e) => e.toString().split('.').last == category,
+        orElse: () => BookCategory.OTHER,
+      );
+    } catch (e) {
+      return BookCategory.OTHER;
+    }
+  }
+
+  // Helper method to parse BookStatus
+  static BookStatus _parseBookStatus(String status) {
+    try {
+      return BookStatus.values.firstWhere(
+        (e) => e.toString().split('.').last == status,
+        orElse: () => BookStatus.PROCESS,
+      );
+    } catch (e) {
+      return BookStatus.PROCESS;
+    }
   }
 
   // Convert to JSON
@@ -85,7 +105,7 @@ class NewBook {
   NewBook copyWith({
     String? id,
     String? bookName,
-    double? bookPrice,
+    int? bookPrice,
     String? bookDesc,
     List<String>? bookImages,
     BookCategory? bookCategory,

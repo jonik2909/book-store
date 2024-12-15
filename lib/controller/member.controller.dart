@@ -29,7 +29,7 @@ class MemberController extends GetxController {
       final token = await getToken();
       if (token != null && token.isNotEmpty) {
         authToken.value = token;
-        await getUserDetails(token);
+        // await getUserDetails(token);
         isAuthenticated.value = true;
         Get.offAll(() => MainPage());
       } else {
