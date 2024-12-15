@@ -6,17 +6,27 @@ class NewBookController extends GetxController {
   final bookService = NewBookService();
 
   final RxList<NewBook> topBooks = <NewBook>[].obs;
+  final RxList<NewBook> trendBooks = <NewBook>[].obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
+    // topBooks
     getBooks(
       targetList: topBooks,
       order: 'bookViews',
       page: 1,
-      limit: 3,
+      limit: 4,
+    );
+
+    // trendBooks
+    getBooks(
+      targetList: trendBooks,
+      order: 'bookLikes',
+      page: 1,
+      limit: 4,
     );
   }
 

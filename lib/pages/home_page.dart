@@ -189,27 +189,42 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              //   child: SizedBox(
-              //     height: 310,
-              //     child: ListView.builder(
-              //       scrollDirection: Axis.horizontal,
-              //       itemCount: 10,
-              //       itemBuilder: (context, index) {
-              //         return BookCard(
-              //           onTap: () => Get.to(ChosenBookPage()),
-              //           bookName: 'Displacement',
-              //           bookAuthor: 'Kiku Hughes',
-              //           bookPrice: 16,
-              //           width: 130,
-              //           height: 194,
-              //           imageNetwork: "lib/assets/book.jpg",
-              //         );
-              //       },
-              //     ),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: SizedBox(
+                  height: 310,
+                  child: Obx(() {
+                    if (bookController.isLoading.value) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+
+                    if (bookController.errorMessage.isNotEmpty) {
+                      return Center(
+                          child: Text(bookController.errorMessage.value));
+                    }
+
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: bookController.trendBooks.length,
+                      itemBuilder: (context, index) {
+                        final book = bookController.trendBooks[index];
+                        return BookCard(
+                          onTap: () => Get.to(ChosenBookPage()),
+
+                          bookName: book.bookName,
+                          bookAuthor:
+                              'Author Name', // Add author field to your model if needed
+                          bookPrice: book.bookPrice,
+                          width: 130,
+                          height: 194,
+                          imageNetwork:
+                              '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}', // true if using network image
+                        );
+                      },
+                    );
+                  }),
+                ),
+              ),
             ],
           ),
         ),
