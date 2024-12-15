@@ -33,7 +33,7 @@ class MemberService {
   Future<Map<String, dynamic>> _handleResponse(http.Response response) async {
     final body = jsonDecode(response.body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return body;
     } else {
       final errorMessage = body['message'] ?? 'An error occurred';
@@ -62,17 +62,17 @@ class MemberService {
   // Signup
   Future<Map<String, dynamic>> signup({
     required String username,
-    required String phone,
+    required String email,
     required String password,
   }) async {
     try {
       final response = await _client.post(
-        Uri.parse('$_baseUrl/auth/signup'),
+        Uri.parse('$_baseUrl/member/signup'),
         headers: _getHeaders(),
         body: jsonEncode({
-          'nick': username,
-          'email': phone,
-          'password': password,
+          'memberNick': username,
+          'memberEmail': email,
+          'memberPassword': password,
         }),
       );
 

@@ -45,6 +45,7 @@ class MemberController extends GetxController {
   Future<void> login(String username, String password) async {
     try {
       var response = await memberService.login(username, password);
+
       authToken.value = response['accessToken'];
 
       await _saveToken(authToken.value);
@@ -55,17 +56,17 @@ class MemberController extends GetxController {
     }
   }
 
-  Future<void> signup(String username, String phone, String password) async {
+  Future<void> signup(String username, String email, String password) async {
     try {
       var response = await memberService.signup(
-          username: username, phone: phone, password: password);
-      authToken.value = response['authToken'];
+          username: username, email: email, password: password);
+      authToken.value = response['accessToken'];
 
-      await getUserDetails(response['authToken']);
+      // await getUserDetails(response['authToken']);
+      await _saveToken(authToken.value);
 
       Get.to(MainPage());
     } catch (e) {
-      print("error >> $e");
       signupErrorMessage.value = e.toString();
     }
   }
