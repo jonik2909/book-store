@@ -12,7 +12,8 @@ class ChosenBookPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NewBook book = Get.arguments as NewBook;
-    print("arguments $book");
+    print("book $book");
+    print("arguments ${book.authorData.memberNick}");
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -75,7 +76,7 @@ class ChosenBookPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "book.bookAuthor",
+                      "${book.authorData.memberNick}",
                       style: TextStyle(
                         color: Color(0xff9D9D9D),
                         fontSize: 16,
@@ -84,65 +85,27 @@ class ChosenBookPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: Color(0xffFF9E00),
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: Color(0xffFF9E00),
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: Color(0xffFF9E00),
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: Color(0xffFF9E00),
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: Color(0xffCED4DA),
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    "4.0",
-                    style: TextStyle(
-                      color: Color(0xff19191B),
-                    ),
-                  )
-                ],
-              ),
               SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "About the Author",
-                    style: TextStyle(
-                      color: Color(0xff19191B),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "book.bookAuthorDesc",
-                    style: TextStyle(
-                      color: Color(0xff9D9D9D),
-                    ),
-                  ),
-                ],
-              ),
+              // Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text(
+              //       "About the Author",
+              //       style: TextStyle(
+              //         color: Color(0xff19191B),
+              //         fontSize: 18,
+              //         fontWeight: FontWeight.w700,
+              //       ),
+              //     ),
+              //     SizedBox(height: 10),
+              //     Text(
+              //       "book.bookAuthorDesc",
+              //       style: TextStyle(
+              //         color: Color(0xff9D9D9D),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

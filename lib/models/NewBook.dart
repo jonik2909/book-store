@@ -1,6 +1,8 @@
 // Enum definitions
 import 'dart:ffi';
 
+import 'package:book_store/models/Member.dart';
+
 enum BookCategory {
   FANTASY,
   HISTORY,
@@ -23,6 +25,7 @@ class NewBook {
   final int bookLikes;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final Member authorData;
 
   NewBook({
     this.id,
@@ -37,6 +40,7 @@ class NewBook {
     this.bookLikes = 0,
     this.createdAt,
     this.updatedAt,
+    required this.authorData,
   });
 
   factory NewBook.fromJson(Map<String, dynamic> json) {
@@ -56,6 +60,7 @@ class NewBook {
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt:
           json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      authorData: Member.fromJson(json['authorData']),
     );
   }
 
@@ -98,6 +103,7 @@ class NewBook {
       'bookLikes': bookLikes,
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
+      'authorData': authorData?.toJson(),
     };
   }
 
@@ -129,6 +135,7 @@ class NewBook {
       bookLikes: bookLikes ?? this.bookLikes,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      authorData: authorData ?? this.authorData,
     );
   }
 }

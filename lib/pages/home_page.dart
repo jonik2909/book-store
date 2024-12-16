@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
       ),
       drawer: Drawer(),
       body: RefreshIndicator(
-        onRefresh: () => bookController.refreshAllData(),
+        onRefresh: () => bookController.refreshHomePageData(),
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Column(
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
                 height: 50,
-                color: Color(0xffF8F9FA),
+                color: Color.fromARGB(229, 248, 248, 248),
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

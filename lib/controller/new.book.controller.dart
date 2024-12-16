@@ -12,13 +12,11 @@ class NewBookController extends GetxController {
 
   @override
   void onInit() {
-    print("refetching..! ");
     super.onInit();
-    refreshAllData();
+    refreshHomePageData();
   }
 
-  Future<void> refreshAllData() async {
-    print("Refreshing all data...");
+  Future<void> refreshHomePageData() async {
     errorMessage.value = '';
 
     await Future.wait([
@@ -26,14 +24,8 @@ class NewBookController extends GetxController {
         targetList: topBooks,
         order: 'bookViews',
         page: 1,
-        limit: 4,
-      ),
-      getBooks(
-        targetList: trendBooks,
-        order: 'bookLikes',
-        page: 1,
-        limit: 4,
-      ),
+        limit: 6,
+      )
     ]);
   }
 
