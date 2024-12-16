@@ -1,10 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/components/BookCard.dart';
-import 'package:book_store/components/Category_card.dart';
-import 'package:book_store/controller/controller.dart';
-import 'package:book_store/controller/new.book.controller.dart';
 import 'package:book_store/pages/chosen_book_page.dart';
+import 'package:book_store/controller/new.book.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -27,175 +25,87 @@ class HomePage extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.search,
-                size: 30,
-              ),
-            ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search, size: 30),
+            padding: EdgeInsets.only(right: 10),
           )
         ],
       ),
       drawer: Drawer(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 30.0),
+      body: RefreshIndicator(
+        onRefresh: () => bookController.refreshAllData(),
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
-              SizedBox(height: 30),
-              SizedBox(height: 25),
               Container(
+                margin: EdgeInsets.symmetric(vertical: 20),
                 height: 50,
                 color: Color(0xffF8F9FA),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Top Books",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Top Books",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "See all",
-                            style: TextStyle(
-                              color: Color(0xffEB5757),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: 12,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "See all",
+                          style: TextStyle(
                             color: Color(0xffEB5757),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
                           ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: SizedBox(
-                  height: 310,
-                  child: Obx(() {
-                    if (bookController.isLoading.value) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-
-                    if (bookController.errorMessage.isNotEmpty) {
-                      return Center(
-                          child: Text(bookController.errorMessage.value));
-                    }
-
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: bookController.topBooks.length,
-                      itemBuilder: (context, index) {
-                        final book = bookController.topBooks[index];
-                        return BookCard(
-                          onTap: () => Get.to(ChosenBookPage()),
-
-                          bookName: book.bookName,
-                          bookAuthor:
-                              'Author Name', // Add author field to your model if needed
-                          bookPrice: book.bookPrice,
-                          width: 130,
-                          height: 194,
-                          imageNetwork:
-                              '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}', // true if using network image
-                        );
-                      },
-                    );
-                  }),
-                ),
-              ),
-              SizedBox(height: 25),
-              Container(
-                height: 50,
-                color: Color(0xffF8F9FA),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Trending Now",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "See all",
-                            style: TextStyle(
-                              color: Color(0xffEB5757),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: 12,
-                            color: Color(0xffEB5757),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
+                        SizedBox(width: 8),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 12,
+                          color: Color(0xffEB5757),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               ),
-              SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: SizedBox(
-                  height: 310,
-                  child: Obx(() {
-                    if (bookController.isLoading.value) {
-                      return Center(child: CircularProgressIndicator());
-                    }
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Obx(() {
+                  if (bookController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
 
-                    if (bookController.errorMessage.isNotEmpty) {
-                      return Center(
-                          child: Text(bookController.errorMessage.value));
-                    }
+                  if (bookController.errorMessage.isNotEmpty) {
+                    return Center(
+                        child: Text(bookController.errorMessage.value));
+                  }
 
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: bookController.trendBooks.length,
-                      itemBuilder: (context, index) {
-                        final book = bookController.trendBooks[index];
-                        return BookCard(
-                          onTap: () =>
-                              Get.to(ChosenBookPage(), arguments: book),
-
-                          bookName: book.bookName,
-                          bookAuthor:
-                              'Author Name', // Add author field to your model if needed
-                          bookPrice: book.bookPrice,
-                          width: 130,
-                          height: 194,
-                          imageNetwork:
-                              '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}', // true if using network image
-                        );
-                      },
-                    );
-                  }),
-                ),
+                  return Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 16,
+                    runSpacing: 16,
+                    children: bookController.topBooks.map((book) {
+                      return BookCard(
+                        onTap: () =>
+                            Get.to(() => ChosenBookPage(), arguments: book),
+                        bookName: book.bookName,
+                        bookAuthor: 'Author Name',
+                        bookPrice: book.bookPrice,
+                        width: (MediaQuery.of(context).size.width - 100) / 2,
+                        height: 240,
+                        imageNetwork:
+                            '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
+                      );
+                    }).toList(),
+                  );
+                }),
               ),
             ],
           ),
