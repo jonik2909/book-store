@@ -15,12 +15,13 @@ class NewBookController extends GetxController {
   final Rx<NewBook?> chosenBook = Rx<NewBook?>(null);
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     refreshHomePageData();
   }
 
   Future<void> refreshHomePageData() async {
+    print("refresh home page");
     errorMessage.value = '';
 
     await Future.wait([

@@ -20,6 +20,10 @@ class ChosenBookPage extends GetView<NewBookController> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios),
+        //   onPressed: () async {},
+        // ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),

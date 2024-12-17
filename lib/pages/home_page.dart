@@ -97,12 +97,10 @@ class HomePage extends StatelessWidget {
                       runSpacing: 16,
                       children: bookController.topBooks.map((book) {
                         return BookCard(
-                          onTap: () => Get.to(
-                            () => ChosenBookPage(),
-                            arguments: {
-                              'bookId': book.id,
-                            },
-                          ),
+                          onTap: () => Get.to(() => ChosenBookPage(),
+                                  arguments: {'bookId': book.id})!
+                              .then(
+                                  (_) => bookController.refreshHomePageData()),
                           bookName: book.bookName,
                           bookAuthor: book.authorData.memberNick,
                           bookPrice: book.bookPrice,
