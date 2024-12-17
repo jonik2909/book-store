@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:book_store/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -15,45 +16,19 @@ class MemberService {
     _client.close();
   }
 
-  // Common headers
-  Map<String, String> _getHeaders([String? token]) {
-    print("token $token");
-    final headers = {
-      'Content-Type': 'application/json; charset=UTF-8',
-    };
-
-    if (token != null) {
-      headers['Authorization'] = 'Bearer $token';
-    }
-
-    return headers;
-  }
-
-  // Handle API response
-  Future<Map<String, dynamic>> _handleResponse(http.Response response) async {
-    final body = jsonDecode(response.body);
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return body;
-    } else {
-      final errorMessage = body['message'] ?? 'An error occurred';
-      throw errorMessage;
-    }
-  }
-
   // Login
   Future<Map<String, dynamic>> login(String username, String password) async {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/member/login'),
-        headers: _getHeaders(),
+        headers: getHeaders(),
         body: jsonEncode({
           'memberNick': username,
           'memberPassword': password,
         }),
       );
 
-      return _handleResponse(response);
+      return handleResponse(response);
     } catch (e) {
       throw Exception('Login failed: ${e.toString()}');
     }
@@ -68,7 +43,7 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/member/signup'),
-        headers: _getHeaders(),
+        headers: getHeaders(),
         body: jsonEncode({
           'memberNick': username,
           'memberEmail': email,
@@ -76,7 +51,7 @@ class MemberService {
         }),
       );
 
-      return _handleResponse(response);
+      return handleResponse(response);
     } catch (e) {
       throw Exception('Signup failed: ${e.toString()}');
     }
@@ -87,10 +62,10 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/member/logout'),
-        headers: _getHeaders(token),
+        headers: getHeaders(token),
       );
 
-      return _handleResponse(response);
+      return handleResponse(response);
     } catch (e) {
       throw Exception('Login failed: ${e.toString()}');
     }
@@ -101,10 +76,10 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/auth/me'),
-        headers: _getHeaders(token),
+        headers: getHeaders(token),
       );
 
-      return _handleResponse(response);
+      return handleResponse(response);
     } catch (e) {
       throw Exception('Failed to get user details: ${e.toString()}');
     }
@@ -120,7 +95,7 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/members/$id'),
-        headers: _getHeaders(token),
+        headers: getHeaders(token),
         body: jsonEncode({
           'id': id,
           'nick': nick,
@@ -128,7 +103,7 @@ class MemberService {
         }),
       );
 
-      return _handleResponse(response);
+      return handleResponse(response);
     } catch (e) {
       throw Exception('Failed to update user data: ${e.toString()}');
     }

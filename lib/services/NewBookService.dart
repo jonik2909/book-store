@@ -25,20 +25,18 @@ class NewBookService {
         if (order != null) 'order': order,
         if (page != null) 'page': page.toString(),
         if (limit != null) 'limit': limit.toString(),
-        if (bookCategory != null)
-          'collection': bookCategory.toString().split('.').last,
+        if (bookCategory != null) 'collection': bookCategory,
         if (search != null) 'search': search,
       };
 
-      final uri = Uri.parse('${_baseUrl}/book/all')
-          .replace(queryParameters: queryParams);
+      final uri =
+          Uri.parse('$_baseUrl/book/all').replace(queryParameters: queryParams);
 
       final response = await _client.get(uri);
-      final List<dynamic> jsonData = jsonDecode(response.body);
+      final List<dynamic> jsonData = await handleListResponse(response);
 
       return jsonData.map((book) => NewBook.fromJson(book)).toList();
     } catch (e) {
-      print('Service error: $e');
       throw Exception('Failed to fetch books: ${e.toString()}');
     }
   } // updateBook
