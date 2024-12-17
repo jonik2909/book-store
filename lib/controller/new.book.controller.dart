@@ -63,14 +63,16 @@ class NewBookController extends GetxController {
   }
 
   Future<void> getBook(String bookId) async {
+    isLoading.value = true;
+    errorMessage.value = '';
+
     try {
-      errorMessage.value = '';
       final response = await bookService.getBook(bookId);
-      print(response);
       chosenBook.value = response;
     } catch (e) {
       errorMessage.value = e.toString();
-      print('Controller error: $e');
+    } finally {
+      isLoading.value = false;
     }
   }
 }

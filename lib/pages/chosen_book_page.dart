@@ -10,8 +10,10 @@ class ChosenBookPage extends GetView<NewBookController> {
 
   @override
   Widget build(BuildContext context) {
-    final String bookId = Get.arguments['bookId'] as String;
-    controller.getBook(bookId);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final String bookId = Get.arguments['bookId'] as String;
+      controller.getBook(bookId);
+    });
 
     return Scaffold(
       backgroundColor: Colors.white,

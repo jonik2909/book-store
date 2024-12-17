@@ -32,7 +32,10 @@ class NewBookService {
       final uri =
           Uri.parse('$_baseUrl/book/all').replace(queryParameters: queryParams);
 
-      final response = await _client.get(uri);
+      final response = await _client.get(
+        uri,
+        headers: getHeaders(),
+      );
       final List<dynamic> jsonData = await handleListResponse(response);
 
       return jsonData.map((book) => NewBook.fromJson(book)).toList();
@@ -43,7 +46,10 @@ class NewBookService {
 
   Future<NewBook> getBook(String bookId) async {
     try {
-      final response = await _client.get(Uri.parse('$_baseUrl/book/$bookId'));
+      final response = await _client.get(
+        Uri.parse('$_baseUrl/book/$bookId'),
+        headers: getHeaders(),
+      );
 
       final body = jsonDecode(response.body);
 
@@ -55,7 +61,7 @@ class NewBookService {
         throw errorMessage;
       }
     } catch (e) {
-      throw Exception(e.toString());
+      throw e.toString();
     }
   }
   // getBook
