@@ -39,7 +39,27 @@ class NewBookService {
     } catch (e) {
       throw Exception('Failed to fetch books: ${e.toString()}');
     }
-  } // updateBook
+  }
+
+  Future<NewBook> getBook(String bookId) async {
+    try {
+      final response = await _client.get(Uri.parse('$_baseUrl/book/$bookId'));
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("response success");
+        return NewBook.fromJson(body);
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+  // getBook
+  // updateBook
   // deleteBook
   // likeTargetBook
 }

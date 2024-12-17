@@ -103,7 +103,7 @@ class NewBook {
       'bookLikes': bookLikes,
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
-      'authorData': authorData?.toJson(),
+      'authorData': authorData.toJson(),
     };
   }
 
@@ -135,7 +135,7 @@ class NewBook {
       bookLikes: bookLikes ?? this.bookLikes,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      authorData: authorData ?? this.authorData,
+      authorData: authorData,
     );
   }
 }

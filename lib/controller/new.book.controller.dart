@@ -5,10 +5,14 @@ import 'package:get/get.dart';
 class NewBookController extends GetxController {
   final bookService = NewBookService();
 
-  final RxList<NewBook> topBooks = <NewBook>[].obs;
-  final RxList<NewBook> trendBooks = <NewBook>[].obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
+
+  // home page
+  final RxList<NewBook> topBooks = <NewBook>[].obs;
+
+  // chosenBook page
+  final Rx<NewBook?> chosenBook = Rx<NewBook?>(null);
 
   @override
   void onInit() {
@@ -55,6 +59,18 @@ class NewBookController extends GetxController {
       print('Controller error: $e');
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> getBook(String bookId) async {
+    try {
+      errorMessage.value = '';
+      final response = await bookService.getBook(bookId);
+      print(response);
+      chosenBook.value = response;
+    } catch (e) {
+      errorMessage.value = e.toString();
+      print('Controller error: $e');
     }
   }
 }
