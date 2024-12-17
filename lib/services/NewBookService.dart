@@ -34,7 +34,7 @@ class NewBookService {
 
       final response = await _client.get(
         uri,
-        headers: getHeaders(),
+        headers: await getHeaders(),
       );
       final List<dynamic> jsonData = await handleListResponse(response);
 
@@ -48,7 +48,7 @@ class NewBookService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/book/$bookId'),
-        headers: getHeaders(),
+        headers: await getHeaders(),
       );
 
       final body = jsonDecode(response.body);

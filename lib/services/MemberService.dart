@@ -11,7 +11,6 @@ class MemberService {
       : _baseUrl = dotenv.env['API_URL'] ?? 'http://localhost:3003/book',
         _client = client ?? http.Client();
 
-  // Cleanup resources
   void dispose() {
     _client.close();
   }
@@ -21,7 +20,7 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/member/login'),
-        headers: getHeaders(),
+        headers: await getHeaders(),
         body: jsonEncode({
           'memberNick': username,
           'memberPassword': password,
@@ -43,7 +42,7 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/member/signup'),
-        headers: getHeaders(),
+        headers: await getHeaders(),
         body: jsonEncode({
           'memberNick': username,
           'memberEmail': email,
@@ -62,7 +61,7 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/member/logout'),
-        headers: getHeaders(token),
+        headers: await getHeaders(),
       );
 
       return handleResponse(response);
@@ -76,7 +75,7 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/auth/me'),
-        headers: getHeaders(token),
+        headers: await getHeaders(),
       );
 
       return handleResponse(response);
@@ -95,7 +94,7 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/members/$id'),
-        headers: getHeaders(token),
+        headers: await getHeaders(),
         body: jsonEncode({
           'id': id,
           'nick': nick,
