@@ -62,36 +62,36 @@ class BookCard extends StatelessWidget {
                       ),
               ),
             ),
-            SizedBox(height: 15),
-            Row(
-              children: [
-                Icon(
-                  Icons.star,
-                  size: 15,
-                  color: Color(0xffFF9E00),
-                ),
-                Icon(
-                  Icons.star,
-                  size: 15,
-                  color: Color(0xffFF9E00),
-                ),
-                Icon(
-                  Icons.star,
-                  size: 15,
-                  color: Color(0xffFF9E00),
-                ),
-                Icon(
-                  Icons.star,
-                  size: 15,
-                  color: Color(0xffFF9E00),
-                ),
-                Icon(
-                  Icons.star,
-                  size: 15,
-                  color: Color(0xffCED4DA),
-                ),
-              ],
-            ),
+            // SizedBox(height: 15),
+            // Row(
+            //   children: [
+            //     Icon(
+            //       Icons.star,
+            //       size: 15,
+            //       color: Color(0xffFF9E00),
+            //     ),
+            //     Icon(
+            //       Icons.star,
+            //       size: 15,
+            //       color: Color(0xffFF9E00),
+            //     ),
+            //     Icon(
+            //       Icons.star,
+            //       size: 15,
+            //       color: Color(0xffFF9E00),
+            //     ),
+            //     Icon(
+            //       Icons.star,
+            //       size: 15,
+            //       color: Color(0xffFF9E00),
+            //     ),
+            //     Icon(
+            //       Icons.star,
+            //       size: 15,
+            //       color: Color(0xffCED4DA),
+            //     ),
+            //   ],
+            // ),
             SizedBox(height: 8),
             Text(
               bookName,

@@ -75,37 +75,38 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Obx(() {
-                  if (bookController.isLoading.value) {
-                    return Center(child: CircularProgressIndicator());
-                  }
+              Container(
+                child: Center(
+                  child: Obx(() {
+                    if (bookController.isLoading.value) {
+                      return Center(child: CircularProgressIndicator());
+                    }
 
-                  if (bookController.errorMessage.isNotEmpty) {
-                    return Center(
-                        child: Text(bookController.errorMessage.value));
-                  }
+                    if (bookController.errorMessage.isNotEmpty) {
+                      return Center(
+                          child: Text(bookController.errorMessage.value));
+                    }
 
-                  return Wrap(
-                    direction: Axis.horizontal,
-                    spacing: 16,
-                    runSpacing: 16,
-                    children: bookController.topBooks.map((book) {
-                      return BookCard(
-                        onTap: () =>
-                            Get.to(() => ChosenBookPage(), arguments: book),
-                        bookName: book.bookName,
-                        bookAuthor: 'Author Name',
-                        bookPrice: book.bookPrice,
-                        width: (MediaQuery.of(context).size.width - 100) / 2,
-                        height: 240,
-                        imageNetwork:
-                            '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
-                      );
-                    }).toList(),
-                  );
-                }),
+                    return Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 16,
+                      runSpacing: 16,
+                      children: bookController.topBooks.map((book) {
+                        return BookCard(
+                          onTap: () =>
+                              Get.to(() => ChosenBookPage(), arguments: book),
+                          bookName: book.bookName,
+                          bookAuthor: 'Author Name',
+                          bookPrice: book.bookPrice,
+                          width: (MediaQuery.of(context).size.width - 60) / 2,
+                          height: 200,
+                          imageNetwork:
+                              '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
+                        );
+                      }).toList(),
+                    );
+                  }),
+                ),
               ),
             ],
           ),
