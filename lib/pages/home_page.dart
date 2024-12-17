@@ -104,8 +104,9 @@ class HomePage extends StatelessWidget {
                             },
                           ),
                           bookName: book.bookName,
-                          bookAuthor: 'Author Name',
+                          bookAuthor: book.authorData.memberNick,
                           bookPrice: book.bookPrice,
+                          bookViews: book.bookViews,
                           width: (MediaQuery.of(context).size.width - 60) / 2,
                           height: 200,
                           imageNetwork:
