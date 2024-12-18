@@ -72,6 +72,7 @@ class ChosenBookPage extends GetView<NewBookController> {
                   ),
                   child: CarouselSlider(
                     options: CarouselOptions(
+                      enableInfiniteScroll: false,
                       height: 350.0,
                       enlargeCenterPage: true,
                     ),
@@ -81,22 +82,66 @@ class ChosenBookPage extends GetView<NewBookController> {
                           return Container(
                             width: MediaQuery.of(context).size.width,
                             margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: Image.network(
-                                '${dotenv.env['UPLOAD_URL']}/$img',
-                                fit: BoxFit.fill,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Center(child: Icon(Icons.error));
-                                },
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                },
+                            child: Stack(fit: StackFit.expand, children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.network(
+                                  '${dotenv.env['UPLOAD_URL']}/$img',
+                                  fit: BoxFit.fill,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Center(
+                                        child: Icon(Icons.error));
+                                  },
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  },
+                                ),
                               ),
-                            ),
+                              Positioned(
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 12),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(8.0),
+                                      bottomRight: Radius.circular(8.0),
+                                    ),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                      colors: [
+                                        Colors.black.withOpacity(0.7),
+                                        Colors.transparent,
+                                      ],
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.remove_red_eye,
+                                        size: 20,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        '${5.toString()} views',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ]),
                           );
                         },
                       );
