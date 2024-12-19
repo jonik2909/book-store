@@ -25,7 +25,8 @@ class NewBookService {
         if (order != null) 'order': order,
         if (page != null) 'page': page.toString(),
         if (limit != null) 'limit': limit.toString(),
-        if (bookCategory != null) 'collection': bookCategory,
+        if (bookCategory != null)
+          'bookCategory': bookCategory.toString().split('.').last,
         if (search != null) 'search': search,
       };
 

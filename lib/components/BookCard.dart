@@ -11,7 +11,6 @@ class BookCard extends StatelessWidget {
   final double width;
   final double height;
   final String imageNetwork;
-  // final int viewCount; // Added view count parameter
 
   const BookCard({
     super.key,
@@ -23,7 +22,6 @@ class BookCard extends StatelessWidget {
     required this.width,
     required this.height,
     required this.imageNetwork,
-    // required this.viewCount, // Required parameter for view count
   });
 
   @override

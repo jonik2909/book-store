@@ -1,5 +1,4 @@
 import 'package:book_store/controller/new.book.controller.dart';
-import 'package:book_store/models/NewBook.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -20,18 +19,13 @@ class ChosenBookPage extends GetView<NewBookController> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios),
-        //   onPressed: () async {},
-        // ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
               onPressed: () {},
               icon: const Icon(
-                Icons.favorite,
-                color: Colors.red,
+                Icons.share,
               ),
             ),
           )
@@ -130,7 +124,7 @@ class ChosenBookPage extends GetView<NewBookController> {
                                       ),
                                       SizedBox(width: 4),
                                       Text(
-                                        '${5.toString()} views',
+                                        '${book.bookViews.toString()} views',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,

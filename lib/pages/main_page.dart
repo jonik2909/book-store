@@ -3,7 +3,7 @@
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/pages/admin/admin_page.dart';
-import 'package:book_store/pages/explore_page.dart';
+import 'package:book_store/pages/books_page.dart';
 import 'package:book_store/pages/favorite_page.dart';
 import 'package:book_store/pages/home_page.dart';
 import 'package:book_store/pages/profile_page.dart';
@@ -15,7 +15,7 @@ class MainPage extends StatelessWidget {
 
   final List<Widget> _screens = [
     HomePage(),
-    ExplorePage(),
+    BooksPage(),
     FavoritePage(),
     ProfilePage(),
     AdminPage(),
@@ -41,12 +41,12 @@ class MainPage extends StatelessWidget {
                 label: 'HOME',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.category),
-                label: 'EXPLORE',
+                icon: Icon(Icons.library_books),
+                label: 'BOOKS',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
-                label: 'FAVORITE',
+                icon: Icon(Icons.people_alt),
+                label: 'AUTHORS',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
