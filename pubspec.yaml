@@ -42,6 +42,8 @@ dependencies:
   flutter_dotenv: ^5.1.0
   shared_preferences: ^2.2.0
   carousel_slider: ^4.2.1
+  epub_view: ^3.2.0
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/assets/
+    - lib/assets/books/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see

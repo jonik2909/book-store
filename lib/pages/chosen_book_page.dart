@@ -1,8 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:book_store/controller/new.book.controller.dart';
+import 'package:book_store/pages/file_reader.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 class ChosenBookPage extends GetView<NewBookController> {
   const ChosenBookPage({super.key});
@@ -198,7 +204,32 @@ class ChosenBookPage extends GetView<NewBookController> {
                       height: 55,
                       margin: const EdgeInsets.only(top: 10, bottom: 50),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            // Load the EPUB file from assets
+                            final ByteData data = await rootBundle
+                                .load('lib/assets/books/book.epub');
+                            final bytes = data.buffer.asUint8List();
+
+                            // Get temporary directory to save the file
+                            final tempDir = await getTemporaryDirectory();
+                            final tempEpubPath =
+                                '${tempDir.path}/temp_book.epub';
+
+                            // Write the file
+                            File(tempEpubPath).writeAsBytesSync(bytes);
+
+                            // Navigate to the EPUB reader
+                            Get.to(
+                                () => EpubReaderPage(epubPath: tempEpubPath));
+                          } catch (e) {
+                            Get.snackbar(
+                              'Error',
+                              'Failed to load the book: ${e.toString()}',
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xffEB5757),
                           shape: RoundedRectangleBorder(
@@ -210,7 +241,7 @@ class ChosenBookPage extends GetView<NewBookController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Download',
+                                'Read Book',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -218,7 +249,7 @@ class ChosenBookPage extends GetView<NewBookController> {
                               ),
                               SizedBox(width: 10),
                               Icon(
-                                Icons.download,
+                                Icons.menu_book,
                                 color: Colors.white,
                               )
                             ],
