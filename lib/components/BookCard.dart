@@ -11,6 +11,7 @@ class BookCard extends StatelessWidget {
   final double width;
   final double height;
   final String imageNetwork;
+  final String bookCategory; // Added category parameter
 
   const BookCard({
     super.key,
@@ -22,6 +23,7 @@ class BookCard extends StatelessWidget {
     required this.width,
     required this.height,
     required this.imageNetwork,
+    required this.bookCategory, // Added to constructor
   });
 
   @override
@@ -66,6 +68,26 @@ class BookCard extends StatelessWidget {
                             height: 194,
                             fit: BoxFit.fill,
                           ),
+                  ),
+                ),
+                // Category badge overlay
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      bookCategory,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
                 // View count overlay

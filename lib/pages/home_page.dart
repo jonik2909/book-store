@@ -105,6 +105,8 @@ class HomePage extends StatelessWidget {
                           bookAuthor: book.authorData.memberNick,
                           bookPrice: book.bookPrice,
                           bookViews: book.bookViews,
+                          bookCategory:
+                              book.bookCategory.toString().split('.').last,
                           width: (MediaQuery.of(context).size.width - 60) / 2,
                           height: 200,
                           imageNetwork:
