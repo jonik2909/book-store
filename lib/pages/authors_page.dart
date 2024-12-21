@@ -1,13 +1,14 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/components/AuthorCard.dart';
 import 'package:book_store/components/BookCard.dart';
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/pages/chosen_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FavoritePage extends StatelessWidget {
-  const FavoritePage({super.key});
+class AuthorsPage extends StatelessWidget {
+  const AuthorsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class FavoritePage extends StatelessWidget {
         backgroundColor: Colors.white,
         centerTitle: false,
         title: Text(
-          'Favorite',
+          'Authors',
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
         actions: [
@@ -52,16 +53,20 @@ class FavoritePage extends StatelessWidget {
                       spacing: 10,
                       runSpacing: 20,
                       children: [
-                        // BookCard(
-                        //   onTap: () => Get.to(ChosenBookPage()),
-                        //   imagePath: "lib/assets/book.jpg",
-                        //   bookName: 'Displacement',
-                        //   bookAuthor: 'Kiku Hughes',
-                        //   bookPrice: 16,
-                        //   width: 160,
-                        //   height: 194,
-                        //   imageNetwork: false,
-                        // ),
+                        AuthorCard(
+                          authorName: "authorName",
+                          email: "email",
+                          views: 2,
+                          likes: 2,
+                          onTap: () {},
+                        ),
+                        AuthorCard(
+                          authorName: "authorName",
+                          email: "email",
+                          views: 2,
+                          likes: 2,
+                          onTap: () {},
+                        ),
                       ],
                     ),
                   ],

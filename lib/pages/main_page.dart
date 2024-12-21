@@ -4,7 +4,7 @@ import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/pages/admin/admin_page.dart';
 import 'package:book_store/pages/books_page.dart';
-import 'package:book_store/pages/favorite_page.dart';
+import 'package:book_store/pages/authors_page.dart';
 import 'package:book_store/pages/home_page.dart';
 import 'package:book_store/pages/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class MainPage extends StatelessWidget {
   final List<Widget> _screens = [
     HomePage(),
     BooksPage(),
-    FavoritePage(),
+    AuthorsPage(),
     ProfilePage(),
     AdminPage(),
   ];
