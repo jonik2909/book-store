@@ -109,7 +109,7 @@ class BooksPage extends StatelessWidget {
                             .then((_) => bookController.getBookPagedata(
                                 bookController.selectedCategory.value)),
                         bookName: book.bookName,
-                        bookAuthor: book.authorData.memberNick,
+                        bookAuthor: '${book.authorData?.memberNick}',
                         bookPrice: book.bookPrice,
                         bookViews: book.bookViews,
                         bookCategory:

@@ -25,7 +25,7 @@ class NewBook {
   final int bookLikes;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final Member authorData;
+  final Member? authorData;
 
   NewBook({
     this.id,
@@ -60,7 +60,9 @@ class NewBook {
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt:
           json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
-      authorData: Member.fromJson(json['authorData']),
+      authorData: json['authorData'] != null
+          ? Member.fromJson(json['authorData'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -103,7 +105,7 @@ class NewBook {
       'bookLikes': bookLikes,
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
-      'authorData': authorData.toJson(),
+      'authorData': authorData?.toJson(),
     };
   }
 }

@@ -165,7 +165,7 @@ class ChosenBookPage extends GetView<NewBookController> {
                       ),
                     ),
                     Text(
-                      book.authorData.memberNick,
+                      '${book.authorData?.memberNick}',
                       style: const TextStyle(
                         color: Color(0xff9D9D9D),
                         fontSize: 16,

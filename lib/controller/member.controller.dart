@@ -23,6 +23,9 @@ class MemberController extends GetxController {
   // Home Page
   final RxList<Member> authorList = <Member>[].obs;
 
+  // Chosen Author Page
+  final Rx<Member?> chosenAuthor = Rx<Member?>(null);
+
   @override
   void onReady() {
     super.onReady();
@@ -137,6 +140,23 @@ class MemberController extends GetxController {
       authorList.assignAll(members);
     } catch (e) {
       print('Controller error: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> getBook(String memberId) async {
+    isLoading.value = true;
+
+    print("responsing $memberId");
+
+    try {
+      final response = await memberService.getMember(memberId);
+
+      chosenAuthor.value = response;
+    } catch (e) {
+      print(e);
+      // errorMessage.value = e.toString();
     } finally {
       isLoading.value = false;
     }

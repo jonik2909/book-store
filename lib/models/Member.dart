@@ -12,12 +12,13 @@ class Member {
   final MemberType memberType;
   final MemberStatus memberStatus;
   final String memberEmail;
-  final String memberDesc;
+  final String? memberDesc;
+  final String? memberImage;
   final int memberViews;
   final int memberLikes;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final NewBook? bookData;
+  final List<NewBook>? bookData;
 
   Member({
     required this.id,
@@ -26,6 +27,7 @@ class Member {
     required this.memberStatus,
     required this.memberEmail,
     required this.memberDesc,
+    required this.memberImage,
     required this.memberViews,
     required this.memberLikes,
     required this.createdAt,
@@ -41,12 +43,14 @@ class Member {
       memberStatus: parseMemberStatus(json['memberStatus']),
       memberEmail: json['memberEmail'],
       memberDesc: json['memberDesc'] ?? '',
+      memberImage: json['memberImage'] ?? '',
       memberViews: json['memberViews'],
       memberLikes: json['memberLikes'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
-      bookData:
-          json['bookData'] != null ? NewBook.fromJson(json['bookData']) : null,
+      bookData: json['bookData'] != null
+          ? List<NewBook>.from(json['bookData'].map((x) => NewBook.fromJson(x)))
+          : null,
     );
   }
 
@@ -58,11 +62,12 @@ class Member {
       'memberStatus': memberStatus.toString().split('.').last,
       'memberEmail': memberEmail,
       'memberDesc': memberDesc,
+      'memberImage': memberImage,
       'memberViews': memberViews,
       'memberLikes': memberLikes,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
-      'bookData': bookData
+      'bookData': bookData?.map((book) => book.toJson()).toList()
     };
   }
 

@@ -140,4 +140,27 @@ class MemberService {
       throw Exception('Failed to fetch books: ${e.toString()}');
     }
   }
+
+  Future<Member> getMember(String memberId) async {
+    try {
+      print('getMember ${memberId}');
+      final response = await _client.get(
+        Uri.parse('$_baseUrl/member/$memberId'),
+        headers: await getHeaders(),
+      );
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("response success $body");
+        return Member.fromJson(body);
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      print("error $e");
+      throw e.toString();
+    }
+  }
 }

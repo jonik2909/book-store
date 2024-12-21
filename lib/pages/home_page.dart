@@ -102,7 +102,7 @@ class HomePage extends StatelessWidget {
                               .then(
                                   (_) => bookController.refreshHomePageData()),
                           bookName: book.bookName,
-                          bookAuthor: book.authorData.memberNick,
+                          bookAuthor: '${book.authorData?.memberNick}',
                           bookPrice: book.bookPrice,
                           bookViews: book.bookViews,
                           bookCategory:
