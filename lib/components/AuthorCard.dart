@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthorCard extends StatelessWidget {
-  final String authorName;
-  final String email;
-  final int views;
+  final String memberNick;
+  final String memberEmail;
+  final String? memberImage;
+  final int memberViews;
   final Function() onTap;
 
   const AuthorCard({
     super.key,
-    required this.authorName,
-    required this.email,
-    required this.views,
+    required this.memberNick,
+    required this.memberEmail,
+    this.memberImage,
+    required this.memberViews,
     required this.onTap,
   });
 
@@ -39,27 +42,51 @@ class AuthorCard extends StatelessWidget {
           child: Row(
             children: [
               // Author Avatar with border
+              // Author Avatar with border
               Container(
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: const Color(0xffEB5757).withOpacity(0.1),
+                  color: memberImage == null
+                      ? const Color(0xffEB5757).withOpacity(0.1)
+                      : null,
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: const Color(0xffEB5757).withOpacity(0.2),
                     width: 2,
                   ),
                 ),
-                child: Center(
-                  child: Text(
-                    authorName[0].toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xffEB5757),
-                    ),
-                  ),
-                ),
+                child: memberImage != null && memberImage!.isNotEmpty
+                    ? ClipOval(
+                        child: Image.network(
+                          '${dotenv.env['UPLOAD_URL']}/$memberImage',
+                          fit: BoxFit.cover,
+                          width: 60,
+                          height: 60,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                              child: Text(
+                                memberNick[0].toUpperCase(),
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xffEB5757),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Text(
+                          memberNick[0].toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffEB5757),
+                          ),
+                        ),
+                      ),
               ),
               const SizedBox(width: 16),
               // Author Info
@@ -68,7 +95,7 @@ class AuthorCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      authorName,
+                      memberNick,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -77,7 +104,7 @@ class AuthorCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      email,
+                      memberEmail,
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
@@ -108,7 +135,7 @@ class AuthorCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                '$views views',
+                                '$memberViews views',
                                 style: const TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey,

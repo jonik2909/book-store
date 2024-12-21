@@ -48,24 +48,31 @@ class AuthorDetailPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Author Profile Section
                 Center(
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        radius: 60,
-                        backgroundColor: Colors.grey[200],
-                        child: Text(
-                          author.memberNick.isNotEmpty
-                              ? author.memberNick[0].toUpperCase()
-                              : 'A',
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[800],
+                      if (author.memberImage != null &&
+                          author.memberImage!.isNotEmpty)
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundImage: NetworkImage(
+                            '${dotenv.env['UPLOAD_URL']}/${author.memberImage}',
+                          ),
+                          backgroundColor: Colors.grey[200],
+                        )
+                      else
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundColor: Colors.grey[200],
+                          child: Text(
+                            author.memberNick[0].toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[800],
+                            ),
                           ),
                         ),
-                      ),
                       SizedBox(height: 16),
                       Text(
                         author.memberNick,

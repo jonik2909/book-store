@@ -76,9 +76,10 @@ class AuthorsPage extends StatelessWidget {
                         runSpacing: 20,
                         children: memberController.authorList.map((author) {
                           return AuthorCard(
-                              authorName: author.memberNick,
-                              email: author.memberEmail,
-                              views: author.memberViews,
+                              memberNick: author.memberNick,
+                              memberEmail: author.memberEmail,
+                              memberImage: author.memberImage,
+                              memberViews: author.memberViews,
                               onTap: () => Get.to(() => AuthorDetailPage(),
                                       arguments: {'memberId': author.id})
                                   ?.then((_) => memberController.getAuthorList(
