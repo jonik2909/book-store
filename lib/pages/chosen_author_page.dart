@@ -150,7 +150,7 @@ class AuthorDetailPage extends StatelessWidget {
                           );
                         },
                         bookName: book.bookName,
-                        bookAuthor: '${book.authorData?.memberNick}',
+                        bookAuthor: '${author.memberNick}',
                         bookPrice: book.bookPrice,
                         bookViews: book.bookViews,
                         bookCategory:
