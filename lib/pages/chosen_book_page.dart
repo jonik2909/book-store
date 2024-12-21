@@ -9,9 +9,26 @@ import 'package:get/get.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ChosenBookPage extends GetView<NewBookController> {
   const ChosenBookPage({super.key});
+
+  void _shareBookDetails(String bookName, String authorName, String category,
+      String price, String description) {
+    final String shareText = '''
+Check out this book on Book Store!
+
+📚 ${bookName}
+✍️ By: ${authorName}
+📑 Category: ${category}
+💰 Price: \$${price}
+
+📖 Description:
+${description}
+''';
+    Share.share(shareText);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +46,18 @@ class ChosenBookPage extends GetView<NewBookController> {
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                final book = controller.chosenBook.value;
+                if (book != null) {
+                  _shareBookDetails(
+                    book.bookName,
+                    book.authorData?.memberNick ?? 'Unknown Author',
+                    book.bookCategory.toString().split('.').last,
+                    book.bookPrice.toString(),
+                    book.bookDesc,
+                  );
+                }
+              },
               icon: const Icon(
                 Icons.share,
               ),

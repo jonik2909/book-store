@@ -8,12 +8,26 @@ import 'package:get/get.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AuthorDetailPage extends StatelessWidget {
   AuthorDetailPage({super.key});
 
   final MemberController memberController = Get.put(MemberController());
-  final BookController bookController = Get.put(BookController()); // Add this
+  final BookController bookController = Get.put(BookController());
+
+  void _shareAuthorProfile(
+      String authorName, String email, int books, int views) {
+    final String shareText = '''
+Check out this author on Book Store!
+
+👤 Author: $authorName
+✉️ Email: $email
+📚 Published Books: $books
+👀 Total Views: $views
+''';
+    Share.share(shareText);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +45,17 @@ class AuthorDetailPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                final author = memberController.chosenAuthor.value;
+                if (author != null) {
+                  _shareAuthorProfile(
+                    author.memberNick,
+                    author.memberEmail,
+                    author.bookData?.length ?? 0,
+                    author.memberViews,
+                  );
+                }
+              },
               icon: const Icon(
                 Icons.share,
               ),
