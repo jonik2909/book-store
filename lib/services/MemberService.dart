@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:book_store/models/Member.dart';
 import 'package:book_store/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -105,6 +106,38 @@ class MemberService {
       return handleResponse(response);
     } catch (e) {
       throw Exception('Failed to update user data: ${e.toString()}');
+    }
+  }
+
+  Future<List<Member>> getMembers({
+    String? order,
+    int? page,
+    int? limit,
+    MemberType? memberType,
+    String? search,
+  }) async {
+    try {
+      final queryParams = {
+        if (order != null) 'order': order,
+        if (page != null) 'page': page.toString(),
+        if (limit != null) 'limit': limit.toString(),
+        if (memberType != null)
+          'memberType': memberType.toString().split('.').last,
+        if (search != null) 'search': search,
+      };
+
+      final uri = Uri.parse('$_baseUrl/member/all')
+          .replace(queryParameters: queryParams);
+
+      final response = await _client.get(
+        uri,
+        headers: await getHeaders(),
+      );
+      final List<dynamic> jsonData = await handleListResponse(response);
+
+      return jsonData.map((book) => Member.fromJson(book)).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch books: ${e.toString()}');
     }
   }
 }

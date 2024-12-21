@@ -52,11 +52,11 @@ class MainPage extends StatelessWidget {
                 icon: Icon(Icons.person),
                 label: 'PROFILE',
               ),
-              if (memberController.member.value.type == 'ADMIN')
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.admin_panel_settings),
-                  label: 'ADMIN',
-                ),
+              // if (memberController.member.value.type == 'ADMIN')
+              //   BottomNavigationBarItem(
+              //     icon: Icon(Icons.admin_panel_settings),
+              //     label: 'ADMIN',
+              //   ),
             ],
             currentIndex: controller.currentScreen.value,
             selectedItemColor: Color(0xffEB5757),

@@ -4,7 +4,6 @@ class AuthorCard extends StatelessWidget {
   final String authorName;
   final String email;
   final int views;
-  final int likes;
   final Function() onTap;
 
   const AuthorCard({
@@ -12,7 +11,6 @@ class AuthorCard extends StatelessWidget {
     required this.authorName,
     required this.email,
     required this.views,
-    required this.likes,
     required this.onTap,
   });
 

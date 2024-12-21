@@ -3,12 +3,15 @@
 import 'package:book_store/components/AuthorCard.dart';
 import 'package:book_store/components/BookCard.dart';
 import 'package:book_store/controller/controller.dart';
+import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/pages/chosen_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthorsPage extends StatelessWidget {
-  const AuthorsPage({super.key});
+  AuthorsPage({super.key});
+
+  final MemberController memberController = Get.put(MemberController());
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +50,40 @@ class AuthorsPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    Wrap(
-                      direction: Axis.horizontal,
-                      alignment: WrapAlignment.start,
-                      spacing: 10,
-                      runSpacing: 20,
-                      children: [
-                        AuthorCard(
-                          authorName: "authorName",
-                          email: "email",
-                          views: 2,
-                          likes: 2,
-                          onTap: () {},
-                        ),
-                        AuthorCard(
-                          authorName: "authorName",
-                          email: "email",
-                          views: 2,
-                          likes: 2,
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
+                    Obx(() {
+                      if (memberController.isLoading.value) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      if (memberController.authorList.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'No data found!',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        );
+                      }
+                      return Wrap(
+                        direction: Axis.horizontal,
+                        alignment: WrapAlignment.start,
+                        spacing: 10,
+                        runSpacing: 20,
+                        children: memberController.authorList.map((author) {
+                          return AuthorCard(
+                            authorName: author.memberNick,
+                            email: author.memberEmail,
+                            views: author.memberViews,
+                            onTap: () {
+                              // Handle author card tap
+                            },
+                          );
+                        }).toList(),
+                      );
+                    })
                   ],
                 ),
               )

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:book_store/models/User.dart';
+import 'package:book_store/models/Member.dart';
 import 'package:book_store/pages/home_page.dart';
 import 'package:book_store/pages/login_page.dart';
 import 'package:book_store/pages/main_page.dart';
@@ -12,16 +12,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MemberController extends GetxController {
   final memberService = MemberService();
 
+  final RxBool isLoading = false.obs;
+
   var authToken = ''.obs;
-  var member = Member(id: 0, nick: '', email: '', type: '').obs;
+  // var member = Member(id: id, memberNick: memberNick, memberType: memberType, memberStatus: memberStatus, memberEmail: memberEmail, memberDesc: memberDesc, memberViews: memberViews, memberLikes: memberLikes, createdAt: createdAt, updatedAt: updatedAt, bookData: bookData).obs;
   var loginErrorMessage = ''.obs;
   var signupErrorMessage = ''.obs;
   var isAuthenticated = false.obs;
 
+  // Home Page
+  final RxList<Member> authorList = <Member>[].obs;
+
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     checkLoginStatus();
+
+    getAuthorList(
+        order: 'createdAt', page: 1, limit: 100, memberType: MemberType.AUTHOR);
   }
 
   Future<void> checkLoginStatus() async {
@@ -89,7 +97,7 @@ class MemberController extends GetxController {
       var response = await memberService.getUserDetails(token);
       print("member >> $response");
 
-      member.value = Member.fromJson(response);
+      // member.value = Member.fromJson(response);
     } catch (e) {
       print("error >> $e");
     }
@@ -103,6 +111,34 @@ class MemberController extends GetxController {
     } catch (e) {
       print("error >> $e");
       throw e;
+    }
+  }
+
+  Future<void> getAuthorList({
+    String? order,
+    int? page,
+    int? limit,
+    MemberType? memberType,
+    String? search,
+  }) async {
+    print("getAuthorsData");
+
+    try {
+      final members = await memberService.getMembers(
+        order: order,
+        page: page,
+        limit: limit,
+        memberType: memberType,
+        search: search,
+      );
+
+      print("members response success");
+
+      authorList.assignAll(members);
+    } catch (e) {
+      print('Controller error: $e');
+    } finally {
+      isLoading.value = false;
     }
   }
 
