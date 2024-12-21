@@ -1,12 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/components/AuthorCard.dart';
-import 'package:book_store/components/BookCard.dart';
-import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/models/Member.dart';
 import 'package:book_store/pages/chosen_author_page.dart';
-import 'package:book_store/pages/chosen_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,18 +24,6 @@ class AuthorsPage extends StatelessWidget {
           'Authors',
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.search,
-                size: 30,
-              ),
-            ),
-          )
-        ],
       ),
       drawer: Drawer(),
       body: SingleChildScrollView(

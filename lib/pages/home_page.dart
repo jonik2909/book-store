@@ -28,13 +28,6 @@ class HomePage extends StatelessWidget {
           'Book Store',
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.search, size: 30),
-            padding: EdgeInsets.only(right: 10),
-          )
-        ],
       ),
       drawer: Drawer(),
       body: RefreshIndicator(
@@ -58,24 +51,6 @@ class HomePage extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "See all",
-                          style: TextStyle(
-                            color: Color(0xffEB5757),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          size: 12,
-                          color: Color(0xffEB5757),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),
