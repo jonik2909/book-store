@@ -27,10 +27,17 @@ class AuthorDetailPage extends StatelessWidget {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
-        title: Text(
-          'Author Details',
-          style: TextStyle(fontWeight: FontWeight.w800),
-        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.share,
+              ),
+            ),
+          )
+        ],
       ),
       body: Obx(() {
         if (memberController.isLoading.value) {
