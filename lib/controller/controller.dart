@@ -9,8 +9,6 @@ class Controller extends GetxController {
   // current screen
   var currentScreen = 0.obs;
   void changeScreen(int index) {
-    print("index: $index");
-    print("currentScreen.value : ${currentScreen.value} ");
     currentScreen.value = index;
   }
 
@@ -28,7 +26,6 @@ class Controller extends GetxController {
       if (img == null) return;
 
       _thumnailImage.value = File(img.path);
-      print(_thumnailImage.value);
     } on PlatformException catch (e) {
       print('[ERROR] pickImage error : $e');
     }

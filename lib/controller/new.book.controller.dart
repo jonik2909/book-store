@@ -30,7 +30,6 @@ class NewBookController extends GetxController {
   }
 
   Future<void> refreshHomePageData() async {
-    print("refresh home page");
     errorMessage.value = '';
 
     getBooks(
@@ -42,7 +41,6 @@ class NewBookController extends GetxController {
   }
 
   Future<void> getBookPagedata(BookCategory category) async {
-    print("refresh getBookPagedata $category");
     errorMessage.value = '';
 
     getBooks(
@@ -65,8 +63,6 @@ class NewBookController extends GetxController {
     isLoading.value = true;
     errorMessage.value = '';
 
-    print("step-1 $bookCategory");
-
     try {
       final books = await bookService.getBooks(
         order: order,
@@ -75,8 +71,6 @@ class NewBookController extends GetxController {
         bookCategory: bookCategory,
         search: search,
       );
-
-      print("books response success");
 
       targetList.assignAll(books);
     } catch (e) {

@@ -143,7 +143,6 @@ class MemberService {
 
   Future<Member> getMember(String memberId) async {
     try {
-      print('getMember ${memberId}');
       final response = await _client.get(
         Uri.parse('$_baseUrl/member/$memberId'),
         headers: await getHeaders(),
@@ -152,7 +151,6 @@ class MemberService {
       final body = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("response success $body");
         return Member.fromJson(body);
       } else {
         final errorMessage = body['message'] ?? 'Something went wrong!';

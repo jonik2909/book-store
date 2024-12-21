@@ -4,6 +4,7 @@ import 'package:book_store/components/AuthorCard.dart';
 import 'package:book_store/components/BookCard.dart';
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
+import 'package:book_store/models/Member.dart';
 import 'package:book_store/pages/chosen_author_page.dart';
 import 'package:book_store/pages/chosen_book_page.dart';
 import 'package:flutter/material.dart';
@@ -75,12 +76,16 @@ class AuthorsPage extends StatelessWidget {
                         runSpacing: 20,
                         children: memberController.authorList.map((author) {
                           return AuthorCard(
-                            authorName: author.memberNick,
-                            email: author.memberEmail,
-                            views: author.memberViews,
-                            onTap: () => Get.to(() => AuthorDetailPage(),
-                                arguments: {'memberId': author.id}),
-                          );
+                              authorName: author.memberNick,
+                              email: author.memberEmail,
+                              views: author.memberViews,
+                              onTap: () => Get.to(() => AuthorDetailPage(),
+                                      arguments: {'memberId': author.id})
+                                  ?.then((_) => memberController.getAuthorList(
+                                      order: 'createdAt',
+                                      page: 1,
+                                      limit: 100,
+                                      memberType: MemberType.AUTHOR)));
                         }).toList(),
                       );
                     })

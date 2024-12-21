@@ -55,7 +55,6 @@ class NewBookService {
       final body = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print("response success");
         return NewBook.fromJson(body);
       } else {
         final errorMessage = body['message'] ?? 'Something went wrong!';

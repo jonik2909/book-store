@@ -27,10 +27,6 @@ class AuthorDetailPage extends StatelessWidget {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Get.back(),
-        ),
         title: Text(
           'Author Details',
           style: TextStyle(fontWeight: FontWeight.w800),
@@ -144,11 +140,7 @@ class AuthorDetailPage extends StatelessWidget {
                           Get.to(
                             () => ChosenBookPage(),
                             arguments: {'bookId': book.id},
-                          )?.then((_) => memberController.getAuthorList(
-                              order: 'createdAt',
-                              page: 1,
-                              limit: 100,
-                              memberType: MemberType.AUTHOR));
+                          );
                         },
                         bookName: book.bookName,
                         bookAuthor: '${book.authorData?.memberNick}',
@@ -164,6 +156,7 @@ class AuthorDetailPage extends StatelessWidget {
                       );
                     }).toList(),
                   ),
+                SizedBox(height: 20),
               ],
             ),
           ),

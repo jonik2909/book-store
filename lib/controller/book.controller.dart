@@ -24,7 +24,6 @@ class BookController extends GetxController {
       if (books != null) {
         bookList.value = books;
       }
-      print("books $books");
     } catch (err) {
       print("getBooks $err");
     } finally {

@@ -98,7 +98,6 @@ class MemberController extends GetxController {
   Future<void> getUserDetails(String token) async {
     try {
       var response = await memberService.getUserDetails(token);
-      print("member >> $response");
 
       // member.value = Member.fromJson(response);
     } catch (e) {
@@ -135,8 +134,6 @@ class MemberController extends GetxController {
         search: search,
       );
 
-      print("members response success");
-
       authorList.assignAll(members);
     } catch (e) {
       print('Controller error: $e');
@@ -147,8 +144,6 @@ class MemberController extends GetxController {
 
   Future<void> getBook(String memberId) async {
     isLoading.value = true;
-
-    print("responsing $memberId");
 
     try {
       final response = await memberService.getMember(memberId);
@@ -163,7 +158,6 @@ class MemberController extends GetxController {
   }
 
   Future<void> _saveToken(String token) async {
-    print(token);
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('accessToken', token);
   }
