@@ -60,7 +60,7 @@ class ChosenBookPage extends GetView<NewBookController> {
               Center(
                 child: Container(
                   height: 350,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: Color.fromRGBO(0, 0, 0, 0.05),
@@ -173,6 +173,47 @@ class ChosenBookPage extends GetView<NewBookController> {
                     ),
                   ],
                 ),
+              ),
+
+              // After the author name text widget, add this section:
+              const SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffEB5757).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      '${book.bookCategory.toString().split('.').last}',
+                      style: const TextStyle(
+                        color: Color(0xffEB5757),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      '\$${book.bookPrice}',
+                      style: const TextStyle(
+                        color: Colors.green,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 10),

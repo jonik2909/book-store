@@ -68,7 +68,7 @@ class NewBook {
   static BookCategory _parseBookCategory(String category) {
     try {
       return BookCategory.values.firstWhere(
-        (e) => e.toString().split('.').last == category,
+        (e) => e.name == category, // Use .name instead of toString().split()
         orElse: () => BookCategory.OTHER,
       );
     } catch (e) {
@@ -80,7 +80,7 @@ class NewBook {
   static BookStatus _parseBookStatus(String status) {
     try {
       return BookStatus.values.firstWhere(
-        (e) => e.toString().split('.').last == status,
+        (e) => e.name == status,
         orElse: () => BookStatus.PROCESS,
       );
     } catch (e) {
@@ -105,37 +105,5 @@ class NewBook {
       'updatedAt': updatedAt?.toIso8601String(),
       'authorData': authorData.toJson(),
     };
-  }
-
-  // Copy with method for immutability
-  NewBook copyWith({
-    String? id,
-    String? bookName,
-    int? bookPrice,
-    String? bookDesc,
-    List<String>? bookImages,
-    BookCategory? bookCategory,
-    BookStatus? bookStatus,
-    String? memberId,
-    int? bookViews,
-    int? bookLikes,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) {
-    return NewBook(
-      id: id ?? this.id,
-      bookName: bookName ?? this.bookName,
-      bookPrice: bookPrice ?? this.bookPrice,
-      bookDesc: bookDesc ?? this.bookDesc,
-      bookImages: bookImages ?? this.bookImages,
-      bookCategory: bookCategory ?? this.bookCategory,
-      bookStatus: bookStatus ?? this.bookStatus,
-      memberId: memberId ?? this.memberId,
-      bookViews: bookViews ?? this.bookViews,
-      bookLikes: bookLikes ?? this.bookLikes,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      authorData: authorData,
-    );
   }
 }
