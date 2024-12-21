@@ -1,4 +1,6 @@
 // Member Type and Status enums
+import 'package:book_store/models/NewBook.dart';
+
 enum MemberType { USER, AUTHOR, ADMIN }
 
 enum MemberStatus { ACTIVE, BLOCK, DELETE }
@@ -10,10 +12,12 @@ class Member {
   final MemberType memberType;
   final MemberStatus memberStatus;
   final String memberEmail;
+  final String memberDesc;
   final int memberViews;
   final int memberLikes;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final NewBook? bookData;
 
   Member({
     required this.id,
@@ -21,27 +25,28 @@ class Member {
     required this.memberType,
     required this.memberStatus,
     required this.memberEmail,
+    required this.memberDesc,
     required this.memberViews,
     required this.memberLikes,
     required this.createdAt,
     required this.updatedAt,
+    required this.bookData,
   });
 
   factory Member.fromJson(Map<String, dynamic> json) {
     return Member(
       id: json['_id'],
       memberNick: json['memberNick'],
-      memberType: MemberType.values.firstWhere(
-        (e) => e.toString().split('.').last == json['memberType'],
-      ),
-      memberStatus: MemberStatus.values.firstWhere(
-        (e) => e.toString().split('.').last == json['memberStatus'],
-      ),
+      memberType: parseMemberType(json['memberType']),
+      memberStatus: parseMemberStatus(json['memberStatus']),
       memberEmail: json['memberEmail'],
+      memberDesc: json['memberDesc'] ?? '',
       memberViews: json['memberViews'],
       memberLikes: json['memberLikes'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
+      bookData:
+          json['bookData'] != null ? NewBook.fromJson(json['bookData']) : null,
     );
   }
 
@@ -52,10 +57,32 @@ class Member {
       'memberType': memberType.toString().split('.').last,
       'memberStatus': memberStatus.toString().split('.').last,
       'memberEmail': memberEmail,
+      'memberDesc': memberDesc,
       'memberViews': memberViews,
       'memberLikes': memberLikes,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
+      'bookData': bookData
     };
+  }
+
+  static MemberType parseMemberType(String type) {
+    try {
+      return MemberType.values.firstWhere(
+        (e) => e.name == type,
+      );
+    } catch (e) {
+      return MemberType.USER;
+    }
+  }
+
+  static MemberStatus parseMemberStatus(String type) {
+    try {
+      return MemberStatus.values.firstWhere(
+        (e) => e.name == type,
+      );
+    } catch (e) {
+      return MemberStatus.ACTIVE;
+    }
   }
 }
