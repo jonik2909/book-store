@@ -2,12 +2,12 @@
 
 import 'package:book_store/components/BookCard.dart';
 import 'package:book_store/controller/book.controller.dart'; // Add this import
-import 'package:book_store/models/Member.dart';
 import 'package:book_store/pages/chosen_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:book_store/controller/member.controller.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart'; // Add this import
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 class AuthorDetailPage extends StatelessWidget {
   AuthorDetailPage({super.key});
@@ -60,12 +60,20 @@ class AuthorDetailPage extends StatelessWidget {
                     children: [
                       if (author.memberImage != null &&
                           author.memberImage!.isNotEmpty)
-                        CircleAvatar(
-                          radius: 60,
-                          backgroundImage: NetworkImage(
-                            '${dotenv.env['UPLOAD_URL']}/${author.memberImage}',
+                        InstaImageViewer(
+                          imageUrl:
+                              '${dotenv.env['UPLOAD_URL']}/${author.memberImage}',
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(60),
+                            child: SizedBox(
+                              width: 120, // Fixed size
+                              height: 120,
+                              child: Image.network(
+                                '${dotenv.env['UPLOAD_URL']}/${author.memberImage}',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
-                          backgroundColor: Colors.grey[200],
                         )
                       else
                         CircleAvatar(
