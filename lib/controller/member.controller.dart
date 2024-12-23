@@ -19,6 +19,7 @@ class MemberController extends GetxController {
   var loginErrorMessage = ''.obs;
   var signupErrorMessage = ''.obs;
   var isAuthenticated = false.obs;
+  final Rx<Member?> authMember = Rx<Member?>(null);
 
   // Home Page
   final RxList<Member> authorList = <Member>[].obs;
@@ -58,6 +59,7 @@ class MemberController extends GetxController {
       var response = await memberService.login(username, password);
 
       authToken.value = response['accessToken'];
+      authMember.value = Member.fromJson(response['member']);
 
       await _saveToken(authToken.value);
 
