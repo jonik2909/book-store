@@ -2,7 +2,9 @@
 
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
+import 'package:book_store/models/Member.dart';
 import 'package:book_store/pages/admin/admin_page.dart';
+import 'package:book_store/pages/author_panel/author_panel.dart';
 import 'package:book_store/pages/books_page.dart';
 import 'package:book_store/pages/authors_page.dart';
 import 'package:book_store/pages/home_page.dart';
@@ -18,6 +20,7 @@ class MainPage extends StatelessWidget {
     BooksPage(),
     AuthorsPage(),
     ProfilePage(),
+    AuthorPanel(),
     AdminPage(),
   ];
 
@@ -52,11 +55,18 @@ class MainPage extends StatelessWidget {
                 icon: Icon(Icons.person),
                 label: 'PROFILE',
               ),
-              // if (memberController.member.value.type == 'ADMIN')
-              //   BottomNavigationBarItem(
-              //     icon: Icon(Icons.admin_panel_settings),
-              //     label: 'ADMIN',
-              //   ),
+              if (memberController.authMember.value?.memberType ==
+                  MemberType.AUTHOR)
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.admin_panel_settings),
+                  label: 'AUTHOR',
+                ),
+              if (memberController.authMember.value?.memberType ==
+                  MemberType.ADMIN)
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.admin_panel_settings),
+                  label: 'ADMIN',
+                ),
             ],
             currentIndex: controller.currentScreen.value,
             selectedItemColor: Color(0xffEB5757),
