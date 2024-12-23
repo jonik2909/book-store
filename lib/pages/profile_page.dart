@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/helper/alert.dart';
@@ -62,29 +64,46 @@ class ProfilePage extends StatelessWidget {
                     },
                     child: Stack(
                       children: [
-                        member.memberImage != ""
+                        // Show preview if there's a newly selected image
+                        Obx(() => controller.thumnailImage.value != null
                             ? Container(
                                 width: 105,
                                 height: 105,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: NetworkImage(member.memberImage!),
+                                    image: FileImage(
+                                        controller.thumnailImage.value!),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                               )
-                            : Container(
-                                width: 105,
-                                height: 105,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: AssetImage('lib/assets/book.jpg'),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
+                            // Otherwise show existing profile image or default
+                            : member.memberImage != ""
+                                ? Container(
+                                    width: 105,
+                                    height: 105,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image:
+                                            NetworkImage(member.memberImage!),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    width: 105,
+                                    height: 105,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image:
+                                            AssetImage('lib/assets/book.jpg'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )),
                         Positioned(
                           bottom: 0,
                           right: 0,
@@ -244,23 +263,13 @@ class ProfilePage extends StatelessWidget {
                                   ? null
                                   : () async {
                                       if (_formKey.currentState!.validate()) {
-                                        try {
-                                          await memberController.updateUserData(
-                                            memberNick: nickController.text,
-                                            memberEmail: emailController.text,
-                                            memberDesc: descController.text,
-                                            memberImage:
-                                                controller.thumnailImage.value,
-                                          );
-                                          alertDialog(
-                                            context,
-                                            "Success",
-                                            "Member information updated successfully!",
-                                          );
-                                        } catch (err) {
-                                          alertDialog(
-                                              context, "Error", err.toString());
-                                        }
+                                        await memberController.updateUserData(
+                                          memberNick: nickController.text,
+                                          memberEmail: emailController.text,
+                                          memberDesc: descController.text,
+                                          memberImage:
+                                              controller.thumnailImage.value,
+                                        );
                                       }
                                     },
                               style: ElevatedButton.styleFrom(
