@@ -6,6 +6,7 @@ import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/helper/alert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -86,8 +87,8 @@ class ProfilePage extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
-                                        image:
-                                            NetworkImage(member.memberImage!),
+                                        image: NetworkImage(
+                                            '${dotenv.env['UPLOAD_URL']}/${member.memberImage!}'),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
