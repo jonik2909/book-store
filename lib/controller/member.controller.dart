@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:book_store/models/Member.dart';
 import 'package:book_store/pages/home_page.dart';
@@ -6,6 +7,7 @@ import 'package:book_store/pages/login_page.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/pages/splash_page.dart';
 import 'package:book_store/services/MemberService.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +43,7 @@ class MemberController extends GetxController {
       final token = await getToken();
       if (token != null && token.isNotEmpty) {
         authToken.value = token;
-        // await getUserDetails(token);
+        await getMyData();
         isAuthenticated.value = true;
         Get.offAll(() => MainPage());
       } else {
@@ -61,7 +63,7 @@ class MemberController extends GetxController {
       authToken.value = response['accessToken'];
       authMember.value = Member.fromJson(response['member']);
 
-      await _saveToken(authToken.value);
+      await _saveToken(authToken.value, authMember.value!);
 
       Get.to(MainPage());
     } catch (e) {
@@ -74,9 +76,9 @@ class MemberController extends GetxController {
       var response = await memberService.signup(
           username: username, email: email, password: password);
       authToken.value = response['accessToken'];
+      authMember.value = Member.fromJson(response['member']);
 
-      // await getUserDetails(response['authToken']);
-      await _saveToken(authToken.value);
+      await _saveToken(authToken.value, authMember.value!);
 
       Get.to(MainPage());
     } catch (e) {
@@ -97,24 +99,62 @@ class MemberController extends GetxController {
     }
   }
 
-  Future<void> getUserDetails(String token) async {
+  Future<void> getMyData() async {
     try {
-      var response = await memberService.getUserDetails(token);
+      final prefs = await SharedPreferences.getInstance();
+      final memberJson = prefs.getString('memberData');
 
-      // member.value = Member.fromJson(response);
+      authMember.value = Member.fromJson(jsonDecode(memberJson!));
     } catch (e) {
-      print("error >> $e");
+      print('Error retrieving member data: $e');
+      return null;
     }
   }
 
-  Future<void> updateUserData(
-      String token, int id, String nick, String email) async {
+  Future<void> updateUserData({
+    required String? memberNick,
+    required String? memberEmail,
+    required String? memberDesc,
+    File? memberImage,
+  }) async {
     try {
-      // var response = await memberService.updateUserData(token, id, nick, email);
-      // member.value = Member.fromJson(response);
+      isLoading.value = true;
+
+      // Get the member ID from current authMember
+      if (authMember.value == null) {
+        throw Exception('No authenticated member found');
+      }
+
+      final response = await memberService.updateUserData(
+        nick: memberNick,
+        email: memberEmail,
+        desc: memberDesc,
+        memberImage: memberImage,
+      );
+
+      // Update the auth member with new data
+      authMember.value = Member.fromJson(response);
+
+      // Show success update
+      Get.snackbar(
+        'Success',
+        'Profile updated successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
     } catch (e) {
-      print("error >> $e");
+      // Show error message
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       throw e;
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -159,9 +199,10 @@ class MemberController extends GetxController {
     }
   }
 
-  Future<void> _saveToken(String token) async {
+  Future<void> _saveToken(String token, Member member) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('accessToken', token);
+    await prefs.setString('memberData', jsonEncode(member.toJson()));
   }
 
   Future<String?> getToken() async {
@@ -172,5 +213,6 @@ class MemberController extends GetxController {
   Future<void> _clearStorage() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('accessToken');
+    await prefs.remove('memberData');
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:book_store/models/Member.dart';
 import 'package:book_store/utils/utils.dart';
 import 'package:http/http.dart' as http;
@@ -86,28 +87,28 @@ class MemberService {
   }
 
   // Update user data
-  Future<Map<String, dynamic>> updateUserData({
-    required String token,
-    required int id,
-    required String nick,
-    required String email,
-  }) async {
-    try {
-      final response = await _client.post(
-        Uri.parse('$_baseUrl/members/$id'),
-        headers: await getHeaders(),
-        body: jsonEncode({
-          'id': id,
-          'nick': nick,
-          'email': email,
-        }),
-      );
+  // Future<Map<String, dynamic>> updateUserData({
+  //   required String token,
+  //   required int id,
+  //   required String nick,
+  //   required String email,
+  // }) async {
+  //   try {
+  //     final response = await _client.post(
+  //       Uri.parse('$_baseUrl/members/$id'),
+  //       headers: await getHeaders(),
+  //       body: jsonEncode({
+  //         'id': id,
+  //         'nick': nick,
+  //         'email': email,
+  //       }),
+  //     );
 
-      return handleResponse(response);
-    } catch (e) {
-      throw Exception('Failed to update user data: ${e.toString()}');
-    }
-  }
+  //     return handleResponse(response);
+  //   } catch (e) {
+  //     throw Exception('Failed to update user data: ${e.toString()}');
+  //   }
+  // }
 
   Future<List<Member>> getMembers({
     String? order,
@@ -159,6 +160,48 @@ class MemberService {
     } catch (e) {
       print("error $e");
       throw e.toString();
+    }
+  }
+
+  Future<Map<String, dynamic>> updateUserData({
+    required String? nick,
+    required String? email,
+    required String? desc,
+    File? memberImage,
+  }) async {
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('$_baseUrl/member/update'),
+      );
+
+      // Add text fields
+      if (nick != null) request.fields['memberNick'] = nick;
+      if (email != null) request.fields['memberEmail'] = email;
+      if (desc != null) request.fields['memberDesc'] = desc;
+
+      // Add the image if it exists
+      if (memberImage != null) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'memberImage',
+            memberImage.path,
+          ),
+        );
+      }
+
+      // Add headers
+      var headers = await getHeaders();
+      headers.forEach((key, value) {
+        request.headers[key] = value;
+      });
+
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      return handleResponse(response);
+    } catch (e) {
+      throw Exception('Failed to update user data: ${e.toString()}');
     }
   }
 }
