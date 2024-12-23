@@ -14,6 +14,14 @@ class AuthorsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      memberController.getAuthorList(
+          order: 'createdAt',
+          page: 1,
+          limit: 100,
+          memberType: MemberType.AUTHOR);
+    });
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
