@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/pages/admin/create_book.dart';
 import 'package:book_store/pages/admin/books.dart';
 import 'package:book_store/pages/admin/members.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +26,10 @@ class AdminPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: ListView(
             children: [
-              _buildRouterTile(context, 'Books', Icons.store, Books()),
-              _buildRouterTile(
-                  context, 'Add new Book', Icons.add_box, CreateBook()),
-              _buildRouterTile(context, 'Users', Icons.people, Members()),
+              // _buildRouterTile(context, 'Books', Icons.store, Books()),
+              // _buildRouterTile(
+              //     context, 'Add new Book', Icons.add_box, CreateBook()),
+              // _buildRouterTile(context, 'Users', Icons.people, Members()),
             ],
           ),
         ));

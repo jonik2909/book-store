@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:ffi';
+import 'dart:io';
 import 'package:book_store/models/NewBook.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -45,6 +47,7 @@ class NewBookService {
     }
   }
 
+  // getBook
   Future<NewBook> getBook(String bookId) async {
     try {
       final response = await _client.get(
@@ -64,8 +67,60 @@ class NewBookService {
       throw e.toString();
     }
   }
-  // getBook
-  // updateBook
-  // deleteBook
-  // likeTargetBook
+
+  //createBook
+  Future<NewBook> createBook({
+    required String bookName,
+    required int bookPrice,
+    required String bookDesc,
+    required BookCategory bookCategory,
+    List<File>? bookImages,
+  }) async {
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('$_baseUrl/book/create'),
+      );
+
+      // Add text fields
+      request.fields.addAll({
+        'bookName': bookName,
+        'bookPrice': bookPrice.toString(),
+        'bookDesc': bookDesc,
+        'bookCategory': bookCategory.toString().split('.').last,
+      });
+
+      // Add multiple images if they exist
+      if (bookImages != null && bookImages.isNotEmpty) {
+        for (var i = 0; i < bookImages.length; i++) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'bookImages', // Using array notation in field name
+              bookImages[i].path,
+            ),
+          );
+        }
+      }
+
+      // Add headers
+      var headers = await getHeaders();
+      headers.forEach((key, value) {
+        request.headers[key] = value;
+      });
+
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return NewBook.fromJson(body);
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      throw Exception('Failed to create book: ${e.toString()}');
+    }
+  }
 }
