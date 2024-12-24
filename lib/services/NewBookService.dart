@@ -143,4 +143,25 @@ class NewBookService {
       throw e.toString();
     }
   }
+
+  Future<bool> deleteBook(String bookId) async {
+    try {
+      final response = await _client.post(
+        Uri.parse('$_baseUrl/book/delete'),
+        headers: await getHeaders(),
+        body: jsonEncode({'_id': bookId}),
+      );
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

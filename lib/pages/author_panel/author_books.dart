@@ -134,7 +134,8 @@ class AuthorBooks extends StatelessWidget {
                                     ),
                                   );
                                   if (result == true) {
-                                    // await authorController.deleteBook(book.id.toString());
+                                    await authorController
+                                        .deleteBook(book.id.toString());
                                   }
                                 },
                                 child: Icon(Icons.delete_outline,

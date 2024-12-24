@@ -68,6 +68,16 @@ class AuthorController extends GetxController {
     }
   }
 
+  Future<void> deleteBook(String bookId) async {
+    try {
+      await bookService.deleteBook(bookId);
+
+      getAuthorBooks();
+    } catch (err) {
+      print(err);
+    }
+  }
+
   Future<void> pickMultipleImages() async {
     if (selectedImages.length >= MAX_IMAGES) {
       Get.snackbar(
