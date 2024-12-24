@@ -123,4 +123,24 @@ class NewBookService {
       throw Exception('Failed to create book: ${e.toString()}');
     }
   }
+
+  Future<List<NewBook>> getAuthorBooks() async {
+    try {
+      final response = await _client.get(
+        Uri.parse('$_baseUrl/book/my'),
+        headers: await getHeaders(),
+      );
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return body.map<NewBook>((book) => NewBook.fromJson(book)).toList();
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

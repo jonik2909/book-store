@@ -15,6 +15,14 @@ class AuthorController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxList<File> selectedImages = <File>[].obs;
 
+  final RxList<NewBook> authorBooks = <NewBook>[].obs;
+
+  @override
+  void onReady() async {
+    super.onReady();
+    getAuthorBooks();
+  }
+
   Future<void> createBook(Map<String, dynamic> data) async {
     try {
       isLoading.value = true;
@@ -46,6 +54,17 @@ class AuthorController extends GetxController {
       throw err;
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> getAuthorBooks() async {
+    try {
+      print("request getAuthorBooks");
+      final books = await bookService.getAuthorBooks();
+
+      authorBooks.assignAll(books);
+    } catch (err) {
+      print(err);
     }
   }
 
@@ -83,7 +102,6 @@ class AuthorController extends GetxController {
     selectedImages.clear();
   }
 
-  // Remove a specific image
   void removeImage(int index) {
     if (index >= 0 && index < selectedImages.length) {
       selectedImages.removeAt(index);
