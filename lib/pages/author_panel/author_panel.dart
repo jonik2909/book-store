@@ -1,6 +1,4 @@
-import 'package:book_store/pages/admin/books.dart';
 import 'package:book_store/pages/author_panel/create_book.dart';
-import 'package:book_store/pages/admin/members.dart';
 import 'package:book_store/pages/author_panel/author_books.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,56 +9,140 @@ class AuthorPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         centerTitle: false,
-        title: Text(
-          'Author Panel',
-          style: TextStyle(fontWeight: FontWeight.w800),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Author Panel',
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                color: Colors.blue[900],
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              'Manage your books',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+        child: Column(
           children: [
-            _buildRouterTile(context, 'My Books', Icons.store, AuthorBooks()),
-            _buildRouterTile(
-                context, 'Add new Book', Icons.add_box, CreateBook()),
+            _buildRouterCard(
+              context,
+              'My Books',
+              'View and manage your published books',
+              Icons.library_books,
+              AuthorBooks(),
+              Colors.blue[700]!,
+            ),
+            SizedBox(height: 16),
+            _buildRouterCard(
+              context,
+              'Add New Book',
+              'Create and publish a new book',
+              Icons.add_circle,
+              CreateBook(),
+              Colors.green[700]!,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildRouterTile(
-      BuildContext context, String title, IconData icon, Widget route) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6.0,
-            spreadRadius: 1.0,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: Color(0xffEB5757)),
-        title: Text(
-          title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+  Widget _buildRouterCard(BuildContext context, String title, String subtitle,
+      IconData icon, Widget route, Color color) {
+    return GestureDetector(
+      onTap: () => Get.to(() => route),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              spreadRadius: 0,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
-        trailing: Icon(Icons.arrow_forward, color: Color(0xffEB5757)),
-        onTap: () {
-          Get.to(() => route);
-        },
+        child: Stack(
+          children: [
+            Positioned(
+              right: -20,
+              top: -20,
+              child: Icon(
+                icon,
+                size: 100,
+                color: color.withOpacity(0.1),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: color.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      icon,
+                      color: color,
+                      size: 24,
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          subtitle,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: color,
+                    size: 18,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
