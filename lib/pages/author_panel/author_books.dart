@@ -19,10 +19,7 @@ class AuthorBooks extends StatelessWidget {
         centerTitle: false,
         title: Text(
           'My Books',
-          style: TextStyle(
-            fontWeight: FontWeight.w800,
-            color: Colors.blue[900],
-          ),
+          style: TextStyle(fontWeight: FontWeight.w800),
         ),
       ),
       body: Obx(
