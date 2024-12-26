@@ -23,7 +23,7 @@ class AuthorPanel extends StatelessWidget {
               'Author Panel',
               style: TextStyle(
                 fontWeight: FontWeight.w800,
-                color: Colors.blue[900],
+                color: Colors.red,
                 fontSize: 24,
               ),
             ),

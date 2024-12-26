@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:book_store/controller/author.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -17,9 +19,26 @@ class AuthorBooks extends StatelessWidget {
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         centerTitle: false,
-        title: Text(
-          'My Books',
-          style: TextStyle(fontWeight: FontWeight.w800),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'My Books',
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                color: Colors.red,
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              'Controll your books',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
       ),
       body: Obx(

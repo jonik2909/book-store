@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/controller/author.controller.dart';
 import 'package:book_store/models/NewBook.dart';
@@ -20,7 +20,7 @@ class CreateBook extends StatelessWidget {
     final bookDesc = TextEditingController();
     final bookCategory = TextEditingController();
 
-    void handleSubmit() async {
+    Future<void> handleSubmit() async {
       try {
         if (bookName.text.isEmpty ||
             bookPrice.text.isEmpty ||
@@ -64,7 +64,6 @@ class CreateBook extends StatelessWidget {
               : null,
         });
 
-        // Show success message
         Get.snackbar(
           'Success',
           'Book created successfully',
@@ -73,8 +72,6 @@ class CreateBook extends StatelessWidget {
           colorText: Colors.white,
         );
 
-        // // Add a small delay before navigation
-        // await Future.delayed(Duration(milliseconds: 1000));
         Navigator.pop(context);
       } catch (e) {
         Get.snackbar(
@@ -88,273 +85,294 @@ class CreateBook extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
+        elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         centerTitle: false,
-        title: Text(
-          'Add book',
-          style: TextStyle(fontWeight: FontWeight.w800),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Create New Book',
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                color: Colors.red,
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              'Add your book details',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8, bottom: 50),
-            child: Column(
-              children: [
-                SizedBox(height: 20),
-                inputField(
-                  label: 'Book Name',
-                  controller: bookName,
-                  onChanged: (value) {},
-                ),
-                SizedBox(height: 20),
-                inputField(
-                  label: 'Book Price',
-                  controller: bookPrice,
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {},
-                ),
-                SizedBox(height: 20),
-                inputField(
-                  label: 'Book Description',
-                  controller: bookDesc,
-                  maxLines: 3,
-                  onChanged: (value) {},
-                ),
-                SizedBox(height: 20),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.04),
-                        spreadRadius: 5,
-                        blurRadius: 10,
-                        offset: Offset(0, 1),
-                      ),
-                    ],
-                  ),
-                  child: DropdownButtonFormField<String>(
-                    value: bookCategory.text.isEmpty ? null : bookCategory.text,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xff8E8E93),
-                        ),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSectionTitle('Book Images'),
+              SizedBox(height: 12),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
                     ),
-                    hint: Text('Select Category'),
-                    isExpanded: true,
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        bookCategory.text = newValue;
-                      }
-                    },
-                    items:
-                        _categories.map<DropdownMenuItem<String>>((category) {
-                      final value = category.toString().split('.').last;
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
+                  ],
                 ),
-                SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.04),
-                        spreadRadius: 5,
-                        blurRadius: 10,
-                        offset: Offset(0, 1),
-                      ),
-                    ],
-                  ),
-                  child: Obx(() => authorController.selectedImages.isEmpty
-                      ? GestureDetector(
-                          onTap: authorController.pickMultipleImages,
-                          child: Image.asset(
-                            'lib/assets/upload_img.png',
-                            width: double.infinity,
-                            height: 200,
-                            fit: BoxFit.cover,
+                child: Obx(() => authorController.selectedImages.isEmpty
+                    ? GestureDetector(
+                        onTap: authorController.pickMultipleImages,
+                        child: Container(
+                          height: 200,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.blue[50],
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: Colors.blue[200]!),
                           ),
-                        )
-                      : Column(
-                          children: [
-                            Container(
-                              height: 200,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: authorController
-                                        .selectedImages.length +
-                                    (authorController.selectedImages.length < 3
-                                        ? 1
-                                        : 0),
-                                itemBuilder: (context, index) {
-                                  if (index ==
-                                      authorController.selectedImages.length) {
-                                    // Add more button (only shown if less than 3 images)
-                                    return GestureDetector(
-                                      onTap:
-                                          authorController.pickMultipleImages,
-                                      child: Container(
-                                        width: 150,
-                                        margin: EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.add_photo_alternate,
-                                                size: 40),
-                                            Text(
-                                                'Add More\n(${3 - authorController.selectedImages.length} left)'),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }
-
-                                  return Stack(
-                                    children: [
-                                      Container(
-                                        width: 150,
-                                        height: 200,
-                                        margin: EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          image: DecorationImage(
-                                            image: FileImage(
-                                              authorController
-                                                  .selectedImages[index],
-                                            ),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned(
-                                        top: 0,
-                                        right: 0,
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.cancel,
-                                            color: Colors.red,
-                                          ),
-                                          onPressed: () {
-                                            authorController.removeImage(index);
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Upload up to 3 images (${authorController.selectedImages.length}/3)',
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.add_photo_alternate,
+                                  size: 48, color: Colors.blue[400]),
+                              SizedBox(height: 8),
+                              Text(
+                                'Upload Book Images',
                                 style: TextStyle(
-                                  color: Colors.grey[600],
+                                  color: Colors.blue[700],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                'Upload up to 3 images',
+                                style: TextStyle(
+                                  color: Colors.blue[400],
                                   fontSize: 12,
                                 ),
                               ),
-                            ),
-                          ],
-                        )),
-                ),
-                SizedBox(height: 20),
-                Obx(() => SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: authorController.isLoading.value
-                            ? null
-                            : handleSubmit,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffEB5757),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            ],
                           ),
                         ),
-                        child: authorController.isLoading.value
-                            ? CircularProgressIndicator(color: Colors.white)
-                            : Text(
-                                'Add Book',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
+                      )
+                    : _buildImageList(authorController)),
+              ),
+              SizedBox(height: 24),
+              _buildSectionTitle('Book Details'),
+              SizedBox(height: 12),
+              _buildInputField(
+                label: 'Book Name',
+                controller: bookName,
+                prefixIcon: Icons.book,
+              ),
+              SizedBox(height: 16),
+              _buildInputField(
+                label: 'Price (\$)',
+                controller: bookPrice,
+                keyboardType: TextInputType.number,
+                prefixIcon: Icons.attach_money,
+              ),
+              SizedBox(height: 16),
+              Container(
+                decoration: _buildBoxDecoration(),
+                child: DropdownButtonFormField<String>(
+                  value: bookCategory.text.isEmpty ? null : bookCategory.text,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.category, color: Colors.blue[700]),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  hint: Text('Select Category'),
+                  items: _categories.map<DropdownMenuItem<String>>((category) {
+                    final value = category.toString().split('.').last;
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    if (newValue != null) bookCategory.text = newValue;
+                  },
+                ),
+              ),
+              SizedBox(height: 16),
+              _buildInputField(
+                label: 'Description',
+                controller: bookDesc,
+                maxLines: 4,
+                prefixIcon: Icons.description,
+              ),
+              SizedBox(height: 32),
+              Obx(() => SizedBox(
+                    width: double.infinity,
+                    height: 54,
+                    child: ElevatedButton(
+                      onPressed: authorController.isLoading.value
+                          ? null
+                          : handleSubmit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[700],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 2,
                       ),
-                    )),
-              ],
-            ),
+                      child: authorController.isLoading.value
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                              'Publish Book',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                    ),
+                  )),
+              SizedBox(height: 20),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget inputField({
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+        color: Colors.grey[800],
+      ),
+    );
+  }
+
+  Widget _buildInputField({
     required String label,
     required TextEditingController controller,
     TextInputType keyboardType = TextInputType.text,
     int maxLines = 1,
-    required Function(String) onChanged,
+    required IconData prefixIcon,
   }) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.04),
-            spreadRadius: 5,
-            blurRadius: 10,
-            offset: Offset(0, 1),
-          ),
-        ],
-      ),
+      decoration: _buildBoxDecoration(),
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
         maxLines: maxLines,
         decoration: InputDecoration(
+          prefixIcon: Icon(prefixIcon, color: Colors.blue[700]),
+          hintText: label,
+          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
           filled: true,
           fillColor: Colors.white,
-          hintText: label,
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-            color: Color(0xff8E8E93),
-          )),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-          ),
         ),
       ),
+    );
+  }
+
+  BoxDecoration _buildBoxDecoration() {
+    return BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(12),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.05),
+          blurRadius: 10,
+          offset: Offset(0, 4),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImageList(AuthorController controller) {
+    return Column(
+      children: [
+        Container(
+          height: 200,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: controller.selectedImages.length +
+                (controller.selectedImages.length < 3 ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index == controller.selectedImages.length) {
+                return GestureDetector(
+                  onTap: controller.pickMultipleImages,
+                  child: Container(
+                    width: 150,
+                    margin: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.blue[50],
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.blue[200]!),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add_photo_alternate,
+                            size: 32, color: Colors.blue[400]),
+                        SizedBox(height: 8),
+                        Text(
+                          '${3 - controller.selectedImages.length} more',
+                          style: TextStyle(color: Colors.blue[700]),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+
+              return Stack(
+                children: [
+                  Container(
+                    width: 150,
+                    margin: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(
+                        image: FileImage(controller.selectedImages[index]),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 4,
+                    right: 4,
+                    child: IconButton(
+                      icon: Icon(Icons.cancel, color: Colors.red[400]),
+                      onPressed: () => controller.removeImage(index),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
