@@ -2,6 +2,7 @@
 
 import 'dart:io';
 import 'package:book_store/models/NewBook.dart';
+import 'package:book_store/pages/admin/books.dart';
 import 'package:book_store/services/NewBookService.dart';
 import 'package:book_store/utils/image_picker_util.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +76,52 @@ class AuthorController extends GetxController {
       getAuthorBooks();
     } catch (err) {
       print(err);
+    }
+  }
+
+  Future<void> updateBook({
+    required String id,
+    String? bookName,
+    String? bookPrice,
+    String? bookDesc,
+    BookCategory? bookCategory,
+    List<File>? bookImages,
+  }) async {
+    try {
+      isLoading.value = true;
+
+      await bookService.updateBook(
+        id: id,
+        bookName: bookName,
+        bookPrice: bookPrice,
+        bookDesc: bookDesc,
+        bookCategory: bookCategory,
+        bookImages: bookImages,
+      );
+
+      clearImages();
+
+      Get.back();
+
+      getAuthorBooks();
+
+      Get.snackbar(
+        'Success',
+        'Book updated successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
     }
   }
 

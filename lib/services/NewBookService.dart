@@ -164,4 +164,63 @@ class NewBookService {
       throw e.toString();
     }
   }
+
+  Future<NewBook> updateBook({
+    required String id,
+    String? bookName,
+    String? bookPrice,
+    String? bookDesc,
+    BookCategory? bookCategory,
+    List<File>? bookImages,
+  }) async {
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('$_baseUrl/book/update'),
+      );
+
+      // Add text fields
+      request.fields['_id'] = id;
+      if (bookName != null) request.fields['bookName'] = bookName;
+      if (bookPrice != null) request.fields['bookPrice'] = bookPrice;
+      if (bookDesc != null) request.fields['bookDesc'] = bookDesc;
+      if (bookCategory != null) {
+        request.fields['bookCategory'] =
+            bookCategory.toString().split('.').last;
+      }
+
+      // Add the image if it exists
+      // Add multiple images if they exist
+      if (bookImages != null && bookImages.isNotEmpty) {
+        for (var i = 0; i < bookImages.length; i++) {
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'bookImages', // Using array notation in field name
+              bookImages[i].path,
+            ),
+          );
+        }
+      }
+
+      // Add headers
+      var headers = await getHeaders();
+      headers.forEach((key, value) {
+        request.headers[key] = value;
+      });
+
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return NewBook.fromJson(body);
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      throw Exception('Failed to update book data: ${e.toString()}');
+    }
+  }
 }

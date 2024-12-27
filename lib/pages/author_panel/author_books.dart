@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/controller/author.controller.dart';
+import 'package:book_store/pages/author_panel/edit_book.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -122,7 +123,7 @@ class AuthorBooks extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  // Add edit functionality
+                                  Get.to(() => EditBookPage(book: book));
                                 },
                                 child: Icon(Icons.edit_outlined, size: 20),
                               ),
