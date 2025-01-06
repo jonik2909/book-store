@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:book_store/controller/author.controller.dart';
-import 'package:book_store/models/NewBook.dart';
+import 'package:book_store/models/Book.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EditBookPage extends StatelessWidget {

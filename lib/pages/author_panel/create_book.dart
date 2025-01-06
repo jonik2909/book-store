@@ -1,10 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/controller/author.controller.dart';
-import 'package:book_store/models/NewBook.dart';
+import 'package:book_store/models/Book.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:io';
 
 class CreateBook extends StatelessWidget {
   const CreateBook({super.key});
@@ -21,57 +20,47 @@ class CreateBook extends StatelessWidget {
     final bookCategory = TextEditingController();
 
     Future<void> handleSubmit() async {
-      try {
-        if (bookName.text.isEmpty ||
-            bookPrice.text.isEmpty ||
-            bookDesc.text.isEmpty ||
-            bookCategory.text.isEmpty) {
-          Get.snackbar(
-            'Error',
-            'Please fill all fields',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-          return;
-        }
-
-        final price = int.tryParse(bookPrice.text);
-        if (price == null || price <= 0) {
-          Get.snackbar(
-            'Error',
-            'Please enter a valid price',
-            snackPosition: SnackPosition.TOP,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-          return;
-        }
-
-        // Convert string category to enum
-        final category = BookCategory.values.firstWhere(
-          (cat) => cat.toString().split('.').last == bookCategory.text,
-          orElse: () => BookCategory.OTHER,
-        );
-
-        await authorController.createBook({
-          'bookName': bookName.text,
-          'bookPrice': price,
-          'bookDesc': bookDesc.text,
-          'bookCategory': category,
-          'bookImages': authorController.selectedImages.isNotEmpty
-              ? authorController.selectedImages.toList()
-              : null,
-        });
-      } catch (e) {
+      if (bookName.text.isEmpty ||
+          bookPrice.text.isEmpty ||
+          bookDesc.text.isEmpty ||
+          bookCategory.text.isEmpty) {
         Get.snackbar(
           'Error',
-          e.toString(),
+          'Please fill all fields',
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
+        return;
       }
+
+      final price = int.tryParse(bookPrice.text);
+      if (price == null || price <= 0) {
+        Get.snackbar(
+          'Error',
+          'Please enter a valid price',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+        return;
+      }
+
+      // Convert string category to enum
+      final category = BookCategory.values.firstWhere(
+        (cat) => cat.toString().split('.').last == bookCategory.text,
+        orElse: () => BookCategory.OTHER,
+      );
+
+      await authorController.createBook({
+        'bookName': bookName.text,
+        'bookPrice': price,
+        'bookDesc': bookDesc.text,
+        'bookCategory': category,
+        'bookImages': authorController.selectedImages.isNotEmpty
+            ? authorController.selectedImages.toList()
+            : null,
+      });
     }
 
     return Scaffold(

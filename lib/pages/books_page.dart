@@ -2,8 +2,8 @@
 
 import 'package:book_store/components/BookCard.dart';
 import 'package:book_store/components/Category_card.dart';
-import 'package:book_store/controller/new.book.controller.dart';
-import 'package:book_store/models/NewBook.dart';
+import 'package:book_store/controller/book.controller.dart';
+import 'package:book_store/models/Book.dart';
 import 'package:book_store/pages/chosen_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -74,7 +74,8 @@ class BooksPage extends StatelessWidget {
             ),
             SizedBox(height: 25),
             Container(
-              child: Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Obx(() {
                   if (bookController.isLoading.value) {
                     return Center(child: CircularProgressIndicator());

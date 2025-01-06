@@ -2,7 +2,7 @@
 
 import 'dart:typed_data';
 
-import 'package:book_store/controller/new.book.controller.dart';
+import 'package:book_store/controller/book.controller.dart';
 import 'package:book_store/pages/file_reader.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
