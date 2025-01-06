@@ -301,7 +301,7 @@ ${description}
                             Get.snackbar(
                               'Error',
                               'Failed to load the book: ${e.toString()}',
-                              snackPosition: SnackPosition.BOTTOM,
+                              snackPosition: SnackPosition.TOP,
                             );
                           }
                         },

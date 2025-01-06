@@ -61,11 +61,6 @@ class HomePage extends StatelessWidget {
                       return Center(child: CircularProgressIndicator());
                     }
 
-                    if (bookController.errorMessage.isNotEmpty) {
-                      return Center(
-                          child: Text(bookController.errorMessage.value));
-                    }
-
                     return Wrap(
                       direction: Axis.horizontal,
                       spacing: 16,

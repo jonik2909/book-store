@@ -92,8 +92,14 @@ class MemberController extends GetxController {
       await _clearStorage();
 
       Get.to(SplashPage());
-    } catch (e) {
-      loginErrorMessage.value = e.toString();
+    } catch (err) {
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
@@ -103,9 +109,14 @@ class MemberController extends GetxController {
       final memberJson = prefs.getString('memberData');
 
       authMember.value = Member.fromJson(jsonDecode(memberJson!));
-    } catch (e) {
-      print('Error retrieving member data: $e');
-      return null;
+    } catch (err) {
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
@@ -137,16 +148,16 @@ class MemberController extends GetxController {
       Get.snackbar(
         'Success',
         'Profile updated successfully',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-    } catch (e) {
+    } catch (err) {
       // Show error message
       Get.snackbar(
         'Error',
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
+        err.toString(),
+        snackPosition: SnackPosition.TOP,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
@@ -174,8 +185,14 @@ class MemberController extends GetxController {
       );
 
       authorList.assignAll(members);
-    } catch (e) {
-      print('Controller error: $e');
+    } catch (err) {
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -188,9 +205,14 @@ class MemberController extends GetxController {
       final response = await memberService.getMember(memberId);
 
       chosenAuthor.value = response;
-    } catch (e) {
-      print(e);
-      // errorMessage.value = e.toString();
+    } catch (err) {
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }

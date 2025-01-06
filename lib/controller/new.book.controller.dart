@@ -1,5 +1,6 @@
 import 'package:book_store/models/NewBook.dart';
 import 'package:book_store/services/NewBookService.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NewBookController extends GetxController {
@@ -73,9 +74,14 @@ class NewBookController extends GetxController {
       );
 
       targetList.assignAll(books);
-    } catch (e) {
-      errorMessage.value = e.toString();
-      print('Controller error: $e');
+    } catch (err) {
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -88,8 +94,14 @@ class NewBookController extends GetxController {
     try {
       final response = await bookService.getBook(bookId);
       chosenBook.value = response;
-    } catch (e) {
-      errorMessage.value = e.toString();
+    } catch (err) {
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }

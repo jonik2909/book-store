@@ -80,11 +80,6 @@ class BooksPage extends StatelessWidget {
                     return Center(child: CircularProgressIndicator());
                   }
 
-                  if (bookController.errorMessage.isNotEmpty) {
-                    return Center(
-                        child: Text(bookController.errorMessage.value));
-                  }
-
                   if (bookController.books.isEmpty) {
                     return Center(
                       child: Text(

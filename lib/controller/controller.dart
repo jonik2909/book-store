@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,8 +27,14 @@ class Controller extends GetxController {
       if (img == null) return;
 
       _thumnailImage.value = File(img.path);
-    } on PlatformException catch (e) {
-      print('[ERROR] pickImage error : $e');
+    } catch (err) {
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 }
