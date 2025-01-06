@@ -63,16 +63,6 @@ class CreateBook extends StatelessWidget {
               ? authorController.selectedImages.toList()
               : null,
         });
-
-        Get.snackbar(
-          'Success',
-          'Book created successfully',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-
-        Navigator.pop(context);
       } catch (e) {
         Get.snackbar(
           'Error',

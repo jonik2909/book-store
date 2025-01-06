@@ -51,8 +51,24 @@ class AuthorController extends GetxController {
 
       // Clear selected images
       selectedImages.clear();
-    } catch (err) {
-      throw err;
+
+      Get.back();
+
+      Get.snackbar(
+        'Success',
+        'Book created successfully',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }
@@ -65,7 +81,13 @@ class AuthorController extends GetxController {
 
       authorBooks.assignAll(books);
     } catch (err) {
-      print(err);
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
@@ -75,7 +97,13 @@ class AuthorController extends GetxController {
 
       getAuthorBooks();
     } catch (err) {
-      print(err);
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 

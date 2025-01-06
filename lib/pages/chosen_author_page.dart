@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/components/BookCard.dart';
-import 'package:book_store/controller/book.controller.dart'; // Add this import
 import 'package:book_store/pages/chosen_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +13,6 @@ class AuthorDetailPage extends StatelessWidget {
   AuthorDetailPage({super.key});
 
   final MemberController memberController = Get.put(MemberController());
-  final BookController bookController = Get.put(BookController());
 
   void _shareAuthorProfile(
       String authorName, String email, int books, int views) {
