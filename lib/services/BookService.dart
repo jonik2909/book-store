@@ -222,4 +222,46 @@ class NewBookService {
       throw Exception('Failed to update book data: ${e.toString()}');
     }
   }
+
+  // ADMIN API
+  Future<List<NewBook>> getAllBooks() async {
+    try {
+      final response = await _client.get(
+        Uri.parse('$_baseUrl/admin/book/all'),
+        headers: await getHeaders(),
+      );
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return body.map<NewBook>((book) => NewBook.fromJson(book)).toList();
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<bool> removeBook(String bookId) async {
+    try {
+      final response = await _client.post(
+        Uri.parse('$_baseUrl/admin/book/delete'),
+        headers: await getHeaders(),
+        body: jsonEncode({'_id': bookId}),
+      );
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }
