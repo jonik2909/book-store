@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/pages/admin/admin_books.dart';
+import 'package:book_store/pages/admin/admin_members.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,6 +32,15 @@ class AdminPanel extends StatelessWidget {
                 'View and manage all published books',
                 Icons.library_books,
                 AdminBooks(),
+                Colors.blue[700]!,
+              ),
+
+              _buildRouterCard(
+                context,
+                'All Members',
+                'View and manage all members',
+                Icons.supervised_user_circle_sharp,
+                AdminMembers(),
                 Colors.blue[700]!,
               ),
 

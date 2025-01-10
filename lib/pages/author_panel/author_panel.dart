@@ -57,7 +57,7 @@ class AuthorPanel extends StatelessWidget {
               'Create and publish a new book',
               Icons.add_circle,
               CreateBook(),
-              Colors.green[700]!,
+              Colors.blue[700]!,
             ),
           ],
         ),

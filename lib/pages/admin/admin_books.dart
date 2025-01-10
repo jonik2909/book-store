@@ -31,7 +31,7 @@ class AdminBooks extends StatelessWidget {
               ),
             ),
             Text(
-              'Controll all books',
+              'Manage all books',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[600],

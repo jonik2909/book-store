@@ -204,4 +204,46 @@ class MemberService {
       throw Exception('Failed to update user data: ${e.toString()}');
     }
   }
+
+  // ADMIN API
+  Future<List<Member>> getAllBooks() async {
+    try {
+      final response = await _client.get(
+        Uri.parse('$_baseUrl/admin/member/all'),
+        headers: await getHeaders(),
+      );
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return body.map<Member>((book) => Member.fromJson(book)).toList();
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<bool> removeMember(String memberId) async {
+    try {
+      final response = await _client.post(
+        Uri.parse('$_baseUrl/admin/member/delete'),
+        headers: await getHeaders(),
+        body: jsonEncode({'_id': memberId}),
+      );
+
+      final body = jsonDecode(response.body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      } else {
+        final errorMessage = body['message'] ?? 'Something went wrong!';
+        throw errorMessage;
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }
