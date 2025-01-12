@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:book_store/controller/controller.dart';
 import 'package:book_store/models/Member.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/pages/splash_page.dart';
@@ -88,6 +89,11 @@ class MemberController extends GetxController {
     try {
       await memberService.logout(authToken.value);
       authToken.value = '';
+
+      final Controller controller = Get.put(Controller());
+
+      // Reset the screen to HOME before logging out
+      controller.resetScreen();
 
       await _clearStorage();
 

@@ -12,6 +12,10 @@ class Controller extends GetxController {
     currentScreen.value = index;
   }
 
+  void resetScreen() {
+    currentScreen.value = 0;
+  }
+
   // image upload
   Rx<File?> _thumnailImage = Rx<File?>(null);
   Rx<File?> get thumnailImage => _thumnailImage;

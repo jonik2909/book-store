@@ -1,10 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:io';
-
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
-import 'package:book_store/helper/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
