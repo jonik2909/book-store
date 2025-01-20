@@ -5,10 +5,10 @@ import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/models/Member.dart';
 import 'package:book_store/pages/admin/admin_panel.dart';
 import 'package:book_store/pages/author_panel/author_panel.dart';
-import 'package:book_store/pages/books_page.dart';
-import 'package:book_store/pages/authors_page.dart';
-import 'package:book_store/pages/home_page.dart';
-import 'package:book_store/pages/profile_page.dart';
+import 'package:book_store/pages/books/books_page.dart';
+import 'package:book_store/pages/authors/authors_page.dart';
+import 'package:book_store/pages/home/home_page.dart';
+import 'package:book_store/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

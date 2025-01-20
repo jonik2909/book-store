@@ -1,6 +1,6 @@
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/pages/main_page.dart';
-import 'package:book_store/pages/splash_page.dart';
+import 'package:book_store/pages/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

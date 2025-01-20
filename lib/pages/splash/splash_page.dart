@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:book_store/pages/login_page.dart';
-import 'package:book_store/pages/signup_page.dart';
+import 'package:book_store/pages/join/login_page.dart';
+import 'package:book_store/pages/join/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

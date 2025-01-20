@@ -3,7 +3,7 @@
 import 'dart:typed_data';
 
 import 'package:book_store/controller/book.controller.dart';
-import 'package:book_store/pages/file_reader.dart';
+import 'package:book_store/pages/books/file_reader.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -28,7 +28,7 @@ Check out this book on Book Store!
 💰 Price: \$$price
 
 📖 Description:
-${description}
+$description
 ''';
     Share.share(shareText);
   }
