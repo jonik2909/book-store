@@ -63,7 +63,7 @@ class BookCard extends StatelessWidget {
                             fit: BoxFit.fill,
                           )
                         : Image.asset(
-                            "lib/assets/book.jpg",
+                            "lib/assets/images/book.jpg",
                             width: double.infinity,
                             height: 194,
                             fit: BoxFit.fill,

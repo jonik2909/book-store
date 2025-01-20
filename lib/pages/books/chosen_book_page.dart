@@ -283,7 +283,7 @@ $description
                           try {
                             // Load the EPUB file from assets
                             final ByteData data = await rootBundle
-                                .load('lib/assets/books/book.epub');
+                                .load('lib/assets/files/book.epub');
                             final bytes = data.buffer.asUint8List();
 
                             // Get temporary directory to save the file

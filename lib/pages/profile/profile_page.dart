@@ -121,8 +121,8 @@ class ProfilePage extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
-                                        image:
-                                            AssetImage('lib/assets/book.jpg'),
+                                        image: AssetImage(
+                                            'lib/assets/images/book.jpg'),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
