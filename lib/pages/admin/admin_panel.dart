@@ -17,10 +17,37 @@ class AdminPanel extends StatelessWidget {
           scrolledUnderElevation: 0,
           backgroundColor: Colors.white,
           centerTitle: false,
-          title: Text(
-            'Admin Page',
-            style: TextStyle(fontWeight: FontWeight.w800),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Admin Panel',
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  color: Colors.red,
+                  fontSize: 24,
+                ),
+              ),
+              Text(
+                'Manage system',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 15), // Right padding
+              child: Icon(
+                Icons.menu_book_rounded,
+                color: Colors.red,
+                size: 20,
+              ),
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),

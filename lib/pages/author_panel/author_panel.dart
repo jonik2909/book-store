@@ -19,7 +19,7 @@ class AuthorPanel extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Author Panel',
               style: TextStyle(
                 fontWeight: FontWeight.w800,
@@ -37,6 +37,16 @@ class AuthorPanel extends StatelessWidget {
             ),
           ],
         ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 15), // Right padding
+            child: Icon(
+              Icons.menu_book_rounded,
+              color: Colors.red,
+              size: 20,
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),

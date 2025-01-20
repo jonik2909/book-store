@@ -24,12 +24,38 @@ class HomePage extends StatelessWidget {
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         centerTitle: false,
-        title: Text(
-          'Book Store',
-          style: TextStyle(fontWeight: FontWeight.w800),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Book Store',
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                color: Colors.red,
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              'All for you',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15), // Right padding
+            child: Icon(
+              Icons.menu_book_rounded,
+              color: Colors.red,
+              size: 20,
+            ),
+          ),
+        ],
       ),
-      drawer: Drawer(),
       body: RefreshIndicator(
         onRefresh: () => bookController.refreshHomePageData(),
         child: SingleChildScrollView(
