@@ -41,7 +41,6 @@ class MainPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: Drawer(),
       body: Obx(() => getScreens()[controller.currentScreen.value]),
       bottomNavigationBar: Obx(() {
         final items = <BottomNavigationBarItem>[

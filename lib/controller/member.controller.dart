@@ -64,7 +64,7 @@ class MemberController extends GetxController {
 
       await _saveToken(authToken.value, authMember.value!);
 
-      Get.to(MainPage());
+      Get.offAll(() => MainPage());
     } catch (e) {
       loginErrorMessage.value = e.toString();
     }
@@ -79,7 +79,7 @@ class MemberController extends GetxController {
 
       await _saveToken(authToken.value, authMember.value!);
 
-      Get.to(MainPage());
+      Get.offAll(() => MainPage());
     } catch (e) {
       signupErrorMessage.value = e.toString();
     }
