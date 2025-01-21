@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -103,15 +104,33 @@ class ProfilePage extends StatelessWidget {
                               )
                             // Otherwise show existing profile image or default
                             : member.memberImage != ""
-                                ? Container(
-                                    width: 105,
-                                    height: 105,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            '${dotenv.env['UPLOAD_URL']}/${member.memberImage!}'),
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(52.5),
+                                    child: Container(
+                                      width: 105,
+                                      height: 105,
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            '${dotenv.env['UPLOAD_URL']}/${member.memberImage!}',
                                         fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                            Container(
+                                          color: Colors.grey[200],
+                                          child: Center(
+                                            child: CircularProgressIndicator(),
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  'lib/assets/images/book.jpg'),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   )

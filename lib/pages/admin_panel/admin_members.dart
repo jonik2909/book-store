@@ -1,5 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:book_store/controller/admin.controller.dart';
 import 'package:book_store/models/Member.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -78,6 +81,7 @@ class AdminMembers extends StatelessWidget {
                     child: Row(
                       children: [
                         // Member Avatar
+                        // Member Avatar qismini o'zgartiramiz
                         Container(
                           width: 60,
                           height: 60,
@@ -92,23 +96,18 @@ class AdminMembers extends StatelessWidget {
                           child: member.memberImage != null &&
                                   member.memberImage!.isNotEmpty
                               ? ClipOval(
-                                  child: Image.network(
-                                    '${dotenv.env['UPLOAD_URL']}/${member.memberImage}',
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        '${dotenv.env['UPLOAD_URL']}/${member.memberImage}',
                                     fit: BoxFit.cover,
                                     width: 60,
                                     height: 60,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Center(
-                                        child: Text(
-                                          member.memberNick[0].toUpperCase(),
-                                          style: const TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xffEB5757),
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                    placeholder: (context, url) => Container(
+                                      color: Colors.grey[200],
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
                                   ),
                                 )
                               : Center(

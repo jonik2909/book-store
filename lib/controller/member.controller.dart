@@ -204,7 +204,7 @@ class MemberController extends GetxController {
     }
   }
 
-  Future<void> getBook(String memberId) async {
+  Future<void> getMember(String memberId) async {
     isLoading.value = true;
 
     try {

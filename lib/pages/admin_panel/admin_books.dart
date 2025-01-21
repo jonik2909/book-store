@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:book_store/controller/admin.controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -81,13 +82,19 @@ class AdminBooks extends StatelessWidget {
                     Expanded(
                       child: Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
+                        child: ClipRRect(
                           borderRadius:
                               BorderRadius.vertical(top: Radius.circular(12)),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}'),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
                             fit: BoxFit.cover,
+                            placeholder: (context, url) => Container(
+                              color: Colors.grey[200],
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
                           ),
                         ),
                       ),

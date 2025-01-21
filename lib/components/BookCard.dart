@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class BookCard extends StatelessWidget {
@@ -55,19 +56,18 @@ class BookCard extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: imageNetwork.isNotEmpty
-                        ? Image.network(
-                            imageNetwork,
-                            width: double.infinity,
-                            height: 194,
-                            fit: BoxFit.fill,
-                          )
-                        : Image.asset(
-                            "lib/assets/images/book.jpg",
-                            width: double.infinity,
-                            height: 194,
-                            fit: BoxFit.fill,
-                          ),
+                    child: CachedNetworkImage(
+                      imageUrl: imageNetwork,
+                      width: double.infinity,
+                      height: 194,
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) => Container(
+                        color: Colors.grey[200],
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 // Category badge overlay

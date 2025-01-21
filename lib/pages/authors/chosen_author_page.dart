@@ -2,6 +2,7 @@
 
 import 'package:book_store/components/BookCard.dart';
 import 'package:book_store/pages/books/chosen_book_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:book_store/controller/member.controller.dart';
@@ -31,7 +32,7 @@ Check out this author on Book Store!
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final String memberId = Get.arguments['memberId'] as String;
-      memberController.getBook(memberId);
+      memberController.getMember(memberId);
     });
 
     return Scaffold(
@@ -88,11 +89,31 @@ Check out this author on Book Store!
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(60),
                             child: SizedBox(
-                              width: 120, // Fixed size
+                              width: 120,
                               height: 120,
-                              child: Image.network(
-                                '${dotenv.env['UPLOAD_URL']}/${author.memberImage}',
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    '${dotenv.env['UPLOAD_URL']}/${author.memberImage}',
                                 fit: BoxFit.cover,
+                                placeholder: (context, url) => Container(
+                                  color: Colors.grey[200],
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    CircleAvatar(
+                                  radius: 60,
+                                  backgroundColor: Colors.grey[200],
+                                  child: Text(
+                                    author.memberNick[0].toUpperCase(),
+                                    style: TextStyle(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey[800],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -187,7 +208,7 @@ Check out this author on Book Store!
                           );
                         },
                         bookName: book.bookName,
-                        bookAuthor: '${author.memberNick}',
+                        bookAuthor: author.memberNick,
                         bookPrice: book.bookPrice,
                         bookViews: book.bookViews,
                         bookCategory:

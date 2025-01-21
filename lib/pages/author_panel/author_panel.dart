@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:book_store/pages/author_panel/create_book.dart';
 import 'package:book_store/pages/author_panel/author_books.dart';
 import 'package:flutter/material.dart';

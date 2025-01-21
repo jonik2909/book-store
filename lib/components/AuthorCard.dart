@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -41,8 +44,6 @@ class AuthorCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              // Author Avatar with border
-              // Author Avatar with border
               Container(
                 width: 60,
                 height: 60,
@@ -58,23 +59,17 @@ class AuthorCard extends StatelessWidget {
                 ),
                 child: memberImage != null && memberImage!.isNotEmpty
                     ? ClipOval(
-                        child: Image.network(
-                          '${dotenv.env['UPLOAD_URL']}/$memberImage',
-                          fit: BoxFit.cover,
+                        child: CachedNetworkImage(
+                          imageUrl: '${dotenv.env['UPLOAD_URL']}/$memberImage',
                           width: 60,
                           height: 60,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Center(
-                              child: Text(
-                                memberNick[0].toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xffEB5757),
-                                ),
-                              ),
-                            );
-                          },
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Container(
+                            color: Colors.grey[200],
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
                         ),
                       )
                     : Center(

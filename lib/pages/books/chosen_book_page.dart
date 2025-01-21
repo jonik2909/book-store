@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:book_store/controller/book.controller.dart';
 import 'package:book_store/pages/books/file_reader.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -118,19 +119,16 @@ $description
                                 imageUrl: '${dotenv.env['UPLOAD_URL']}/$img',
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  child: Image.network(
-                                    '${dotenv.env['UPLOAD_URL']}/$img',
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        '${dotenv.env['UPLOAD_URL']}/$img',
                                     fit: BoxFit.fill,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return const Center(
-                                          child: Icon(Icons.error));
-                                    },
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return const Center(
-                                          child: CircularProgressIndicator());
-                                    },
+                                    placeholder: (context, url) => Container(
+                                      color: Colors.grey[200],
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
