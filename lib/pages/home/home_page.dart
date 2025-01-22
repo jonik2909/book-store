@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/components/BookCard.dart';
+import 'package:book_store/components/book_card.dart';
 import 'package:book_store/pages/books/chosen_book_page.dart';
 import 'package:book_store/controller/book.controller.dart';
 import 'package:flutter/material.dart';
