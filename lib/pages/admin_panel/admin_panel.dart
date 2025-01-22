@@ -59,7 +59,7 @@ class AdminPanel extends StatelessWidget {
                 'View and manage all published books',
                 Icons.library_books,
                 AdminBooks(),
-                Colors.blue[700]!,
+                Colors.red[700]!,
               ),
               SizedBox(height: 16),
               _buildRouterCard(
@@ -68,7 +68,7 @@ class AdminPanel extends StatelessWidget {
                 'View and manage all members',
                 Icons.supervised_user_circle_sharp,
                 AdminMembers(),
-                Colors.blue[700]!,
+                Colors.red[700]!,
               ),
 
               // _buildRouterTile(context, 'Users', Icons.people, Members()),

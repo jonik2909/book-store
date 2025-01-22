@@ -60,7 +60,7 @@ class AuthorPanel extends StatelessWidget {
               'View and manage your published books',
               Icons.library_books,
               AuthorBooks(),
-              Colors.blue[700]!,
+              Colors.red[700]!,
             ),
             SizedBox(height: 16),
             _buildRouterCard(
@@ -69,7 +69,7 @@ class AuthorPanel extends StatelessWidget {
               'Create and publish a new book',
               Icons.add_circle,
               CreateBook(),
-              Colors.blue[700]!,
+              Colors.red[700]!,
             ),
           ],
         ),
