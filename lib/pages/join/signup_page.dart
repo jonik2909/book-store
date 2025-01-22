@@ -14,6 +14,9 @@ class SignupPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  // Add RxBool for author status
+  final RxBool isAuthor = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +39,7 @@ class SignupPage extends StatelessWidget {
                           color: Color.fromRGBO(0, 0, 0, 0.04),
                           spreadRadius: 5,
                           blurRadius: 10,
-                          offset: Offset(0, 1), // changes position of shadow
+                          offset: Offset(0, 1),
                         ),
                       ],
                     ),
@@ -66,7 +69,7 @@ class SignupPage extends StatelessWidget {
                           color: Color.fromRGBO(0, 0, 0, 0.04),
                           spreadRadius: 5,
                           blurRadius: 10,
-                          offset: Offset(0, 1), // changes position of shadow
+                          offset: Offset(0, 1),
                         ),
                       ],
                     ),
@@ -95,7 +98,7 @@ class SignupPage extends StatelessWidget {
                           color: Color.fromRGBO(0, 0, 0, 0.04),
                           spreadRadius: 5,
                           blurRadius: 10,
-                          offset: Offset(0, 1), // changes position of shadow
+                          offset: Offset(0, 1),
                         ),
                       ],
                     ),
@@ -118,6 +121,53 @@ class SignupPage extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: 20),
+                  // Modern author selection
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border:
+                          Border.all(color: Color(0xff8E8E93).withOpacity(0.2)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.04),
+                          spreadRadius: 1,
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.edit_outlined,
+                              color: Color(0xffEB5757),
+                              size: 20,
+                            ),
+                            SizedBox(width: 12),
+                            Text(
+                              'Sign up as an Author',
+                              style: TextStyle(
+                                color: Color(0xff8E8E93),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Obx(() => Switch(
+                              value: isAuthor.value,
+                              onChanged: (value) => isAuthor.value = value,
+                              activeColor: Color(0xffEB5757),
+                            )),
+                      ],
+                    ),
+                  ),
                   SizedBox(height: 10),
                   Obx(() => Text(
                         memberController.signupErrorMessage.value,
@@ -133,13 +183,13 @@ class SignupPage extends StatelessWidget {
                           nickController.text,
                           emailController.text,
                           passwordController.text,
+                          isAuthor.value, // Pass author status
                         );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xffEB5757),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(10), // Border radius
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       child: Text(
@@ -157,7 +207,7 @@ class SignupPage extends StatelessWidget {
                     onTap: () => Get.to(LoginPage()),
                     child: RichText(
                       text: TextSpan(
-                        text: "Alredy have an account? ",
+                        text: "Already have an account? ",
                         style: TextStyle(
                             color: Color(0xff8E8E93),
                             fontWeight: FontWeight.w400),

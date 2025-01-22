@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:book_store/models/Member.dart';
 import 'package:book_store/utils/utils.dart';
@@ -40,6 +41,7 @@ class MemberService {
     required String username,
     required String email,
     required String password,
+    required bool isAuthor,
   }) async {
     try {
       final response = await _client.post(
@@ -49,6 +51,9 @@ class MemberService {
           'memberNick': username,
           'memberEmail': email,
           'memberPassword': password,
+          'memberType': isAuthor
+              ? MemberType.AUTHOR.toString().split('.').last
+              : MemberType.USER.toString().split('.').last
         }),
       );
 

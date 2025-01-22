@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:book_store/controller/controller.dart';
@@ -70,10 +71,14 @@ class MemberController extends GetxController {
     }
   }
 
-  Future<void> signup(String username, String email, String password) async {
+  Future<void> signup(
+      String username, String email, String password, bool isAuthor) async {
     try {
       var response = await memberService.signup(
-          username: username, email: email, password: password);
+          username: username,
+          email: email,
+          password: password,
+          isAuthor: isAuthor);
       authToken.value = response['accessToken'];
       authMember.value = Member.fromJson(response['member']);
 
