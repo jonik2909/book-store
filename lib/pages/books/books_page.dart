@@ -60,87 +60,90 @@ class BooksPage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 30),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5),
-              child: SizedBox(
-                height: 40,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _categories.length,
-                  itemBuilder: (context, index) {
-                    final category = _categories[index];
-                    return GestureDetector(
-                      onTap: () => {
-                        bookController.getBookPagedata(category),
-                        bookController.changeCategory(category)
-                      },
-                      child: Obx(() => CategoryCard(
-                            name: category.toString().split('.').last,
-                            selected: category ==
-                                bookController.selectedCategory.value,
-                          )),
-                    );
-                  },
-                  separatorBuilder: (context, index) => SizedBox(width: 10),
+      body: RefreshIndicator(
+        onRefresh: () => bookController
+            .getBookPagedata(bookController.selectedCategory.value),
+        child: ListView(physics: AlwaysScrollableScrollPhysics(), children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 30),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: SizedBox(
+                  height: 40,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _categories.length,
+                    itemBuilder: (context, index) {
+                      final category = _categories[index];
+                      return GestureDetector(
+                        onTap: () => {
+                          bookController.getBookPagedata(category),
+                          bookController.changeCategory(category)
+                        },
+                        child: Obx(() => CategoryCard(
+                              name: category.toString().split('.').last,
+                              selected: category ==
+                                  bookController.selectedCategory.value,
+                            )),
+                      );
+                    },
+                    separatorBuilder: (context, index) => SizedBox(width: 10),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 25),
-            Container(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Obx(() {
-                  if (bookController.isLoading.value) {
-                    return Center(child: CircularProgressIndicator());
-                  }
+              SizedBox(height: 25),
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Obx(() {
+                    if (bookController.isLoading.value) {
+                      return Center(child: CircularProgressIndicator());
+                    }
 
-                  if (bookController.books.isEmpty) {
-                    return Center(
-                      child: Text(
-                        'No data found!',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey[600],
+                    if (bookController.books.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'No data found!',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[600],
+                          ),
                         ),
-                      ),
-                    );
-                  }
-
-                  return Wrap(
-                    direction: Axis.horizontal,
-                    spacing: 16,
-                    runSpacing: 16,
-                    children: bookController.books.map((book) {
-                      return BookCard(
-                        onTap: () => Get.to(() => ChosenBookPage(),
-                                arguments: {'bookId': book.id})!
-                            .then((_) => bookController.getBookPagedata(
-                                bookController.selectedCategory.value)),
-                        bookName: book.bookName,
-                        bookAuthor: '${book.authorData?.memberNick}',
-                        bookPrice: book.bookPrice,
-                        bookViews: book.bookViews,
-                        bookCategory:
-                            book.bookCategory.toString().split('.').last,
-                        width: (MediaQuery.of(context).size.width - 60) / 2,
-                        height: 200,
-                        imageNetwork:
-                            '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
                       );
-                    }).toList(),
-                  );
-                }),
+                    }
+
+                    return Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 16,
+                      runSpacing: 16,
+                      children: bookController.books.map((book) {
+                        return BookCard(
+                          onTap: () => Get.to(() => ChosenBookPage(),
+                                  arguments: {'bookId': book.id})!
+                              .then((_) => bookController.getBookPagedata(
+                                  bookController.selectedCategory.value)),
+                          bookName: book.bookName,
+                          bookAuthor: '${book.authorData?.memberNick}',
+                          bookPrice: book.bookPrice,
+                          bookViews: book.bookViews,
+                          bookCategory:
+                              book.bookCategory.toString().split('.').last,
+                          width: (MediaQuery.of(context).size.width - 60) / 2,
+                          height: 200,
+                          imageNetwork:
+                              '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
+                        );
+                      }).toList(),
+                    );
+                  }),
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ]),
       ),
     );
   }

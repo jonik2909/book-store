@@ -58,12 +58,29 @@ class HomePage extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () => bookController.refreshHomePageData(),
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
+        child: Obx(() {
+          if (bookController.isLoading.value) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (bookController.topBooks.isEmpty) {
+            return Center(
+              child: Text(
+                'No data found!',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey[600],
+                ),
+              ),
+            );
+          }
+
+          return ListView(
+            physics: AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 20),
                 height: 50,
                 color: Color.fromARGB(229, 248, 248, 248),
                 padding: EdgeInsets.symmetric(horizontal: 20),
@@ -80,42 +97,32 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                child: Center(
-                  child: Obx(() {
-                    if (bookController.isLoading.value) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-
-                    return Wrap(
-                      direction: Axis.horizontal,
-                      spacing: 16,
-                      runSpacing: 16,
-                      children: bookController.topBooks.map((book) {
-                        return BookCard(
-                          onTap: () => Get.to(() => ChosenBookPage(),
-                                  arguments: {'bookId': book.id})!
-                              .then(
-                                  (_) => bookController.refreshHomePageData()),
-                          bookName: book.bookName,
-                          bookAuthor: '${book.authorData?.memberNick}',
-                          bookPrice: book.bookPrice,
-                          bookViews: book.bookViews,
-                          bookCategory:
-                              book.bookCategory.toString().split('.').last,
-                          width: (MediaQuery.of(context).size.width - 60) / 2,
-                          height: 200,
-                          imageNetwork:
-                              '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
-                        );
-                      }).toList(),
-                    );
-                  }),
-                ),
+              SizedBox(height: 20),
+              Wrap(
+                alignment: WrapAlignment.start,
+                direction: Axis.horizontal,
+                spacing: 16,
+                runSpacing: 16,
+                children: bookController.topBooks.map((book) {
+                  return BookCard(
+                    onTap: () => Get.to(() => ChosenBookPage(),
+                            arguments: {'bookId': book.id})!
+                        .then((_) => bookController.refreshHomePageData()),
+                    bookName: book.bookName,
+                    bookAuthor: '${book.authorData?.memberNick}',
+                    bookPrice: book.bookPrice,
+                    bookViews: book.bookViews,
+                    bookCategory: book.bookCategory.toString().split('.').last,
+                    width: (MediaQuery.of(context).size.width - 60) / 2,
+                    height: 200,
+                    imageNetwork:
+                        '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
+                  );
+                }).toList(),
               ),
             ],
-          ),
-        ),
+          );
+        }),
       ),
     );
   }
