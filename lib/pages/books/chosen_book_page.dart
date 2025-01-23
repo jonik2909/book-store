@@ -15,7 +15,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ChosenBookPage extends GetView<NewBookController> {
+class ChosenBookPage extends GetView<BookController> {
   const ChosenBookPage({super.key});
 
   void _shareBookDetails(String bookName, String authorName, String category,

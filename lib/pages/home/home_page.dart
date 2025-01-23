@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final NewBookController bookController = Get.put(NewBookController());
+  final BookController bookController = Get.put(BookController());
 
   @override
   Widget build(BuildContext context) {

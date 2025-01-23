@@ -3,7 +3,7 @@ import 'package:book_store/services/BookService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class NewBookController extends GetxController {
+class BookController extends GetxController {
   final bookService = NewBookService();
 
   final RxBool isLoading = false.obs;
