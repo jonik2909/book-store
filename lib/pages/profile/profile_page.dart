@@ -58,10 +58,10 @@ class ProfilePage extends StatelessWidget {
 
         if (member == null) {
           return GestureDetector(
-              onTap: () {
-                memberController.logout();
-              },
-              child: Center(child: CircularProgressIndicator()));
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
 
         final TextEditingController nickController = TextEditingController(
@@ -84,12 +84,12 @@ class ProfilePage extends StatelessWidget {
                 Center(
                   child: GestureDetector(
                     onTap: () {
-                      controller.picImage();
+                      memberController.pickMemberImage();
                     },
                     child: Stack(
                       children: [
                         // Show preview if there's a newly selected image
-                        Obx(() => controller.thumnailImage.value != null
+                        Obx(() => memberController.thumnailImage.value != null
                             ? Container(
                                 width: 105,
                                 height: 105,
@@ -97,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: FileImage(
-                                        controller.thumnailImage.value!),
+                                        memberController.thumnailImage.value!),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -309,8 +309,8 @@ class ProfilePage extends StatelessWidget {
                                           memberNick: nickController.text,
                                           memberEmail: emailController.text,
                                           memberDesc: descController.text,
-                                          memberImage:
-                                              controller.thumnailImage.value,
+                                          memberImage: memberController
+                                              .thumnailImage.value,
                                         );
                                       }
                                     },

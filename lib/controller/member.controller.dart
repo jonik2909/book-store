@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -8,6 +10,7 @@ import 'package:book_store/pages/splash/splash_page.dart';
 import 'package:book_store/services/MemberService.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MemberController extends GetxController {
@@ -16,7 +19,6 @@ class MemberController extends GetxController {
   final RxBool isLoading = false.obs;
 
   var authToken = ''.obs;
-  // var member = Member(id: id, memberNick: memberNick, memberType: memberType, memberStatus: memberStatus, memberEmail: memberEmail, memberDesc: memberDesc, memberViews: memberViews, memberLikes: memberLikes, createdAt: createdAt, updatedAt: updatedAt, bookData: bookData).obs;
   var loginErrorMessage = ''.obs;
   var signupErrorMessage = ''.obs;
   var isAuthenticated = false.obs;
@@ -27,6 +29,28 @@ class MemberController extends GetxController {
 
   // Chosen Author Page
   final Rx<Member?> chosenAuthor = Rx<Member?>(null);
+
+  // Profile page
+  Rx<File?> _thumnailImage = Rx<File?>(null);
+  Rx<File?> get thumnailImage => _thumnailImage;
+
+  Future pickMemberImage() async {
+    try {
+      var img = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+      if (img == null) return;
+
+      _thumnailImage.value = File(img.path);
+    } catch (err) {
+      Get.snackbar(
+        'Error',
+        err.toString(),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
 
   @override
   void onReady() {
