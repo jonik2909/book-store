@@ -71,7 +71,7 @@ class MemberController extends GetxController {
         Get.offAll(() => MainPage());
       } else {
         isAuthenticated.value = false;
-        Get.offAll(() => SplashPage());
+        // Get.offAll(() => SplashPage());
       }
     } catch (e) {
       isAuthenticated.value = false;
@@ -117,15 +117,9 @@ class MemberController extends GetxController {
     try {
       await memberService.logout(authToken.value);
       authToken.value = '';
-
-      final Controller controller = Get.put(Controller());
-
-      // Reset the screen to HOME before logging out
-      controller.resetScreen();
+      authMember.value = null;
 
       await _clearStorage();
-
-      Get.to(SplashPage());
     } catch (err) {
       Get.snackbar(
         'Error',

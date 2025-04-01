@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/member.controller.dart';
+import 'package:book_store/pages/splash/splash_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -59,8 +60,28 @@ class ProfilePage extends StatelessWidget {
         if (member == null) {
           return GestureDetector(
             child: Center(
-              child: CircularProgressIndicator(),
-            ),
+                child: SizedBox(
+              height: 50,
+              width: 200,
+              child: ElevatedButton(
+                onPressed: () {
+                  Get.offAll(SplashPage());
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xffEB5757),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            )),
           );
         }
 
