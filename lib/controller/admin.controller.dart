@@ -16,7 +16,7 @@ class AdminController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxList<File> selectedImages = <File>[].obs;
 
-  final RxList<NewBook> adminBooks = <NewBook>[].obs;
+  final RxList<Book> adminBooks = <Book>[].obs;
   final RxList<Member> adminMembers = <Member>[].obs;
 
   @override

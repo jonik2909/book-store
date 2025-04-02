@@ -11,7 +11,7 @@ enum BookCategory {
 
 enum BookStatus { PROCESS, PAUSE }
 
-class NewBook {
+class Book {
   final String? id;
   final String bookName;
   final int bookPrice;
@@ -26,7 +26,7 @@ class NewBook {
   final DateTime? updatedAt;
   final Member? authorData;
 
-  NewBook({
+  Book({
     this.id,
     required this.bookName,
     required this.bookPrice,
@@ -42,8 +42,8 @@ class NewBook {
     required this.authorData,
   });
 
-  factory NewBook.fromJson(Map<String, dynamic> json) {
-    return NewBook(
+  factory Book.fromJson(Map<String, dynamic> json) {
+    return Book(
       id: json['_id'],
       bookName: json['bookName'],
       bookPrice: json['bookPrice'],

@@ -9,7 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class EditBookPage extends StatelessWidget {
   EditBookPage({Key? key, required this.book}) : super(key: key);
 
-  final NewBook book;
+  final Book book;
   final _formKey = GlobalKey<FormState>();
   final AuthorController authorController = Get.find();
 

@@ -15,6 +15,7 @@ class AuthorsPage extends StatelessWidget {
   Future<void> refreshData() async {
     // Convert the void return type to Future<void>
     await memberController.getAuthorList(
+      targetList: memberController.authorList,
       order: 'createdAt',
       page: 1,
       limit: 100,
@@ -103,18 +104,20 @@ class AuthorsPage extends StatelessWidget {
                           runSpacing: 20,
                           children: memberController.authorList.map((author) {
                             return AuthorCard(
-                                memberNick: author.memberNick,
-                                memberEmail: author.memberEmail,
-                                memberImage: author.memberImage,
-                                memberViews: author.memberViews,
-                                onTap: () => Get.to(() => AuthorDetailPage(),
-                                        arguments: {'memberId': author.id})
-                                    ?.then((_) =>
-                                        memberController.getAuthorList(
-                                            order: 'createdAt',
-                                            page: 1,
-                                            limit: 100,
-                                            memberType: MemberType.AUTHOR)));
+                              memberNick: author.memberNick,
+                              memberEmail: author.memberEmail,
+                              memberImage: author.memberImage,
+                              memberViews: author.memberViews,
+                              onTap: () => Get.to(() => AuthorDetailPage(),
+                                  arguments: {'memberId': author.id})?.then(
+                                (_) => memberController.getAuthorList(
+                                    targetList: memberController.authorList,
+                                    order: 'createdAt',
+                                    page: 1,
+                                    limit: 100,
+                                    memberType: MemberType.AUTHOR),
+                              ),
+                            );
                           }).toList(),
                         );
                       })

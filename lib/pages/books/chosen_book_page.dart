@@ -74,10 +74,6 @@ $description
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (controller.errorMessage.value.isNotEmpty) {
-          return Center(child: Text(controller.errorMessage.value));
-        }
-
         final book = controller.chosenBook.value;
         if (book == null) {
           return const Center(child: Text('Kitob topilmadi'));

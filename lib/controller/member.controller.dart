@@ -25,6 +25,9 @@ class MemberController extends GetxController {
   final Rx<Member?> authMember = Rx<Member?>(null);
 
   // Home Page
+  final RxList<Member> topAuthors = <Member>[].obs;
+
+  // Authors Page
   final RxList<Member> authorList = <Member>[].obs;
 
   // Chosen Author Page
@@ -58,7 +61,20 @@ class MemberController extends GetxController {
     checkLoginStatus();
 
     getAuthorList(
-        order: 'createdAt', page: 1, limit: 100, memberType: MemberType.AUTHOR);
+        targetList: authorList,
+        order: 'createdAt',
+        page: 1,
+        limit: 100,
+        memberType: MemberType.AUTHOR);
+
+    getAuthorList(
+        targetList: topAuthors,
+        order: 'createdAt',
+        page: 1,
+        limit: 100,
+        memberType: MemberType.AUTHOR);
+
+    print("topAuthors: $topAuthors");
   }
 
   Future<void> checkLoginStatus() async {
@@ -195,6 +211,7 @@ class MemberController extends GetxController {
   }
 
   Future<void> getAuthorList({
+    required RxList<Member> targetList,
     String? order,
     int? page,
     int? limit,
@@ -212,7 +229,7 @@ class MemberController extends GetxController {
         search: search,
       );
 
-      authorList.assignAll(members);
+      targetList.assignAll(members);
     } catch (err) {
       Get.snackbar(
         'Error',

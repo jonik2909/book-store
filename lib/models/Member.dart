@@ -18,7 +18,7 @@ class Member {
   final int memberLikes;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final List<NewBook>? bookData;
+  final List<Book>? bookData;
 
   Member({
     required this.id,
@@ -49,7 +49,7 @@ class Member {
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
       bookData: json['bookData'] != null
-          ? List<NewBook>.from(json['bookData'].map((x) => NewBook.fromJson(x)))
+          ? List<Book>.from(json['bookData'].map((x) => Book.fromJson(x)))
           : null,
     );
   }

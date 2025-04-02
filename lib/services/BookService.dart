@@ -14,7 +14,7 @@ class NewBookService {
         _client = client ?? http.Client();
 
   // getBooks
-  Future<List<NewBook>> getBooks({
+  Future<List<Book>> getBooks({
     String? order,
     int? page,
     int? limit,
@@ -40,14 +40,14 @@ class NewBookService {
       );
       final List<dynamic> jsonData = await handleListResponse(response);
 
-      return jsonData.map((book) => NewBook.fromJson(book)).toList();
+      return jsonData.map((book) => Book.fromJson(book)).toList();
     } catch (e) {
       throw Exception('Failed to fetch books: ${e.toString()}');
     }
   }
 
   // getBook
-  Future<NewBook> getBook(String bookId) async {
+  Future<Book> getBook(String bookId) async {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/book/$bookId'),
@@ -57,7 +57,7 @@ class NewBookService {
       final body = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return NewBook.fromJson(body);
+        return Book.fromJson(body);
       } else {
         final errorMessage = body['message'] ?? 'Something went wrong!';
         throw errorMessage;
@@ -68,7 +68,7 @@ class NewBookService {
   }
 
   //createBook
-  Future<NewBook> createBook({
+  Future<Book> createBook({
     required String bookName,
     required int bookPrice,
     required String bookDesc,
@@ -113,7 +113,7 @@ class NewBookService {
       final body = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return NewBook.fromJson(body);
+        return Book.fromJson(body);
       } else {
         final errorMessage = body['message'] ?? 'Something went wrong!';
         throw errorMessage;
@@ -123,7 +123,7 @@ class NewBookService {
     }
   }
 
-  Future<List<NewBook>> getAuthorBooks() async {
+  Future<List<Book>> getAuthorBooks() async {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/book/my'),
@@ -133,7 +133,7 @@ class NewBookService {
       final body = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return body.map<NewBook>((book) => NewBook.fromJson(book)).toList();
+        return body.map<Book>((book) => Book.fromJson(book)).toList();
       } else {
         final errorMessage = body['message'] ?? 'Something went wrong!';
         throw errorMessage;
@@ -164,7 +164,7 @@ class NewBookService {
     }
   }
 
-  Future<NewBook> updateBook({
+  Future<Book> updateBook({
     required String id,
     String? bookName,
     String? bookPrice,
@@ -213,7 +213,7 @@ class NewBookService {
       final body = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return NewBook.fromJson(body);
+        return Book.fromJson(body);
       } else {
         final errorMessage = body['message'] ?? 'Something went wrong!';
         throw errorMessage;
@@ -224,7 +224,7 @@ class NewBookService {
   }
 
   // ADMIN API
-  Future<List<NewBook>> getAllBooks() async {
+  Future<List<Book>> getAllBooks() async {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/admin/book/all'),
@@ -234,7 +234,7 @@ class NewBookService {
       final body = jsonDecode(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return body.map<NewBook>((book) => NewBook.fromJson(book)).toList();
+        return body.map<Book>((book) => Book.fromJson(book)).toList();
       } else {
         final errorMessage = body['message'] ?? 'Something went wrong!';
         throw errorMessage;

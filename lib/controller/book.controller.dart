@@ -7,20 +7,19 @@ class BookController extends GetxController {
   final bookService = NewBookService();
 
   final RxBool isLoading = false.obs;
-  final RxString errorMessage = ''.obs;
 
   // Home Page
-  final RxList<NewBook> topBooks = <NewBook>[].obs;
+  final RxList<Book> topBooks = <Book>[].obs;
 
   // Books Page
-  final RxList<NewBook> books = <NewBook>[].obs;
+  final RxList<Book> books = <Book>[].obs;
   final Rx<BookCategory> selectedCategory = BookCategory.FANTASY.obs;
   void changeCategory(BookCategory category) {
     selectedCategory.value = category;
   }
 
   // Chosen Book Page
-  final Rx<NewBook?> chosenBook = Rx<NewBook?>(null);
+  final Rx<Book?> chosenBook = Rx<Book?>(null);
 
   @override
   void onReady() async {
@@ -31,8 +30,6 @@ class BookController extends GetxController {
   }
 
   Future<void> refreshHomePageData() async {
-    errorMessage.value = '';
-
     getBooks(
       targetList: topBooks,
       order: 'bookViews',
@@ -42,8 +39,6 @@ class BookController extends GetxController {
   }
 
   Future<void> getBookPagedata(BookCategory category) async {
-    errorMessage.value = '';
-
     getBooks(
       targetList: books,
       order: 'createdAt',
@@ -54,7 +49,7 @@ class BookController extends GetxController {
   }
 
   Future<void> getBooks({
-    required RxList<NewBook> targetList,
+    required RxList<Book> targetList,
     String? order,
     int? page,
     int? limit,
@@ -62,7 +57,6 @@ class BookController extends GetxController {
     String? search,
   }) async {
     isLoading.value = true;
-    errorMessage.value = '';
 
     try {
       final books = await bookService.getBooks(
@@ -89,7 +83,6 @@ class BookController extends GetxController {
 
   Future<void> getBook(String bookId) async {
     isLoading.value = true;
-    errorMessage.value = '';
 
     try {
       final response = await bookService.getBook(bookId);

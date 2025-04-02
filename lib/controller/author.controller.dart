@@ -15,7 +15,7 @@ class AuthorController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxList<File> selectedImages = <File>[].obs;
 
-  final RxList<NewBook> authorBooks = <NewBook>[].obs;
+  final RxList<Book> authorBooks = <Book>[].obs;
 
   @override
   void onReady() async {
