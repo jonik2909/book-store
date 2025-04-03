@@ -48,6 +48,7 @@ dependencies:
   share_plus: ^7.0.0
   cached_network_image: ^3.3.1
   intl: ^0.18.1
+  video_player: ^2.7.0
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
   assets:
     - lib/assets/images/
     - lib/assets/files/
+    - lib/assets/videos/
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
