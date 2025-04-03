@@ -5,21 +5,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthorHomeCard extends StatelessWidget {
-  final String name;
-  final String email;
-  final int bookCount;
-  final int viewsCount;
-  final String? photoUrl;
+  final String memberNick;
+  final String memberEmail;
+  final int memberBooks;
+  final int memberViews;
+  final String? memberImage;
   final VoidCallback? onTap;
   final double width;
 
   const AuthorHomeCard({
     Key? key,
-    required this.name,
-    required this.email,
-    required this.bookCount,
-    required this.viewsCount,
-    this.photoUrl,
+    required this.memberNick,
+    required this.memberEmail,
+    required this.memberBooks,
+    required this.memberViews,
+    this.memberImage,
     this.onTap,
     this.width = 160,
   }) : super(key: key);
@@ -55,7 +55,7 @@ class AuthorHomeCard extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: photoUrl == null
+                      color: memberImage == null
                           ? const Color(0xffEB5757).withOpacity(0.1)
                           : null,
                       shape: BoxShape.circle,
@@ -64,10 +64,11 @@ class AuthorHomeCard extends StatelessWidget {
                         width: 2,
                       ),
                     ),
-                    child: photoUrl != null && photoUrl!.isNotEmpty
+                    child: memberImage != null && memberImage!.isNotEmpty
                         ? ClipOval(
                             child: CachedNetworkImage(
-                              imageUrl: '${dotenv.env['UPLOAD_URL']}/$photoUrl',
+                              imageUrl:
+                                  '${dotenv.env['UPLOAD_URL']}/$memberImage',
                               width: 70,
                               height: 70,
                               fit: BoxFit.cover,
@@ -92,7 +93,9 @@ class AuthorHomeCard extends StatelessWidget {
                             backgroundColor: Colors.white,
                             child: Center(
                               child: Text(
-                                name.isNotEmpty ? name[0].toUpperCase() : '',
+                                memberNick.isNotEmpty
+                                    ? memberNick[0].toUpperCase()
+                                    : '',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -107,7 +110,7 @@ class AuthorHomeCard extends StatelessWidget {
 
                   // Author Name
                   Text(
-                    name,
+                    memberNick,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -120,7 +123,7 @@ class AuthorHomeCard extends StatelessWidget {
 
                   // Author Email
                   Text(
-                    email,
+                    memberEmail,
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[600],
@@ -143,7 +146,7 @@ class AuthorHomeCard extends StatelessWidget {
                           Icon(Icons.book, color: Colors.red, size: 20),
                           SizedBox(height: 2),
                           Text(
-                            "$bookCount",
+                            "$memberBooks",
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
@@ -168,7 +171,7 @@ class AuthorHomeCard extends StatelessWidget {
                           Icon(Icons.visibility, color: Colors.red, size: 20),
                           SizedBox(height: 2),
                           Text(
-                            "$viewsCount",
+                            "$memberViews",
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,

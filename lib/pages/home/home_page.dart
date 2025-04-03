@@ -183,11 +183,11 @@ class HomePage extends StatelessWidget {
                                   limit: 100,
                                   memberType: MemberType.AUTHOR),
                             ),
-                            name: author.memberNick,
-                            email: author.memberEmail,
-                            bookCount: 0,
-                            viewsCount: author.memberViews,
-                            photoUrl: author.memberImage,
+                            memberNick: author.memberNick,
+                            memberEmail: author.memberEmail,
+                            memberBooks: 0,
+                            memberViews: author.memberViews,
+                            memberImage: author.memberImage,
                             width:
                                 (MediaQuery.of(context).size.width - 100) / 2,
                           );

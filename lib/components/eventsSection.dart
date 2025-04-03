@@ -48,28 +48,28 @@ class EventsSection extends StatelessWidget {
             children: [
               _buildEventCard(
                 context,
-                title: "Muallif bilan uchrashuv",
+                title: "Meeting with author",
                 authorName: "John Smith",
                 date: DateTime.now().add(Duration(days: 5)),
-                location: "Kitoblar olami, Toshkent",
+                location: "Book World, New York",
                 imageColor: Colors.blue.shade100,
                 icon: Icons.people,
               ),
               _buildEventCard(
                 context,
-                title: "Yangi kitob taqdimoti",
+                title: "New book presentation",
                 authorName: "Sarah Johnson",
                 date: DateTime.now().add(Duration(days: 10)),
-                location: "Milliy kutubxona, Toshkent",
+                location: "National Library, Chicago",
                 imageColor: Colors.amber.shade100,
                 icon: Icons.menu_book,
               ),
               _buildEventCard(
                 context,
-                title: "Kitobxonlar kechasi",
-                authorName: "Book Store jamoasi",
+                title: "Readers night",
+                authorName: "Book Store team",
                 date: DateTime.now().add(Duration(days: 15)),
-                location: "Mirzo Ulug'bek bog'i, Toshkent",
+                location: "Central Park, San Francisco",
                 imageColor: Colors.green.shade100,
                 icon: Icons.nightlight_round,
               ),
@@ -215,25 +215,3 @@ class EventsSection extends StatelessWidget {
     );
   }
 }
-
-// How to use in HomePage:
-//
-// class HomePage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         // Your app bar
-//       ),
-//       body: ListView(
-//         children: [
-//           // Your other sections
-//           SizedBox(height: 30),
-//           EventsSection(),
-//           SizedBox(height: 30),
-//           // More sections
-//         ],
-//       ),
-//     );
-//   }
-// }
