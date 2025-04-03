@@ -62,14 +62,14 @@ class MemberController extends GetxController {
 
     getAuthorList(
         targetList: authorList,
-        order: 'createdAt',
+        order: 'memberViews',
         page: 1,
         limit: 100,
         memberType: MemberType.AUTHOR);
 
     getAuthorList(
         targetList: topAuthors,
-        order: 'createdAt',
+        order: 'memberBooks',
         page: 1,
         limit: 100,
         memberType: MemberType.AUTHOR);

@@ -137,7 +137,7 @@ class HomePage extends StatelessWidget {
 
               SizedBox(height: 30),
 
-              if (bookController.topBooks.isNotEmpty)
+              if (memberController.topAuthors.isNotEmpty)
                 Column(
                   children: [
                     Container(

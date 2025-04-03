@@ -16,7 +16,7 @@ class AuthorsPage extends StatelessWidget {
     // Convert the void return type to Future<void>
     await memberController.getAuthorList(
       targetList: memberController.authorList,
-      order: 'createdAt',
+      order: 'memberViews',
       page: 1,
       limit: 100,
       memberType: MemberType.AUTHOR,
@@ -112,7 +112,7 @@ class AuthorsPage extends StatelessWidget {
                                   arguments: {'memberId': author.id})?.then(
                                 (_) => memberController.getAuthorList(
                                     targetList: memberController.authorList,
-                                    order: 'createdAt',
+                                    order: 'memberViews',
                                     page: 1,
                                     limit: 100,
                                     memberType: MemberType.AUTHOR),
