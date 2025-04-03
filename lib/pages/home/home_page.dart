@@ -166,12 +166,11 @@ class HomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Container(
-                      height: 300,
+                      height: 270,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: memberController.topAuthors
-                            .length, // Assuming you have a topAuthors list
-                        padding: EdgeInsets.symmetric(horizontal: 6),
+                        itemCount: memberController.topAuthors.length,
+                        padding: EdgeInsets.only(right: 6),
                         itemBuilder: (context, index) {
                           final author = memberController.topAuthors[index];
                           return AuthorHomeCard(

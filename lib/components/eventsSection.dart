@@ -44,7 +44,7 @@ class EventsSection extends StatelessWidget {
           height: 250,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.only(right: 10),
             children: [
               _buildEventCard(
                 context,
