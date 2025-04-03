@@ -19,10 +19,26 @@ class HomePage extends StatelessWidget {
   final BookController bookController = Get.put(BookController());
   final MemberController memberController = Get.put(MemberController());
 
+  void refreshData() {
+    bookController.getBooks(
+      targetList: bookController.topBooks,
+      order: 'bookViews',
+      page: 1,
+      limit: 6,
+    );
+
+    memberController.getAuthorList(
+        targetList: memberController.topAuthors,
+        order: 'memberBooks',
+        page: 1,
+        limit: 100,
+        memberType: MemberType.AUTHOR);
+  }
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      bookController.refreshHomePageData();
+      refreshData();
     });
 
     return Scaffold(
@@ -186,7 +202,7 @@ class HomePage extends StatelessWidget {
                             ),
                             memberNick: author.memberNick,
                             memberEmail: author.memberEmail,
-                            memberBooks: 0,
+                            memberBooks: author.memberBooks,
                             memberViews: author.memberViews,
                             memberImage: author.memberImage,
                             width:

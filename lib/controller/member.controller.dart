@@ -73,8 +73,6 @@ class MemberController extends GetxController {
         page: 1,
         limit: 100,
         memberType: MemberType.AUTHOR);
-
-    print("topAuthors: $topAuthors");
   }
 
   Future<void> checkLoginStatus() async {

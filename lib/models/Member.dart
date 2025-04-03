@@ -16,6 +16,7 @@ class Member {
   final String? memberImage;
   final int memberViews;
   final int memberLikes;
+  final int memberBooks;
   final DateTime createdAt;
   final DateTime updatedAt;
   final List<Book>? bookData;
@@ -30,6 +31,7 @@ class Member {
     required this.memberImage,
     required this.memberViews,
     required this.memberLikes,
+    required this.memberBooks,
     required this.createdAt,
     required this.updatedAt,
     required this.bookData,
@@ -46,6 +48,7 @@ class Member {
       memberImage: json['memberImage'] ?? '',
       memberViews: json['memberViews'],
       memberLikes: json['memberLikes'],
+      memberBooks: json['memberBooks'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
       bookData: json['bookData'] != null
@@ -65,6 +68,7 @@ class Member {
       'memberImage': memberImage,
       'memberViews': memberViews,
       'memberLikes': memberLikes,
+      'memberBooks': memberBooks,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
       'bookData': bookData?.map((book) => book.toJson()).toList()
