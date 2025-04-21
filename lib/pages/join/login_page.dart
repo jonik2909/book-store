@@ -25,7 +25,6 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('lib/assets/images/logo_red.png'),
-                  SizedBox(height: 50),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),

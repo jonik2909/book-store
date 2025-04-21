@@ -20,7 +20,6 @@ class SplashPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset('lib/assets/images/logo_white.png'),
-              SizedBox(height: 50),
               Text(
                 "Welcome",
                 style: TextStyle(

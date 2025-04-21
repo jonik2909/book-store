@@ -30,7 +30,6 @@ class SignupPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset('lib/assets/images/logo_red.png'),
-                  SizedBox(height: 50),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -173,7 +172,6 @@ class SignupPage extends StatelessWidget {
                         memberController.signupErrorMessage.value,
                         style: TextStyle(color: Colors.red),
                       )),
-                  SizedBox(height: 30),
                   SizedBox(
                     width: double.infinity,
                     height: 50,
