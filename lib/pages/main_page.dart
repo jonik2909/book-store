@@ -11,6 +11,7 @@ import 'package:book_store/pages/home/home_page.dart';
 import 'package:book_store/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -46,34 +47,38 @@ class MainPage extends StatelessWidget {
         final items = <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'HOME',
+            label: AppLocalizations.of(context)!.home,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
-            label: 'BOOKS',
+            label: AppLocalizations.of(context)!.books,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people_alt),
-            label: 'AUTHORS',
+            label: AppLocalizations.of(context)!.authors,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'PROFILE',
+            label: AppLocalizations.of(context)!.profile,
           ),
         ];
 
         // Add the appropriate panel based on user type
         if (memberController.authMember.value?.memberType == MemberType.ADMIN) {
-          items.add(BottomNavigationBarItem(
-            icon: Icon(Icons.admin_panel_settings),
-            label: 'ADMIN',
-          ));
+          items.add(
+            BottomNavigationBarItem(
+              icon: Icon(Icons.admin_panel_settings),
+              label: AppLocalizations.of(context)!.admin,
+            ),
+          );
         } else if (memberController.authMember.value?.memberType ==
             MemberType.AUTHOR) {
-          items.add(BottomNavigationBarItem(
-            icon: Icon(Icons.admin_panel_settings),
-            label: 'AUTHOR',
-          ));
+          items.add(
+            BottomNavigationBarItem(
+              icon: Icon(Icons.admin_panel_settings),
+              label: AppLocalizations.of(context)!.authors,
+            ),
+          );
         }
 
         return BottomNavigationBar(

@@ -1,0 +1,15 @@
+{
+  "home": "BOSH SAHIFA",
+  "books": "KITOBLAR",
+  "authors": "MUALLIFLAR",
+  "profile": "PROFIL",
+  "admin": "ADMIN",
+  "language": "Til",
+  "settings": "Sozlamalar",
+  "english": "Ingliz tili",
+  "uzbek": "O'zbek tili",
+  "welcome": "Xush kelibsiz",
+  "hello": "Salom",
+  "changeLanguage": "Tilni o'zgartirish",
+  "selectLanguage": "Tilni tanlang"
+}

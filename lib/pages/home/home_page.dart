@@ -4,6 +4,7 @@ import 'package:book_store/components/video_section.dart';
 import 'package:book_store/components/author_home_card.dart';
 import 'package:book_store/components/book_card.dart';
 import 'package:book_store/components/events_section.dart';
+import 'package:book_store/controller/language.controller.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/models/Member.dart';
 import 'package:book_store/pages/authors/chosen_author_page.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatelessWidget {
 
   final BookController bookController = Get.put(BookController());
   final MemberController memberController = Get.put(MemberController());
+  final LanguageController languageController = Get.find<LanguageController>();
 
   void refreshData() {
     bookController.getBooks(
@@ -69,13 +71,19 @@ class HomePage extends StatelessWidget {
           ],
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15), // Right padding
-            child: Icon(
-              Icons.menu_book_rounded,
-              color: Colors.red,
-              size: 20,
+          IconButton(
+            icon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  languageController.getCurrentLanguageFlag(),
+                  style: TextStyle(fontSize: 20),
+                ),
+                const SizedBox(width: 2),
+                const Icon(Icons.arrow_drop_down),
+              ],
             ),
+            onPressed: () => languageController.showLanguageDialog(),
           ),
         ],
       ),
