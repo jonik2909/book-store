@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSUserNotificationAlertUsageDescription</key>
+	<string>Ilova sizga bildirishnomalar yuborishi uchun ruxsat kerak.</string>
+	<key>NSUserNotificationSoundUsageDescription</key>
+	<string>Bildirishnoma ovozi uchun ruxsat kerak.</string>
+	<key>NSUserNotificationBadgeUsageDescription</key>
+	<string>Ilova belgisi uchun ruxsat kerak.</string>
+
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>sms</string>
