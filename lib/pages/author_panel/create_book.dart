@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/controller/author.controller.dart';
 import 'package:book_store/models/book.dart';
 import 'package:flutter/material.dart';
@@ -65,33 +66,8 @@ class CreateBook extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        centerTitle: false,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Create New Book',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                color: Colors.red,
-                fontSize: 24,
-              ),
-            ),
-            Text(
-              'Add your book details',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar:
+          CustomAppBar(title: "Create New Book", desc: "Add your book details"),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20),

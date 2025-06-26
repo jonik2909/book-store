@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/controller/author.controller.dart';
 import 'package:book_store/pages/author_panel/edit_book.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,33 +17,7 @@ class AuthorBooks extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        centerTitle: false,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'My Books',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                color: Colors.red,
-                fontSize: 24,
-              ),
-            ),
-            Text(
-              'Controll your books',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar: CustomAppBar(title: "My Books", desc: "Controll your books"),
       body: Obx(
         () => Visibility(
           visible: authorController.authorBooks.isNotEmpty,

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/pages/admin_panel/admin_books.dart';
 import 'package:book_store/pages/admin_panel/admin_members.dart';
 import 'package:flutter/material.dart';
@@ -12,43 +13,7 @@ class AdminPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[50],
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          scrolledUnderElevation: 0,
-          backgroundColor: Colors.white,
-          centerTitle: false,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Admin Panel',
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  color: Colors.red,
-                  fontSize: 24,
-                ),
-              ),
-              Text(
-                'Manage system',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 15), // Right padding
-              child: Icon(
-                Icons.menu_book_rounded,
-                color: Colors.red,
-                size: 20,
-              ),
-            ),
-          ],
-        ),
+        appBar: CustomAppBar(title: "Admin Panel", desc: "Manage system"),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(

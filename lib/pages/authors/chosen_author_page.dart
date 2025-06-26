@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/components/app_bar/detail_bar.dart';
 import 'package:book_store/components/book_card.dart';
 import 'package:book_store/pages/books/chosen_book_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -37,30 +38,18 @@ Check out this author on Book Store!
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              onPressed: () {
-                final author = memberController.chosenAuthor.value;
-                if (author != null) {
-                  _shareAuthorProfile(
-                    author.memberNick,
-                    author.memberEmail,
-                    author.bookData?.length ?? 0,
-                    author.memberViews,
-                  );
-                }
-              },
-              icon: const Icon(
-                Icons.share,
-              ),
-            ),
-          )
-        ],
+      appBar: DetailBar(
+        onPressed: () {
+          final author = memberController.chosenAuthor.value;
+          if (author != null) {
+            _shareAuthorProfile(
+              author.memberNick,
+              author.memberEmail,
+              author.bookData?.length ?? 0,
+              author.memberViews,
+            );
+          }
+        },
       ),
       body: Obx(() {
         if (memberController.isLoading.value) {

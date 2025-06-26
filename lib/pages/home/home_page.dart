@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/components/video_section.dart';
 import 'package:book_store/components/author_home_card.dart';
 import 'package:book_store/components/book_card.dart';
@@ -45,48 +46,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        centerTitle: false,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Book Store',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                color: Colors.red,
-                fontSize: 24,
-              ),
-            ),
-            Text(
-              'All for you',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  languageController.getCurrentLanguageFlag(),
-                  style: TextStyle(fontSize: 20),
-                ),
-                const SizedBox(width: 2),
-                const Icon(Icons.arrow_drop_down),
-              ],
-            ),
-            onPressed: () => languageController.showLanguageDialog(),
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(title: "Book Store", desc: "All for you"),
       body: RefreshIndicator(
         onRefresh: () => bookController.refreshHomePageData(),
         child: Obx(() {

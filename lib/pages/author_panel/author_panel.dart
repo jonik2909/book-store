@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/pages/author_panel/create_book.dart';
 import 'package:book_store/pages/author_panel/author_books.dart';
 import 'package:flutter/material.dart';
@@ -12,44 +13,7 @@ class AuthorPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        centerTitle: false,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Author Panel',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                color: Colors.red,
-                fontSize: 24,
-              ),
-            ),
-            Text(
-              'Manage your books',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 15), // Right padding
-            child: Icon(
-              Icons.menu_book_rounded,
-              color: Colors.red,
-              size: 20,
-            ),
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(title: "Author Panel", desc: "Manage your books"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         child: Column(

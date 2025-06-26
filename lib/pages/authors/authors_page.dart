@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/components/author_card.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/models/member.dart';
@@ -31,42 +32,7 @@ class AuthorsPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        centerTitle: false,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Authors',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                color: Colors.red,
-                fontSize: 24,
-              ),
-            ),
-            Text(
-              'Meet the authors',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15), // Right padding
-            child: Icon(
-              Icons.menu_book_rounded,
-              color: Colors.red,
-              size: 20,
-            ),
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(title: "Authors", desc: "Meet the authors"),
       body: RefreshIndicator(
         onRefresh: () => refreshData(),
         child: ListView(physics: AlwaysScrollableScrollPhysics(), children: [

@@ -2,6 +2,7 @@
 
 import 'dart:typed_data';
 
+import 'package:book_store/components/app_bar/detail_bar.dart';
 import 'package:book_store/controller/book.controller.dart';
 import 'package:book_store/pages/books/file_reader.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -43,31 +44,19 @@ $description
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              onPressed: () {
-                final book = controller.chosenBook.value;
-                if (book != null) {
-                  _shareBookDetails(
-                    book.bookName,
-                    book.authorData?.memberNick ?? 'Unknown Author',
-                    book.bookCategory.toString().split('.').last,
-                    book.bookPrice.toString(),
-                    book.bookDesc,
-                  );
-                }
-              },
-              icon: const Icon(
-                Icons.share,
-              ),
-            ),
-          )
-        ],
+      appBar: DetailBar(
+        onPressed: () {
+          final book = controller.chosenBook.value;
+          if (book != null) {
+            _shareBookDetails(
+              book.bookName,
+              book.authorData?.memberNick ?? 'Unknown Author',
+              book.bookCategory.toString().split('.').last,
+              book.bookPrice.toString(),
+              book.bookDesc,
+            );
+          }
+        },
       ),
       body: Obx(() {
         if (controller.isLoading.value) {

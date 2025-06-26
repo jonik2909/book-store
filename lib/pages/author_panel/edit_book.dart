@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:book_store/controller/author.controller.dart';
@@ -31,22 +32,7 @@ class EditBookPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        title: Text(
-          'Edit Book',
-          style: TextStyle(
-            fontWeight: FontWeight.w800,
-            color: Colors.red,
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Get.back(),
-        ),
-      ),
+      appBar: CustomAppBar(title: "Edit Book", desc: "Edit your book"),
       body: Obx(() => Stack(
             children: [
               Form(

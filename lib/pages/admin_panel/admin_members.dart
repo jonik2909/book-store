@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/controller/admin.controller.dart';
 import 'package:book_store/models/member.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,33 +17,7 @@ class AdminMembers extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
-        centerTitle: false,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'All Members',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                color: Color(0xffEB5757),
-                fontSize: 24,
-              ),
-            ),
-            Text(
-              'Manage all members',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar: CustomAppBar(title: "All Members", desc: "Manage all members"),
       body: Obx(
         () => Visibility(
           visible: adminController.adminMembers.isNotEmpty,
