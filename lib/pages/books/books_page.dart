@@ -3,7 +3,7 @@
 import 'package:book_store/components/book_card.dart';
 import 'package:book_store/components/category_card.dart';
 import 'package:book_store/controller/book.controller.dart';
-import 'package:book_store/models/Book.dart';
+import 'package:book_store/models/book.dart';
 import 'package:book_store/pages/books/chosen_book_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -121,10 +121,14 @@ class BooksPage extends StatelessWidget {
                       runSpacing: 16,
                       children: bookController.books.map((book) {
                         return BookCard(
-                          onTap: () => Get.to(() => ChosenBookPage(),
-                                  arguments: {'bookId': book.id})!
-                              .then((_) => bookController.getBookPagedata(
-                                  bookController.selectedCategory.value)),
+                          onTap: () {
+                            Get.to(() => ChosenBookPage(),
+                                    arguments: {'bookId': book.id})!
+                                .then(
+                              (_) => bookController.getBookPagedata(
+                                  bookController.selectedCategory.value),
+                            );
+                          },
                           bookName: book.bookName,
                           bookAuthor: '${book.authorData?.memberNick}',
                           bookPrice: book.bookPrice,

@@ -1,5 +1,5 @@
 // Member Type and Status enums
-import 'package:book_store/models/Book.dart';
+import 'package:book_store/models/book.dart';
 
 enum MemberType { USER, AUTHOR, ADMIN }
 

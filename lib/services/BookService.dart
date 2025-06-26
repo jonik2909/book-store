@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:book_store/models/Book.dart';
+import 'package:book_store/models/book.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:book_store/utils/utils.dart';

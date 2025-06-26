@@ -1,7 +1,7 @@
 // lib/controller/author.controller.dart
 
 import 'dart:io';
-import 'package:book_store/models/Book.dart';
+import 'package:book_store/models/book.dart';
 import 'package:book_store/services/BookService.dart';
 import 'package:book_store/utils/image_picker_util.dart';
 import 'package:flutter/material.dart';

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:book_store/controller/controller.dart';
-import 'package:book_store/models/Member.dart';
+import 'package:book_store/models/member.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/pages/splash/splash_page.dart';
 import 'package:book_store/services/MemberService.dart';

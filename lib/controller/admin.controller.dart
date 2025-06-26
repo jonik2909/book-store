@@ -1,8 +1,8 @@
 // lib/controller/author.controller.dart
 
 import 'dart:io';
-import 'package:book_store/models/Book.dart';
-import 'package:book_store/models/Member.dart';
+import 'package:book_store/models/book.dart';
+import 'package:book_store/models/member.dart';
 import 'package:book_store/services/BookService.dart';
 import 'package:book_store/services/MemberService.dart';
 import 'package:flutter/material.dart';

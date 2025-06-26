@@ -41,7 +41,7 @@ class SplashPage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () => Get.to(SignupPage()),
+                  onPressed: () => Get.to(() => SignupPage()),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10), // Border radius
@@ -62,7 +62,7 @@ class SplashPage extends StatelessWidget {
                 width: double.infinity,
                 height: 50,
                 child: OutlinedButton(
-                  onPressed: () => Get.to(LoginPage()),
+                  onPressed: () => Get.to(() => LoginPage()),
                   style: OutlinedButton.styleFrom(
                     side: BorderSide(color: Colors.white),
                     shape: RoundedRectangleBorder(

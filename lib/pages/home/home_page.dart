@@ -6,7 +6,7 @@ import 'package:book_store/components/book_card.dart';
 import 'package:book_store/components/events_section.dart';
 import 'package:book_store/controller/language.controller.dart';
 import 'package:book_store/controller/member.controller.dart';
-import 'package:book_store/models/Member.dart';
+import 'package:book_store/models/member.dart';
 import 'package:book_store/pages/authors/chosen_author_page.dart';
 import 'package:book_store/pages/books/chosen_book_page.dart';
 import 'package:book_store/controller/book.controller.dart';
@@ -137,10 +137,17 @@ class HomePage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final book = bookController.topBooks[index];
                           return BookCard(
-                            onTap: () => Get.to(() => ChosenBookPage(),
-                                    arguments: {'bookId': book.id})!
-                                .then((_) =>
-                                    bookController.refreshHomePageData()),
+                            onTap: () {
+                              Get.to(
+                                () => ChosenBookPage(),
+                                arguments: {'bookId': book.id},
+                              )!
+                                  .then(
+                                (_) {
+                                  bookController.refreshHomePageData();
+                                },
+                              );
+                            },
                             bookName: book.bookName,
                             bookAuthor: '${book.authorData?.memberNick}',
                             bookPrice: book.bookPrice,

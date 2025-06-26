@@ -121,7 +121,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   SizedBox(height: 24),
                   GestureDetector(
-                    onTap: () => Get.to(SignupPage()),
+                    onTap: () => Get.to(() => SignupPage()),
                     child: RichText(
                       text: TextSpan(
                         text: "Don't have an account yet? ",
