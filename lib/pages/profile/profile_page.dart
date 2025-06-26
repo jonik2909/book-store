@@ -93,7 +93,7 @@ class ProfilePage extends StatelessWidget {
                             : member.memberImage != ""
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(52.5),
-                                    child: Container(
+                                    child: SizedBox(
                                       width: 105,
                                       height: 105,
                                       child: CachedNetworkImage(

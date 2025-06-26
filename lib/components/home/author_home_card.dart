@@ -14,7 +14,7 @@ class AuthorHomeCard extends StatelessWidget {
   final double width;
 
   const AuthorHomeCard({
-    Key? key,
+    super.key,
     required this.memberNick,
     required this.memberEmail,
     required this.memberBooks,
@@ -22,7 +22,7 @@ class AuthorHomeCard extends StatelessWidget {
     this.memberImage,
     this.onTap,
     this.width = 160,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
