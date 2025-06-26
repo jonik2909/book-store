@@ -9,7 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class AuthorBooks extends StatelessWidget {
-  AuthorBooks({super.key});
+  const AuthorBooks({super.key});
 
   @override
   Widget build(BuildContext context) {

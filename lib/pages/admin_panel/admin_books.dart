@@ -8,7 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class AdminBooks extends StatelessWidget {
-  AdminBooks({super.key});
+  const AdminBooks({super.key});
 
   @override
   Widget build(BuildContext context) {

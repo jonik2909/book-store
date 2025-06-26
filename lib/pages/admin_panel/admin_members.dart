@@ -11,6 +11,28 @@ import 'package:get/get.dart';
 class AdminMembers extends StatelessWidget {
   const AdminMembers({super.key});
 
+  Color _getMemberTypeColor(MemberType type) {
+    switch (type) {
+      case MemberType.AUTHOR:
+        return Colors.blue;
+      case MemberType.USER:
+        return Colors.green;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  IconData _getMemberTypeIcon(MemberType type) {
+    switch (type) {
+      case MemberType.AUTHOR:
+        return Icons.verified;
+      case MemberType.USER:
+        return Icons.person;
+      default:
+        return Icons.person_outline;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final AdminController adminController = Get.put(AdminController());
@@ -213,27 +235,5 @@ class AdminMembers extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Color _getMemberTypeColor(MemberType type) {
-    switch (type) {
-      case MemberType.AUTHOR:
-        return Colors.blue;
-      case MemberType.USER:
-        return Colors.green;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  IconData _getMemberTypeIcon(MemberType type) {
-    switch (type) {
-      case MemberType.AUTHOR:
-        return Icons.verified;
-      case MemberType.USER:
-        return Icons.person;
-      default:
-        return Icons.person_outline;
-    }
   }
 }
