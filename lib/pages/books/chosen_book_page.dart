@@ -2,7 +2,7 @@
 
 import 'dart:typed_data';
 
-import 'package:book_store/components/app_bar/detail_bar.dart';
+import 'package:book_store/components/command/app_bar/detail_bar.dart';
 import 'package:book_store/controller/book.controller.dart';
 import 'package:book_store/pages/books/file_reader.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -65,7 +65,7 @@ $description
 
         final book = controller.chosenBook.value;
         if (book == null) {
-          return const Center(child: Text('Kitob topilmadi'));
+          return const Center(child: Text('Data not found!'));
         }
 
         return SingleChildScrollView(
@@ -168,7 +168,7 @@ $description
               ),
 
               const SizedBox(height: 15),
-              // Kitob haqida ma'lumot
+
               Center(
                 child: Column(
                   children: [
@@ -192,8 +192,8 @@ $description
                 ),
               ),
 
-              // After the author name text widget, add this section:
               const SizedBox(height: 15),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -234,7 +234,7 @@ $description
               ),
 
               const SizedBox(height: 10),
-              // Overview qismi
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Column(
@@ -256,7 +256,6 @@ $description
                       ),
                     ),
                     const SizedBox(height: 30),
-                    // Download tugmasi
                     Container(
                       color: Colors.white,
                       height: 55,

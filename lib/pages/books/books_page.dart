@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/components/app_bar/custom_bar.dart';
-import 'package:book_store/components/book_card.dart';
-import 'package:book_store/components/category_card.dart';
+import 'package:book_store/components/command/app_bar/custom_bar.dart';
+import 'package:book_store/components/command/book/book_card.dart';
+import 'package:book_store/components/books/category_card.dart';
 import 'package:book_store/controller/book.controller.dart';
 import 'package:book_store/models/book.dart';
 import 'package:book_store/pages/books/chosen_book_page.dart';
@@ -48,11 +48,13 @@ class BooksPage extends StatelessWidget {
                           bookController.getBookPagedata(category),
                           bookController.changeCategory(category)
                         },
-                        child: Obx(() => CategoryCard(
-                              name: category.toString().split('.').last,
-                              selected: category ==
-                                  bookController.selectedCategory.value,
-                            )),
+                        child: Obx(() {
+                          return CategoryCard(
+                            name: category.toString().split('.').last,
+                            selected: category ==
+                                bookController.selectedCategory.value,
+                          );
+                        }),
                       );
                     },
                     separatorBuilder: (context, index) => SizedBox(width: 10),
@@ -60,56 +62,56 @@ class BooksPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 25),
-              Container(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Obx(() {
-                    if (bookController.isLoading.value) {
-                      return Center(child: CircularProgressIndicator());
-                    }
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Obx(() {
+                  if (bookController.isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
+                  }
 
-                    if (bookController.books.isEmpty) {
-                      return Center(
-                        child: Text(
-                          'No data found!',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[600],
-                          ),
+                  if (bookController.books.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'No data found!',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[600],
                         ),
-                      );
-                    }
-
-                    return Wrap(
-                      direction: Axis.horizontal,
-                      spacing: 16,
-                      runSpacing: 16,
-                      children: bookController.books.map((book) {
-                        return BookCard(
-                          onTap: () {
-                            Get.to(() => ChosenBookPage(),
-                                    arguments: {'bookId': book.id})!
-                                .then(
-                              (_) => bookController.getBookPagedata(
-                                  bookController.selectedCategory.value),
-                            );
-                          },
-                          bookName: book.bookName,
-                          bookAuthor: '${book.authorData?.memberNick}',
-                          bookPrice: book.bookPrice,
-                          bookViews: book.bookViews,
-                          bookCategory:
-                              book.bookCategory.toString().split('.').last,
-                          width: (MediaQuery.of(context).size.width - 60) / 2,
-                          height: 200,
-                          imageNetwork:
-                              '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
-                        );
-                      }).toList(),
+                      ),
                     );
-                  }),
-                ),
+                  }
+
+                  return Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 16,
+                    runSpacing: 16,
+                    children: bookController.books.map((book) {
+                      return BookCard(
+                        onTap: () {
+                          Get.to(() => ChosenBookPage(),
+                                  arguments: {'bookId': book.id})!
+                              .then(
+                            (_) {
+                              bookController.getBookPagedata(
+                                  bookController.selectedCategory.value);
+                            },
+                          );
+                        },
+                        bookName: book.bookName,
+                        bookAuthor: '${book.authorData?.memberNick}',
+                        bookPrice: book.bookPrice,
+                        bookViews: book.bookViews,
+                        bookCategory:
+                            book.bookCategory.toString().split('.').last,
+                        width: (MediaQuery.of(context).size.width - 60) / 2,
+                        height: 200,
+                        imageNetwork:
+                            '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
+                      );
+                    }).toList(),
+                  );
+                }),
               ),
             ],
           ),

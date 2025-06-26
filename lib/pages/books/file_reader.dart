@@ -5,7 +5,7 @@ import 'package:epub_view/epub_view.dart';
 class EpubReaderPage extends StatefulWidget {
   final String epubPath;
 
-  const EpubReaderPage({Key? key, required this.epubPath}) : super(key: key);
+  const EpubReaderPage({super.key, required this.epubPath});
 
   @override
   State<EpubReaderPage> createState() => _EpubReaderPageState();

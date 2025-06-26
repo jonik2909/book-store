@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:book_store/components/app_bar/custom_bar.dart';
+import 'package:book_store/components/command/app_bar/custom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:book_store/controller/author.controller.dart';
