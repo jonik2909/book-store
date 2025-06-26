@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('en'), // Ingliz tili
-        Locale('uz'), // O'zbek tili
+        Locale('en'),
+        Locale('uz'),
       ],
 
       home: MainPage(),

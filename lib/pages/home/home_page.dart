@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/components/app_bar/custom_bar.dart';
-import 'package:book_store/components/video_section.dart';
-import 'package:book_store/components/author_home_card.dart';
+import 'package:book_store/components/home/video_section.dart';
+import 'package:book_store/components/home/author_home_card.dart';
 import 'package:book_store/components/book_card.dart';
-import 'package:book_store/components/events_section.dart';
+import 'package:book_store/components/home/events_section.dart';
+import 'package:book_store/controller/controller.dart';
 import 'package:book_store/controller/language.controller.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/models/member.dart';
@@ -18,6 +19,7 @@ import 'package:get/get.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
+  final Controller controller = Get.put(Controller());
   final BookController bookController = Get.put(BookController());
   final MemberController memberController = Get.put(MemberController());
   final LanguageController languageController = Get.find<LanguageController>();
@@ -31,11 +33,12 @@ class HomePage extends StatelessWidget {
     );
 
     memberController.getAuthorList(
-        targetList: memberController.topAuthors,
-        order: 'memberBooks',
-        page: 1,
-        limit: 100,
-        memberType: MemberType.AUTHOR);
+      targetList: memberController.topAuthors,
+      order: 'memberBooks',
+      page: 1,
+      limit: 100,
+      memberType: MemberType.AUTHOR,
+    );
   }
 
   @override
@@ -58,7 +61,6 @@ class HomePage extends StatelessWidget {
             physics: AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             children: [
-              // Only show Top Books section if there are books
               if (bookController.topBooks.isNotEmpty)
                 Column(
                   children: [
@@ -76,19 +78,24 @@ class HomePage extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          Text(
-                            "See All",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.red,
+                          GestureDetector(
+                            onTap: () {
+                              controller.changeScreen(1);
+                            },
+                            child: Text(
+                              "See All",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.red,
+                              ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
                     SizedBox(height: 20),
-                    Container(
+                    SizedBox(
                       height: 300,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -125,9 +132,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-
               SizedBox(height: 30),
-
               if (memberController.topAuthors.isNotEmpty)
                 Column(
                   children: [
@@ -145,19 +150,24 @@ class HomePage extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          Text(
-                            "See All",
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.red,
+                          GestureDetector(
+                            onTap: () {
+                              controller.changeScreen(2);
+                            },
+                            child: Text(
+                              "See All",
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.red,
+                              ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
                     SizedBox(height: 20),
-                    Container(
+                    SizedBox(
                       height: 270,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -166,15 +176,20 @@ class HomePage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final author = memberController.topAuthors[index];
                           return AuthorHomeCard(
-                            onTap: () => Get.to(() => AuthorDetailPage(),
-                                arguments: {'memberId': author.id})?.then(
-                              (_) => memberController.getAuthorList(
-                                  targetList: memberController.topAuthors,
-                                  order: 'createdAt',
-                                  page: 1,
-                                  limit: 100,
-                                  memberType: MemberType.AUTHOR),
-                            ),
+                            onTap: () {
+                              Get.to(() => AuthorDetailPage(),
+                                  arguments: {'memberId': author.id})?.then(
+                                (_) {
+                                  memberController.getAuthorList(
+                                    targetList: memberController.topAuthors,
+                                    order: 'createdAt',
+                                    page: 1,
+                                    limit: 100,
+                                    memberType: MemberType.AUTHOR,
+                                  );
+                                },
+                              );
+                            },
                             memberNick: author.memberNick,
                             memberEmail: author.memberEmail,
                             memberBooks: author.memberBooks,

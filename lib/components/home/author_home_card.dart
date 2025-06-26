@@ -26,7 +26,6 @@ class AuthorHomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Fixed height based on the screenshot
     return GestureDetector(
       onTap: onTap,
       child: Padding(

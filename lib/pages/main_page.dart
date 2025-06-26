@@ -21,7 +21,6 @@ class MainPage extends StatelessWidget {
     final Controller controller = Get.put(Controller());
     final MemberController memberController = Get.put(MemberController());
 
-    // Create screens list dynamically based on user type
     List<Widget> getScreens() {
       final baseScreens = [
         HomePage(),
