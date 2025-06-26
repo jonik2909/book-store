@@ -218,26 +218,26 @@ Check out this author on Book Store!
       }),
     );
   }
+}
 
-  Widget _buildStatColumn(String label, String value) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+Widget _buildStatColumn(String label, String value) {
+  return Column(
+    children: [
+      Text(
+        value,
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
         ),
-        SizedBox(height: 4),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey[600],
-          ),
+      ),
+      SizedBox(height: 4),
+      Text(
+        label,
+        style: TextStyle(
+          fontSize: 14,
+          color: Colors.grey[600],
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
 }

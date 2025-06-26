@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:book_store/components/command/app_bar/custom_bar.dart';
-import 'package:book_store/components/author_card.dart';
+import 'package:book_store/components/authors/author_card.dart';
 import 'package:book_store/controller/member.controller.dart';
 import 'package:book_store/models/member.dart';
 import 'package:book_store/pages/authors/chosen_author_page.dart';
@@ -76,12 +76,15 @@ class AuthorsPage extends StatelessWidget {
                               memberViews: author.memberViews,
                               onTap: () => Get.to(() => AuthorDetailPage(),
                                   arguments: {'memberId': author.id})?.then(
-                                (_) => memberController.getAuthorList(
+                                (_) {
+                                  memberController.getAuthorList(
                                     targetList: memberController.authorList,
                                     order: 'memberViews',
                                     page: 1,
                                     limit: 100,
-                                    memberType: MemberType.AUTHOR),
+                                    memberType: MemberType.AUTHOR,
+                                  );
+                                },
                               ),
                             );
                           }).toList(),

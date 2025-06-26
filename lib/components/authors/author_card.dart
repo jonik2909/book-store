@@ -84,7 +84,7 @@ class AuthorCard extends StatelessWidget {
                       ),
               ),
               const SizedBox(width: 16),
-              // Author Info
+
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
