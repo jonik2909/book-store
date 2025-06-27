@@ -12,14 +12,12 @@ class LanguageController extends GetxController {
   // Mavjud tillar
   final List<Map<String, dynamic>> languages = [
     {
-      'name': 'English',
       'nativeName': 'English',
       'locale': const Locale('en'),
       'code': 'en',
       'flag': '🇺🇸'
     },
     {
-      'name': 'Uzbek',
       'nativeName': 'O\'zbek tili',
       'locale': const Locale('uz'),
       'code': 'uz',
@@ -131,13 +129,6 @@ class LanguageController extends GetxController {
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Text(
-                                    language['name'],
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey[600],
                                     ),
                                   ),
                                 ],

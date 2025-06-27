@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/components/command/app_bar/custom_bar.dart';
+import 'package:book_store/utils/validators/book_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:book_store/controller/author.controller.dart';
@@ -20,6 +21,35 @@ class EditBookPage extends StatelessWidget {
   final RxString bookDesc = ''.obs;
   // Use Rx<BookCategory> for enum
   final Rx<BookCategory> selectedCategory = BookCategory.FANTASY.obs;
+
+  Future<void> handleSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      bool hasCurrentImages = book.bookImages.isNotEmpty;
+      bool hasNewImages = authorController.selectedImages.isNotEmpty;
+
+      if (!hasCurrentImages && !hasNewImages) {
+        Get.snackbar(
+          'Error',
+          'At least one image is required',
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+        return;
+      }
+
+      authorController.updateBook(
+        id: book.id.toString(),
+        bookName: bookName.value,
+        bookPrice: bookPrice.value,
+        bookDesc: bookDesc.value,
+        bookCategory: selectedCategory.value,
+        bookImages: authorController.selectedImages.isNotEmpty
+            ? authorController.selectedImages.toList()
+            : null,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +79,9 @@ class EditBookPage extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: 'Book Name',
                           border: OutlineInputBorder(),
+                          errorStyle: TextStyle(height: 0), // Error yashirish
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter book name';
-                          }
-                          return null;
-                        },
+                        validator: BookValidator.validateBookName,
                       ),
                       SizedBox(height: 16),
 
@@ -67,18 +93,10 @@ class EditBookPage extends StatelessWidget {
                           labelText: 'Price',
                           border: OutlineInputBorder(),
                           prefixText: '\$',
+                          errorStyle: TextStyle(height: 0), // Error yashirish
                         ),
                         keyboardType: TextInputType.number,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter price';
-                          }
-                          if (double.tryParse(value) == null ||
-                              double.parse(value) <= 0) {
-                            return 'Please enter valid price';
-                          }
-                          return null;
-                        },
+                        validator: BookValidator.validatePrice,
                       ),
                       SizedBox(height: 16),
 
@@ -89,37 +107,39 @@ class EditBookPage extends StatelessWidget {
                         decoration: InputDecoration(
                           labelText: 'Description',
                           border: OutlineInputBorder(),
+                          errorStyle: TextStyle(height: 0), // Error yashirish
                         ),
                         maxLines: 3,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter description';
-                          }
-                          return null;
-                        },
+                        validator: BookValidator.validateDescription,
                       ),
                       SizedBox(height: 16),
 
-                      // Book Category Dropdown
-                      Obx(() => DropdownButtonFormField<BookCategory>(
-                            value: selectedCategory.value,
-                            decoration: InputDecoration(
-                              labelText: 'Category',
-                              border: OutlineInputBorder(),
-                            ),
-                            items: BookCategory.values.map((category) {
-                              return DropdownMenuItem(
-                                value: category,
-                                child:
-                                    Text(category.toString().split('.').last),
-                              );
-                            }).toList(),
-                            onChanged: (BookCategory? value) {
-                              if (value != null) {
-                                selectedCategory.value = value;
-                              }
-                            },
-                          )),
+                      // Book Category Dropdown - BU YERDA XATOLIK BOR EDI
+                      Obx(
+                        () => DropdownButtonFormField<BookCategory>(
+                          value: selectedCategory.value,
+                          decoration: InputDecoration(
+                            labelText: 'Category',
+                            border: OutlineInputBorder(),
+                            errorStyle: TextStyle(height: 0), // Error yashirish
+                          ),
+                          items: BookCategory.values.map((category) {
+                            return DropdownMenuItem(
+                              value: category,
+                              child: Text(category.toString().split('.').last),
+                            );
+                          }).toList(),
+                          validator: (BookCategory? value) =>
+                              BookValidator.validateCategory(
+                                  value.toString().split('.').last),
+                          onChanged: (BookCategory? value) {
+                            if (value != null) {
+                              selectedCategory.value = value;
+                            }
+                          },
+                        ),
+                      ),
+
                       SizedBox(height: 24),
 
                       // Current Images Section
@@ -147,6 +167,38 @@ class EditBookPage extends StatelessWidget {
                                     width: 100,
                                     height: 100,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        width: 100,
+                                        height: 100,
+                                        color: Colors.grey[300],
+                                        child: Icon(
+                                          Icons.error,
+                                          color: Colors.red,
+                                        ),
+                                      );
+                                    },
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return Container(
+                                        width: 100,
+                                        height: 100,
+                                        color: Colors.grey[200],
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes!
+                                                : null,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                               );
@@ -239,22 +291,7 @@ class EditBookPage extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: authorController.isLoading.value
                               ? null
-                              : () {
-                                  if (_formKey.currentState!.validate()) {
-                                    authorController.updateBook(
-                                      id: book.id.toString(),
-                                      bookName: bookName.value,
-                                      bookPrice: bookPrice.value,
-                                      bookDesc: bookDesc.value,
-                                      bookCategory: selectedCategory.value,
-                                      bookImages: authorController
-                                              .selectedImages.isNotEmpty
-                                          ? authorController.selectedImages
-                                              .toList()
-                                          : null,
-                                    );
-                                  }
-                                },
+                              : handleSubmit,
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(vertical: 16),
                             backgroundColor: Colors.red,

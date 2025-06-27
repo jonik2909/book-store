@@ -1,5 +1,3 @@
-// lib/controller/author.controller.dart
-
 import 'dart:io';
 import 'package:book_store/models/book.dart';
 import 'package:book_store/services/BookService.dart';
@@ -33,11 +31,6 @@ class AuthorController extends GetxController {
       final String bookDesc = data['bookDesc'] ?? '';
       final BookCategory bookCategory = data['bookCategory'];
       final List<File>? bookImages = data['bookImages'];
-
-      // Validate required fields
-      if (bookName.isEmpty || bookPrice <= 0 || bookDesc.isEmpty) {
-        throw 'Please fill all required fields';
-      }
 
       // Call the service method
       await bookService.createBook(
