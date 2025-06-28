@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:book_store/models/member.dart';
+import 'package:book_store/services/auth_service.dart';
 import 'package:book_store/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class MemberService {
   final String _baseUrl;
   final http.Client _client;
+  final AuthService authService = AuthService();
 
   MemberService({http.Client? client})
       : _baseUrl = dotenv.env['API_URL'] ?? 'http://localhost:3003/book',
@@ -22,7 +24,7 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/member/login'),
-        headers: await getHeaders(),
+        headers: await authService.getHeaders(),
         body: jsonEncode({
           'memberNick': username,
           'memberPassword': password,
@@ -45,7 +47,7 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/member/signup'),
-        headers: await getHeaders(),
+        headers: await authService.getHeaders(),
         body: jsonEncode({
           'memberNick': username,
           'memberEmail': email,
@@ -67,7 +69,7 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/member/logout'),
-        headers: await getHeaders(),
+        headers: await authService.getHeaders(),
       );
 
       return handleResponse(response);
@@ -81,7 +83,7 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/auth/me'),
-        headers: await getHeaders(),
+        headers: await authService.getHeaders(),
       );
 
       return handleResponse(response);
@@ -136,7 +138,7 @@ class MemberService {
 
       final response = await _client.get(
         uri,
-        headers: await getHeaders(),
+        headers: await authService.getHeaders(),
       );
       final List<dynamic> jsonData = await handleListResponse(response);
 
@@ -150,7 +152,7 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/member/$memberId'),
-        headers: await getHeaders(),
+        headers: await authService.getHeaders(),
       );
 
       final body = jsonDecode(response.body);
@@ -195,7 +197,7 @@ class MemberService {
       }
 
       // Add headers
-      var headers = await getHeaders();
+      var headers = await authService.getHeaders();
       headers.forEach((key, value) {
         request.headers[key] = value;
       });
@@ -214,7 +216,7 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/admin/member/all'),
-        headers: await getHeaders(),
+        headers: await authService.getHeaders(),
       );
 
       final body = jsonDecode(response.body);
@@ -234,7 +236,7 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/admin/member/delete'),
-        headers: await getHeaders(),
+        headers: await authService.getHeaders(),
         body: jsonEncode({'_id': memberId}),
       );
 

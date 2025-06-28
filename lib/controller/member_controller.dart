@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:book_store/services/auth_service.dart';
 import 'package:book_store/models/member.dart';
 import 'package:book_store/pages/main_page.dart';
@@ -86,7 +85,7 @@ class MemberController extends GetxController {
         authToken.value = token;
         await getMyData();
         isAuthenticated.value = true;
-        Get.offAll(() => MainPage());
+        Get.offAll(() => const MainPage());
       } else {
         isAuthenticated.value = false;
         // Get.offAll(() => SplashPage());
@@ -106,7 +105,7 @@ class MemberController extends GetxController {
 
       await authController.saveToken(authToken.value, authMember.value!);
 
-      Get.offAll(() => MainPage());
+      Get.offAll(() => const MainPage());
     } catch (e) {
       loginErrorMessage.value = e.toString();
     }
@@ -125,7 +124,7 @@ class MemberController extends GetxController {
 
       await authController.saveToken(authToken.value, authMember.value!);
 
-      Get.offAll(() => MainPage());
+      Get.offAll(() => const MainPage());
     } catch (e) {
       signupErrorMessage.value = e.toString();
     }
@@ -220,8 +219,6 @@ class MemberController extends GetxController {
     MemberType? memberType,
     String? search,
   }) async {
-    print("getAuthorsData");
-
     try {
       final members = await memberService.getMembers(
         order: order,
