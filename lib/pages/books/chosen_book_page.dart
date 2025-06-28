@@ -3,7 +3,7 @@
 import 'dart:typed_data';
 
 import 'package:book_store/components/command/app_bar/detail_bar.dart';
-import 'package:book_store/controller/book.controller.dart';
+import 'package:book_store/controller/book_controller.dart';
 import 'package:book_store/pages/books/file_reader.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';

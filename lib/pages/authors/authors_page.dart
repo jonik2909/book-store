@@ -2,7 +2,7 @@
 
 import 'package:book_store/components/command/app_bar/custom_bar.dart';
 import 'package:book_store/components/authors/author_card.dart';
-import 'package:book_store/controller/member.controller.dart';
+import 'package:book_store/controller/member_controller.dart';
 import 'package:book_store/models/member.dart';
 import 'package:book_store/pages/authors/chosen_author_page.dart';
 import 'package:flutter/material.dart';

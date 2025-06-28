@@ -4,12 +4,12 @@ import 'package:book_store/components/command/app_bar/custom_bar.dart';
 import 'package:book_store/utils/validators/book_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:book_store/controller/author.controller.dart';
+import 'package:book_store/controller/author_controller.dart';
 import 'package:book_store/models/book.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class EditBookPage extends StatelessWidget {
-  EditBookPage({Key? key, required this.book}) : super(key: key);
+  EditBookPage({super.key, required this.book});
 
   final Book book;
   final _formKey = GlobalKey<FormState>();

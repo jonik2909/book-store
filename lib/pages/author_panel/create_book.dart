@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/components/command/app_bar/custom_bar.dart';
-import 'package:book_store/controller/author.controller.dart';
+import 'package:book_store/controller/author_controller.dart';
 import 'package:book_store/models/book.dart';
 import 'package:book_store/utils/validators/book_validator.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class CreateBook extends StatelessWidget {
     final formKey = GlobalKey<FormState>(); // Form key qo'shdim
 
     final AuthorController authorController = Get.put(AuthorController());
-    final List<BookCategory> _categories = BookCategory.values;
+    const List<BookCategory> categories = BookCategory.values;
 
     // controllers
     final bookName = TextEditingController();
@@ -188,7 +188,7 @@ class CreateBook extends StatelessWidget {
                     fillColor: Colors.white,
                   ),
                   hint: Text('Select Category'),
-                  items: _categories.map<DropdownMenuItem<String>>((category) {
+                  items: categories.map<DropdownMenuItem<String>>((category) {
                     final value = category.toString().split('.').last;
                     return DropdownMenuItem<String>(
                       value: value,

@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:book_store/utils/utils.dart';
 
-class NewBookService {
+class BookService {
   final String _baseUrl;
   final http.Client _client;
 
-  NewBookService({http.Client? client})
+  BookService({http.Client? client})
       : _baseUrl = dotenv.env['API_URL'] ?? 'http://localhost:3003/book',
         _client = client ?? http.Client();
 

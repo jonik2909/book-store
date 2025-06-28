@@ -3,10 +3,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:book_store/services/auth_service.dart';
 import 'package:book_store/models/member.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/pages/splash/splash_page.dart';
-import 'package:book_store/services/MemberService.dart';
+import 'package:book_store/services/member_service.dart';
+import 'package:book_store/utils/image_picker_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MemberController extends GetxController {
   final memberService = MemberService();
+  final authController = AuthService();
 
   final RxBool isLoading = false.obs;
 
@@ -38,7 +41,7 @@ class MemberController extends GetxController {
 
   Future pickMemberImage() async {
     try {
-      var img = await ImagePicker().pickImage(source: ImageSource.gallery);
+      var img = await ImagePickerUtil.pickImage(source: ImageSource.gallery);
 
       if (img == null) return;
 
@@ -60,23 +63,25 @@ class MemberController extends GetxController {
     checkLoginStatus();
 
     getAuthorList(
-        targetList: authorList,
-        order: 'memberViews',
-        page: 1,
-        limit: 100,
-        memberType: MemberType.AUTHOR);
+      targetList: authorList,
+      order: 'memberViews',
+      page: 1,
+      limit: 100,
+      memberType: MemberType.AUTHOR,
+    );
 
     getAuthorList(
-        targetList: topAuthors,
-        order: 'memberBooks',
-        page: 1,
-        limit: 100,
-        memberType: MemberType.AUTHOR);
+      targetList: topAuthors,
+      order: 'memberBooks',
+      page: 1,
+      limit: 100,
+      memberType: MemberType.AUTHOR,
+    );
   }
 
   Future<void> checkLoginStatus() async {
     try {
-      final token = await getToken();
+      final token = await authController.getToken();
       if (token != null && token.isNotEmpty) {
         authToken.value = token;
         await getMyData();
@@ -88,7 +93,7 @@ class MemberController extends GetxController {
       }
     } catch (e) {
       isAuthenticated.value = false;
-      Get.offAll(() => SplashPage());
+      Get.offAll(() => const SplashPage());
     }
   }
 
@@ -99,7 +104,7 @@ class MemberController extends GetxController {
       authToken.value = response['accessToken'];
       authMember.value = Member.fromJson(response['member']);
 
-      await _saveToken(authToken.value, authMember.value!);
+      await authController.saveToken(authToken.value, authMember.value!);
 
       Get.offAll(() => MainPage());
     } catch (e) {
@@ -118,7 +123,7 @@ class MemberController extends GetxController {
       authToken.value = response['accessToken'];
       authMember.value = Member.fromJson(response['member']);
 
-      await _saveToken(authToken.value, authMember.value!);
+      await authController.saveToken(authToken.value, authMember.value!);
 
       Get.offAll(() => MainPage());
     } catch (e) {
@@ -132,7 +137,7 @@ class MemberController extends GetxController {
       authToken.value = '';
       authMember.value = null;
 
-      await _clearStorage();
+      await authController.clearStorage();
     } catch (err) {
       Get.snackbar(
         'Error',
@@ -258,22 +263,5 @@ class MemberController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  Future<void> _saveToken(String token, Member member) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('accessToken', token);
-    await prefs.setString('memberData', jsonEncode(member.toJson()));
-  }
-
-  Future<String?> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('accessToken');
-  }
-
-  Future<void> _clearStorage() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('accessToken');
-    await prefs.remove('memberData');
   }
 }

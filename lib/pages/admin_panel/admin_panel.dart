@@ -5,7 +5,6 @@ import 'package:book_store/components/command/panel/router_card.dart';
 import 'package:book_store/pages/admin_panel/admin_books.dart';
 import 'package:book_store/pages/admin_panel/admin_members.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AdminPanel extends StatelessWidget {
   const AdminPanel({super.key});

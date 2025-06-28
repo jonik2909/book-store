@@ -3,13 +3,13 @@
 import 'dart:io';
 import 'package:book_store/models/book.dart';
 import 'package:book_store/models/member.dart';
-import 'package:book_store/services/BookService.dart';
-import 'package:book_store/services/MemberService.dart';
+import 'package:book_store/services/book_service.dart';
+import 'package:book_store/services/member_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AdminController extends GetxController {
-  final NewBookService bookService = NewBookService();
+  final BookService bookService = BookService();
   final MemberService memberService = MemberService();
 
   // Observable states

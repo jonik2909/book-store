@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:book_store/models/book.dart';
-import 'package:book_store/services/BookService.dart';
+import 'package:book_store/services/book_service.dart';
 import 'package:book_store/utils/image_picker_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AuthorController extends GetxController {
-  final NewBookService bookService = NewBookService();
+  final BookService bookService = BookService();
   static const int MAX_IMAGES = 3;
 
   // Observable states

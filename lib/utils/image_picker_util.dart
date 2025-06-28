@@ -12,7 +12,6 @@ class ImagePickerUtil {
   static Future<File?> pickImage({
     ImageSource source = ImageSource.gallery,
     int imageQuality = 80,
-    bool showError = true,
   }) async {
     try {
       final XFile? pickedFile = await _picker.pickImage(
@@ -24,15 +23,13 @@ class ImagePickerUtil {
 
       return File(pickedFile.path);
     } catch (e) {
-      if (showError) {
-        Get.snackbar(
-          'Error',
-          'Failed to pick image: ${e.toString()}',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: const Color(0xffEB5757),
-          colorText: const Color(0xffffffff),
-        );
-      }
+      Get.snackbar(
+        'Error',
+        'Failed to pick image: ${e.toString()}',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xffEB5757),
+        colorText: const Color(0xffffffff),
+      );
       return null;
     }
   }
@@ -40,7 +37,6 @@ class ImagePickerUtil {
   // Multiple images picker
   static Future<List<File>> pickMultiImage({
     int imageQuality = 80,
-    bool showError = true,
   }) async {
     try {
       final List<XFile> pickedFiles = await _picker.pickMultiImage(
@@ -49,15 +45,13 @@ class ImagePickerUtil {
 
       return pickedFiles.map((file) => File(file.path)).toList();
     } catch (e) {
-      if (showError) {
-        Get.snackbar(
-          'Error',
-          'Failed to pick images: ${e.toString()}',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: const Color(0xffEB5757),
-          colorText: const Color(0xffffffff),
-        );
-      }
+      Get.snackbar(
+        'Error',
+        'Failed to pick images: ${e.toString()}',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xffEB5757),
+        colorText: const Color(0xffffffff),
+      );
       return [];
     }
   }
