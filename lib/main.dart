@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:book_store/controller/language_controller.dart';
+import 'package:book_store/controllers/language_controller.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

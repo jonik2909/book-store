@@ -3,7 +3,7 @@
 import 'package:book_store/components/command/app_bar/custom_bar.dart';
 import 'package:book_store/components/command/book/book_card.dart';
 import 'package:book_store/components/books/category_card.dart';
-import 'package:book_store/controller/book_controller.dart';
+import 'package:book_store/controllers/book_controller.dart';
 import 'package:book_store/models/book.dart';
 import 'package:book_store/pages/books/chosen_book_page.dart';
 import 'package:flutter/material.dart';

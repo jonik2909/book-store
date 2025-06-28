@@ -2,10 +2,10 @@
 
 import 'package:book_store/components/command/app_bar/custom_bar.dart';
 import 'package:book_store/utils/custom_bar.dart';
-import 'package:book_store/utils/validators/book_validator.dart';
+import 'package:book_store/validators/book_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:book_store/controller/author_controller.dart';
+import 'package:book_store/controllers/author_controller.dart';
 import 'package:book_store/models/book.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

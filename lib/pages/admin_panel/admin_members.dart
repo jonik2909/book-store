@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/components/command/app_bar/custom_bar.dart';
-import 'package:book_store/controller/admin_controller.dart';
+import 'package:book_store/controllers/admin_controller.dart';
 import 'package:book_store/models/member.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

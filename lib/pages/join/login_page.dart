@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/controller/member_controller.dart';
+import 'package:book_store/controllers/member_controller.dart';
 import 'package:book_store/pages/join/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

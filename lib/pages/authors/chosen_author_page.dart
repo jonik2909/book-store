@@ -6,7 +6,7 @@ import 'package:book_store/pages/books/chosen_book_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:book_store/controller/member_controller.dart';
+import 'package:book_store/controllers/member_controller.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:share_plus/share_plus.dart';

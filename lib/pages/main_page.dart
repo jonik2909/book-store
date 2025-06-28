@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/controller/controller.dart';
-import 'package:book_store/controller/member_controller.dart';
+import 'package:book_store/controllers/controller.dart';
+import 'package:book_store/controllers/member_controller.dart';
 import 'package:book_store/models/member.dart';
 import 'package:book_store/pages/admin_panel/admin_panel.dart';
 import 'package:book_store/pages/author_panel/author_panel.dart';
