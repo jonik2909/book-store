@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:book_store/models/book.dart';
 import 'package:book_store/services/book_service.dart';
 import 'package:book_store/utils/image_picker_util.dart';
+import 'package:book_store/utils/custom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,21 +47,9 @@ class AuthorController extends GetxController {
 
       Get.back();
 
-      Get.snackbar(
-        'Success',
-        'Book created successfully',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showSuccess('Book created successfully');
+    } catch (err) {
+      CustomBar.showError(err.toString());
     } finally {
       isLoading.value = false;
     }
@@ -73,13 +62,7 @@ class AuthorController extends GetxController {
 
       authorBooks.assignAll(books);
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     }
   }
 
@@ -89,13 +72,7 @@ class AuthorController extends GetxController {
 
       getAuthorBooks();
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     }
   }
 
@@ -125,21 +102,9 @@ class AuthorController extends GetxController {
 
       getAuthorBooks();
 
-      Get.snackbar(
-        'Success',
-        'Book updated successfully',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        e.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showSuccess('Book updated successfully');
+    } catch (err) {
+      CustomBar.showError(err.toString());
     } finally {
       isLoading.value = false;
     }
@@ -147,13 +112,9 @@ class AuthorController extends GetxController {
 
   Future<void> pickMultipleImages() async {
     if (selectedImages.length >= MAX_IMAGES) {
-      Get.snackbar(
-        'Limit Reached',
-        'You can only upload 3 images',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.orange,
-        colorText: Colors.white,
-      );
+      CustomBar.showWarning('You can only upload 3 images',
+          title: 'Limit Reached');
+
       return;
     }
 
@@ -161,13 +122,9 @@ class AuthorController extends GetxController {
     if (pickedImages.isNotEmpty) {
       final remainingSlots = MAX_IMAGES - selectedImages.length;
       if (pickedImages.length > remainingSlots) {
-        Get.snackbar(
-          'Warning',
-          'Only selecting first $remainingSlots images to meet the 3 image limit',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.orange,
-          colorText: Colors.white,
-        );
+        CustomBar.showWarning(
+            'Only selecting first $remainingSlots images to meet the 3 image limit');
+
         selectedImages.addAll(pickedImages.take(remainingSlots));
       } else {
         selectedImages.addAll(pickedImages);

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_final_fields
-
 import 'dart:convert';
 import 'dart:io';
 import 'package:book_store/services/auth_service.dart';
@@ -8,7 +6,7 @@ import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/pages/splash/splash_page.dart';
 import 'package:book_store/services/member_service.dart';
 import 'package:book_store/utils/image_picker_util.dart';
-import 'package:flutter/material.dart';
+import 'package:book_store/utils/custom_bar.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,8 +33,7 @@ class MemberController extends GetxController {
   final Rx<Member?> chosenAuthor = Rx<Member?>(null);
 
   // Profile page
-  Rx<File?> _thumnailImage = Rx<File?>(null);
-  Rx<File?> get thumnailImage => _thumnailImage;
+  Rx<File?> get thumnailImage => Rx<File?>(null);
 
   Future pickMemberImage() async {
     try {
@@ -44,15 +41,9 @@ class MemberController extends GetxController {
 
       if (img == null) return;
 
-      _thumnailImage.value = File(img.path);
+      thumnailImage.value = File(img.path);
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     }
   }
 
@@ -141,13 +132,7 @@ class MemberController extends GetxController {
 
       await authController.clearStorage();
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     }
   }
 
@@ -158,13 +143,7 @@ class MemberController extends GetxController {
 
       authMember.value = Member.fromJson(jsonDecode(memberJson!));
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     }
   }
 
@@ -193,22 +172,9 @@ class MemberController extends GetxController {
       authMember.value = Member.fromJson(response);
 
       // Show success update
-      Get.snackbar(
-        'Success',
-        'Profile updated successfully',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
+      CustomBar.showSuccess('Profile updated successfully');
     } catch (err) {
-      // Show error message
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     } finally {
       isLoading.value = false;
     }
@@ -235,13 +201,7 @@ class MemberController extends GetxController {
 
       targetList.assignAll(members);
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     } finally {
       isLoading.value = false;
     }
@@ -255,13 +215,7 @@ class MemberController extends GetxController {
 
       chosenAuthor.value = response;
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     } finally {
       isLoading.value = false;
     }

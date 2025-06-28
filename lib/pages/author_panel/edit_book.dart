@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:book_store/components/command/app_bar/custom_bar.dart';
+import 'package:book_store/utils/custom_bar.dart';
 import 'package:book_store/utils/validators/book_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,13 +29,8 @@ class EditBookPage extends StatelessWidget {
       bool hasNewImages = authorController.selectedImages.isNotEmpty;
 
       if (!hasCurrentImages && !hasNewImages) {
-        Get.snackbar(
-          'Error',
-          'At least one image is required',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        CustomBar.showError('At least one image is required');
+
         return;
       }
 

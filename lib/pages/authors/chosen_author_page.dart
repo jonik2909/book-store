@@ -136,6 +136,20 @@ Check out this author on Book Store!
                           color: Colors.grey[600],
                         ),
                       ),
+                      SizedBox(height: 8),
+                      if (author.memberDesc!.isNotEmpty)
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            author.memberDesc!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[700],
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),

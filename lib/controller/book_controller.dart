@@ -1,5 +1,6 @@
 import 'package:book_store/models/book.dart';
 import 'package:book_store/services/book_service.dart';
+import 'package:book_store/utils/custom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -69,13 +70,7 @@ class BookController extends GetxController {
 
       targetList.assignAll(books);
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     } finally {
       isLoading.value = false;
     }
@@ -88,13 +83,7 @@ class BookController extends GetxController {
       final response = await bookService.getBook(bookId);
       chosenBook.value = response;
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     } finally {
       isLoading.value = false;
     }

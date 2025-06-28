@@ -81,7 +81,7 @@ class LanguageController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             children: [
               // Dialog title
-              Text(
+              const Text(
                 'Select Language', // Bu ham ARB faylga qo'shilishi mumkin
                 style: TextStyle(
                   fontSize: 18,
@@ -147,7 +147,7 @@ class LanguageController extends GetxController {
                     ),
                   ),
                 );
-              }).toList(),
+              }),
 
               const SizedBox(height: 20),
 

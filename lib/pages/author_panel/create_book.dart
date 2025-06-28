@@ -3,6 +3,7 @@
 import 'package:book_store/components/command/app_bar/custom_bar.dart';
 import 'package:book_store/controller/author_controller.dart';
 import 'package:book_store/models/book.dart';
+import 'package:book_store/utils/custom_bar.dart';
 import 'package:book_store/utils/validators/book_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,25 +32,14 @@ class CreateBook extends StatelessWidget {
       final imageError =
           BookValidator.validateImages(authorController.selectedImages);
       if (imageError != null) {
-        Get.snackbar(
-          'Error',
-          imageError,
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        CustomBar.showError(imageError);
         return;
       }
 
       final price = int.tryParse(bookPrice.text);
       if (price == null || price <= 0) {
-        Get.snackbar(
-          'Error',
-          'Please enter a valid price',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        CustomBar.showError('Please enter a valid price');
+
         return;
       }
 

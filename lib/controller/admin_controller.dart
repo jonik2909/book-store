@@ -5,7 +5,7 @@ import 'package:book_store/models/book.dart';
 import 'package:book_store/models/member.dart';
 import 'package:book_store/services/book_service.dart';
 import 'package:book_store/services/member_service.dart';
-import 'package:flutter/material.dart';
+import 'package:book_store/utils/custom_bar.dart';
 import 'package:get/get.dart';
 
 class AdminController extends GetxController {
@@ -28,18 +28,11 @@ class AdminController extends GetxController {
 
   Future<void> getAllBooks() async {
     try {
-      print("request getAllBooks");
       final books = await bookService.getAllBooks();
 
       adminBooks.assignAll(books);
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     }
   }
 
@@ -49,13 +42,7 @@ class AdminController extends GetxController {
 
       getAllBooks();
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     }
   }
 
@@ -66,13 +53,7 @@ class AdminController extends GetxController {
 
       adminMembers.assignAll(members);
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     }
   }
 
@@ -82,13 +63,7 @@ class AdminController extends GetxController {
 
       getAllMembers();
     } catch (err) {
-      Get.snackbar(
-        'Error',
-        err.toString(),
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      CustomBar.showError(err.toString());
     }
   }
 }
