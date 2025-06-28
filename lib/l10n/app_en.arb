@@ -4,27 +4,5 @@
   "authors": "AUTHORS",
   "profile": "PROFILE",
   "admin": "ADMIN",
-  "language": "Language",
-  "settings": "Settings",
-  "english": "English",
-  "uzbek": "Uzbek",
-  "welcome": "Welcome",
-  "hello": "Hello",
-  "changeLanguage": "Change Language",
-  "selectLanguage": "Select Language",
-  "@home": {
-    "description": "Home page title"
-  },
-  "@books": {
-    "description": "Books page title"
-  },
-  "@authors": {
-    "description": "Authors page title"
-  },
-  "@profile": {
-    "description": "Profile page title"
-  },
-  "@admin": {
-    "description": "Admin page title"
-  }
+  "author": "AUTHOR"
 }

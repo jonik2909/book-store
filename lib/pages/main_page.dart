@@ -75,7 +75,7 @@ class MainPage extends StatelessWidget {
           items.add(
             BottomNavigationBarItem(
               icon: Icon(Icons.admin_panel_settings),
-              label: AppLocalizations.of(context)!.authors,
+              label: AppLocalizations.of(context)!.author,
             ),
           );
         }
