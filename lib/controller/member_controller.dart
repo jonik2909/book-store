@@ -115,10 +115,12 @@ class MemberController extends GetxController {
       String username, String email, String password, bool isAuthor) async {
     try {
       var response = await memberService.signup(
-          username: username,
-          email: email,
-          password: password,
-          isAuthor: isAuthor);
+        username: username,
+        email: email,
+        password: password,
+        isAuthor: isAuthor,
+      );
+
       authToken.value = response['accessToken'];
       authMember.value = Member.fromJson(response['member']);
 
@@ -133,6 +135,7 @@ class MemberController extends GetxController {
   Future<void> logout() async {
     try {
       await memberService.logout(authToken.value);
+
       authToken.value = '';
       authMember.value = null;
 
@@ -220,6 +223,8 @@ class MemberController extends GetxController {
     String? search,
   }) async {
     try {
+      isLoading.value = false;
+
       final members = await memberService.getMembers(
         order: order,
         page: page,

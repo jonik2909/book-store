@@ -74,7 +74,7 @@ class MemberService {
     }
   }
 
-  // Get user details
+  // getUserDetails
   Future<Map<String, dynamic>> getUserDetails(String token) async {
     try {
       final response = await _client.get(
@@ -84,6 +84,47 @@ class MemberService {
       return handleResponse(response);
     } catch (e) {
       throw Exception('Failed to get user details: ${e.toString()}');
+    }
+  }
+
+  // updateUserData
+  Future<Map<String, dynamic>> updateUserData({
+    required String? nick,
+    required String? email,
+    required String? desc,
+    File? memberImage,
+  }) async {
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('$_baseUrl/member/update'),
+      );
+
+      // Add text fields
+      if (nick != null) request.fields['memberNick'] = nick;
+      if (email != null) request.fields['memberEmail'] = email;
+      if (desc != null) request.fields['memberDesc'] = desc;
+
+      // Add the image if it exists
+      if (memberImage != null) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'memberImage',
+            memberImage.path,
+          ),
+        );
+      }
+
+      var headers = await authService.getHeaders();
+      headers.forEach((key, value) {
+        request.headers[key] = value;
+      });
+      var streamedResponse = await request.send();
+      var response = await http.Response.fromStream(streamedResponse);
+
+      return handleResponse(response);
+    } catch (e) {
+      throw Exception('Failed to update user data: ${e.toString()}');
     }
   }
 
@@ -124,56 +165,11 @@ class MemberService {
         Uri.parse('$_baseUrl/member/$memberId'),
       );
 
-      final body = jsonDecode(response.body);
+      final body = await handleResponse(response);
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Member.fromJson(body);
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      return Member.fromJson(body);
     } catch (e) {
-      print("error $e");
-      throw e.toString();
-    }
-  }
-
-  Future<Map<String, dynamic>> updateUserData({
-    required String? nick,
-    required String? email,
-    required String? desc,
-    File? memberImage,
-  }) async {
-    try {
-      var request = http.MultipartRequest(
-        'POST',
-        Uri.parse('$_baseUrl/member/update'),
-      );
-
-      // Add text fields
-      if (nick != null) request.fields['memberNick'] = nick;
-      if (email != null) request.fields['memberEmail'] = email;
-      if (desc != null) request.fields['memberDesc'] = desc;
-
-      // Add the image if it exists
-      if (memberImage != null) {
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            'memberImage',
-            memberImage.path,
-          ),
-        );
-      }
-      var headers = await authService.getHeaders();
-      headers.forEach((key, value) {
-        request.headers[key] = value;
-      });
-      var streamedResponse = await request.send();
-      var response = await http.Response.fromStream(streamedResponse);
-
-      return handleResponse(response);
-    } catch (e) {
-      throw Exception('Failed to update user data: ${e.toString()}');
+      rethrow;
     }
   }
 
@@ -184,14 +180,9 @@ class MemberService {
         Uri.parse('$_baseUrl/admin/member/all'),
       );
 
-      final body = jsonDecode(response.body);
+      final body = await handleListResponse(response);
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return body.map<Member>((book) => Member.fromJson(book)).toList();
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      return body.map<Member>((book) => Member.fromJson(book)).toList();
     } catch (e) {
       throw e.toString();
     }
@@ -204,14 +195,9 @@ class MemberService {
         body: jsonEncode({'_id': memberId}),
       );
 
-      final body = jsonDecode(response.body);
+      await handleResponse(response);
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return true;
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      return true;
     } catch (e) {
       throw e.toString();
     }
