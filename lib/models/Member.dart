@@ -15,7 +15,6 @@ class Member {
   final String? memberDesc;
   final String? memberImage;
   final int memberViews;
-  final int memberLikes;
   final int memberBooks;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -30,7 +29,6 @@ class Member {
     required this.memberDesc,
     required this.memberImage,
     required this.memberViews,
-    required this.memberLikes,
     required this.memberBooks,
     required this.createdAt,
     required this.updatedAt,
@@ -47,7 +45,6 @@ class Member {
       memberDesc: json['memberDesc'] ?? '',
       memberImage: json['memberImage'] ?? '',
       memberViews: json['memberViews'],
-      memberLikes: json['memberLikes'],
       memberBooks: json['memberBooks'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
@@ -67,7 +64,6 @@ class Member {
       'memberDesc': memberDesc,
       'memberImage': memberImage,
       'memberViews': memberViews,
-      'memberLikes': memberLikes,
       'memberBooks': memberBooks,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),

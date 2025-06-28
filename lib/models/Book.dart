@@ -21,7 +21,6 @@ class Book {
   final BookStatus bookStatus;
   final String memberId;
   final int bookViews;
-  final int bookLikes;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final Member? authorData;
@@ -36,7 +35,6 @@ class Book {
     required this.bookStatus,
     required this.memberId,
     this.bookViews = 0,
-    this.bookLikes = 0,
     this.createdAt,
     this.updatedAt,
     required this.authorData,
@@ -54,7 +52,6 @@ class Book {
       bookStatus: _parseBookStatus(json['bookStatus']), // Parse string to enum
       memberId: json['memberId'],
       bookViews: json['bookViews'] ?? 0,
-      bookLikes: json['bookLikes'] ?? 0,
       createdAt:
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt:
@@ -101,7 +98,6 @@ class Book {
       'bookStatus': bookStatus.index,
       'memberId': memberId,
       'bookViews': bookViews,
-      'bookLikes': bookLikes,
       'createdAt': createdAt?.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
       'authorData': authorData?.toJson(),
