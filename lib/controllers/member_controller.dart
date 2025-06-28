@@ -79,11 +79,10 @@ class MemberController extends GetxController {
         Get.offAll(() => const MainPage());
       } else {
         isAuthenticated.value = false;
-        // Get.offAll(() => SplashPage());
       }
     } catch (e) {
       isAuthenticated.value = false;
-      Get.offAll(() => const SplashPage());
+      Get.offAll(() => SplashPage());
     }
   }
 

@@ -1,12 +1,16 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:book_store/controllers/controller.dart';
 import 'package:book_store/pages/join/login_page.dart';
 import 'package:book_store/pages/join/signup_page.dart';
+import 'package:book_store/pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SplashPage extends StatelessWidget {
-  const SplashPage({super.key});
+  SplashPage({super.key});
+
+  final Controller controller = Get.put(Controller());
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +82,22 @@ class SplashPage extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
+              SizedBox(height: 20),
+              TextButton.icon(
+                onPressed: () {
+                  controller.changeScreen(0);
+                  Get.offAll(() => MainPage());
+                },
+                icon: Icon(Icons.home, color: Colors.white, size: 20),
+                label: Text(
+                  'Continue to Home',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
