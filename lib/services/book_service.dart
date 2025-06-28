@@ -2,18 +2,17 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:book_store/models/book.dart';
 import 'package:book_store/services/auth_service.dart';
+import 'package:book_store/utils/client.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:book_store/utils/utils.dart';
 
 class BookService {
-  final String _baseUrl;
-  final http.Client _client;
+  final String _baseUrl = dotenv.env['API_URL']!;
+  final http.Client _client = Client();
   final AuthService authService = AuthService();
 
-  BookService({http.Client? client})
-      : _baseUrl = dotenv.env['API_URL'] ?? 'http://localhost:3003/book',
-        _client = client ?? http.Client();
+  BookService();
 
   // getBooks
   Future<List<Book>> getBooks({
@@ -38,7 +37,6 @@ class BookService {
 
       final response = await _client.get(
         uri,
-        headers: await authService.getHeaders(),
       );
       final List<dynamic> jsonData = await handleListResponse(response);
 
@@ -53,7 +51,6 @@ class BookService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/book/$bookId'),
-        headers: await authService.getHeaders(),
       );
 
       final body = jsonDecode(response.body);
@@ -129,7 +126,6 @@ class BookService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/book/my'),
-        headers: await authService.getHeaders(),
       );
 
       final body = jsonDecode(response.body);
@@ -149,7 +145,6 @@ class BookService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/book/delete'),
-        headers: await authService.getHeaders(),
         body: jsonEncode({'_id': bookId}),
       );
 
@@ -230,7 +225,6 @@ class BookService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/admin/book/all'),
-        headers: await authService.getHeaders(),
       );
 
       final body = jsonDecode(response.body);
@@ -250,7 +244,6 @@ class BookService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/admin/book/delete'),
-        headers: await authService.getHeaders(),
         body: jsonEncode({'_id': bookId}),
       );
 

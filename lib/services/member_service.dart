@@ -2,18 +2,17 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:book_store/models/member.dart';
 import 'package:book_store/services/auth_service.dart';
+import 'package:book_store/utils/client.dart';
 import 'package:book_store/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MemberService {
-  final String _baseUrl;
-  final http.Client _client;
+  final String _baseUrl = dotenv.env['API_URL']!;
+  final http.Client _client = Client();
   final AuthService authService = AuthService();
 
-  MemberService({http.Client? client})
-      : _baseUrl = dotenv.env['API_URL'] ?? 'http://localhost:3003/book',
-        _client = client ?? http.Client();
+  MemberService();
 
   void dispose() {
     _client.close();
@@ -24,7 +23,6 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/member/login'),
-        headers: await authService.getHeaders(),
         body: jsonEncode({
           'memberNick': username,
           'memberPassword': password,
@@ -47,7 +45,6 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/member/signup'),
-        headers: await authService.getHeaders(),
         body: jsonEncode({
           'memberNick': username,
           'memberEmail': email,
@@ -69,7 +66,6 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/member/logout'),
-        headers: await authService.getHeaders(),
       );
 
       return handleResponse(response);
@@ -83,7 +79,6 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/auth/me'),
-        headers: await authService.getHeaders(),
       );
 
       return handleResponse(response);
@@ -91,30 +86,6 @@ class MemberService {
       throw Exception('Failed to get user details: ${e.toString()}');
     }
   }
-
-  // Update user data
-  // Future<Map<String, dynamic>> updateUserData({
-  //   required String token,
-  //   required int id,
-  //   required String nick,
-  //   required String email,
-  // }) async {
-  //   try {
-  //     final response = await _client.post(
-  //       Uri.parse('$_baseUrl/members/$id'),
-  //       headers: await getHeaders(),
-  //       body: jsonEncode({
-  //         'id': id,
-  //         'nick': nick,
-  //         'email': email,
-  //       }),
-  //     );
-
-  //     return handleResponse(response);
-  //   } catch (e) {
-  //     throw Exception('Failed to update user data: ${e.toString()}');
-  //   }
-  // }
 
   Future<List<Member>> getMembers({
     String? order,
@@ -138,7 +109,6 @@ class MemberService {
 
       final response = await _client.get(
         uri,
-        headers: await authService.getHeaders(),
       );
       final List<dynamic> jsonData = await handleListResponse(response);
 
@@ -152,7 +122,6 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/member/$memberId'),
-        headers: await authService.getHeaders(),
       );
 
       final body = jsonDecode(response.body);
@@ -195,13 +164,10 @@ class MemberService {
           ),
         );
       }
-
-      // Add headers
       var headers = await authService.getHeaders();
       headers.forEach((key, value) {
         request.headers[key] = value;
       });
-
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
@@ -216,7 +182,6 @@ class MemberService {
     try {
       final response = await _client.get(
         Uri.parse('$_baseUrl/admin/member/all'),
-        headers: await authService.getHeaders(),
       );
 
       final body = jsonDecode(response.body);
@@ -236,7 +201,6 @@ class MemberService {
     try {
       final response = await _client.post(
         Uri.parse('$_baseUrl/admin/member/delete'),
-        headers: await authService.getHeaders(),
         body: jsonEncode({'_id': memberId}),
       );
 
