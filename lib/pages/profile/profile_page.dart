@@ -31,7 +31,7 @@ class ProfilePage extends StatelessWidget {
               width: 200,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.offAll(SplashPage());
+                  Get.offAll(() => SplashPage());
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xffEB5757),

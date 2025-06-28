@@ -288,20 +288,27 @@ class EditBookPage extends StatelessWidget {
                       // Submit Button
                       SizedBox(
                         width: double.infinity,
+                        height: 54,
                         child: ElevatedButton(
                           onPressed: authorController.isLoading.value
                               ? null
                               : handleSubmit,
                           style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 16),
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blue[700],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            elevation: 2,
                           ),
                           child: Text(
                             authorController.isLoading.value
                                 ? 'Updating...'
                                 : 'Update Book',
-                            style: TextStyle(fontSize: 16),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
