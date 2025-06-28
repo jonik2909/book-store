@@ -1,0 +1,7 @@
+{
+  "editor.showFoldingControls": "always",
+  "editor.foldingHighlight": true,
+  "editor.foldingStrategy": "auto",
+  // "editor.guides.bracketPairs": "active",
+  "editor.bracketPairColorization.enabled": true
+}

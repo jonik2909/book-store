@@ -24,29 +24,8 @@ class HomePage extends StatelessWidget {
   final MemberController memberController = Get.put(MemberController());
   final LanguageController languageController = Get.find<LanguageController>();
 
-  void refreshData() {
-    bookController.getBooks(
-      targetList: bookController.topBooks,
-      order: 'bookViews',
-      page: 1,
-      limit: 6,
-    );
-
-    memberController.getAuthorList(
-      targetList: memberController.topAuthors,
-      order: 'memberBooks',
-      page: 1,
-      limit: 100,
-      memberType: MemberType.AUTHOR,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      refreshData();
-    });
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(title: "Book Store", desc: "All for you"),

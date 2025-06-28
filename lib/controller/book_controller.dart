@@ -1,7 +1,6 @@
 import 'package:book_store/models/book.dart';
 import 'package:book_store/services/book_service.dart';
 import 'package:book_store/utils/custom_bar.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BookController extends GetxController {
@@ -25,8 +24,8 @@ class BookController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    refreshHomePageData();
 
+    refreshHomePageData();
     getBookPagedata(BookCategory.FANTASY);
   }
 
