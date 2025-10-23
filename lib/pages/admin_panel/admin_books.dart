@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
-import 'package:book_store/components/command/app_bar/custom_bar.dart';
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/controllers/admin_controller.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

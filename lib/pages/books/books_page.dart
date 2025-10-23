@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/components/command/app_bar/custom_bar.dart';
-import 'package:book_store/components/command/book/book_card.dart';
+import 'package:book_store/components/app_bar/custom_bar.dart';
+import 'package:book_store/components/book/book_card.dart';
 import 'package:book_store/components/books/category_card.dart';
 import 'package:book_store/controllers/book_controller.dart';
 import 'package:book_store/models/book.dart';

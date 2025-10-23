@@ -2,7 +2,7 @@
 
 import 'dart:typed_data';
 
-import 'package:book_store/components/command/app_bar/detail_bar.dart';
+import 'package:book_store/components/app_bar/detail_bar.dart';
 import 'package:book_store/controllers/book_controller.dart';
 import 'package:book_store/pages/books/file_reader.dart';
 import 'package:book_store/utils/custom_bar.dart';

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/components/command/app_bar/custom_bar.dart';
-import 'package:book_store/components/command/panel/router_card.dart';
+import 'package:book_store/components/app_bar/custom_bar.dart';
+import 'package:book_store/components/panel/router_card.dart';
 import 'package:book_store/pages/admin_panel/admin_books.dart';
 import 'package:book_store/pages/admin_panel/admin_members.dart';
 import 'package:flutter/material.dart';

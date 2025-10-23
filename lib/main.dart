@@ -4,7 +4,6 @@ import 'package:book_store/controllers/language_controller.dart';
 import 'package:book_store/pages/error/no_internet_page.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/services/connectivity_service.dart';
-import 'package:book_store/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

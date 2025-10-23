@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:book_store/components/command/app_bar/custom_bar.dart';
+import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/components/home/video_section.dart';
 import 'package:book_store/components/home/author_home_card.dart';
-import 'package:book_store/components/command/book/book_card.dart';
+import 'package:book_store/components/book/book_card.dart';
 import 'package:book_store/components/home/events_section.dart';
 import 'package:book_store/controllers/controller.dart';
 import 'package:book_store/controllers/language_controller.dart';
