@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:book_store/bindings/initial_binding.dart';
 import 'package:book_store/controllers/language_controller.dart';
 import 'package:book_store/l10n/app_localizations.dart';
 import 'package:book_store/pages/error/no_internet_page.dart';
@@ -22,7 +23,7 @@ void main() async {
 
   await GetStorage.init();
 
-  Get.put(LanguageController());
+  InitialBinding().dependencies();
 
   runApp(MyApp());
 }
@@ -30,9 +31,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final LanguageController languageController = Get.put(LanguageController());
+  final LanguageController languageController = Get.find<LanguageController>();
   final ConnectivityService connectivityService =
-      Get.put(ConnectivityService());
+      Get.find<ConnectivityService>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
 
       // ✅ ASOSIY TUZATISH: locale parametrini qo'shish
       locale: languageController.currentLocale.value,
+      initialBinding: InitialBinding(),
 
       theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(),

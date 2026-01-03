@@ -19,9 +19,9 @@ import 'package:get/get.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final Controller controller = Get.put(Controller());
-  final BookController bookController = Get.put(BookController());
-  final MemberController memberController = Get.put(MemberController());
+  final Controller controller = Get.find<Controller>();
+  final BookController bookController = Get.find<BookController>();
+  final MemberController memberController = Get.find<MemberController>();
   final LanguageController languageController = Get.find<LanguageController>();
 
   @override

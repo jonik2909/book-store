@@ -29,12 +29,12 @@ class AuthorCard extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: const Color(0xffEB5757).withOpacity(0.1),
+            color: const Color(0xffEB5757).withValues(alpha: 0.1),
             width: 1.5,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -49,11 +49,11 @@ class AuthorCard extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(
                   color: memberImage == null
-                      ? const Color(0xffEB5757).withOpacity(0.1)
+                      ? const Color(0xffEB5757).withValues(alpha: 0.1)
                       : null,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: const Color(0xffEB5757).withOpacity(0.2),
+                    color: const Color(0xffEB5757).withValues(alpha: 0.2),
                     width: 2,
                   ),
                 ),
@@ -112,7 +112,7 @@ class AuthorCard extends StatelessWidget {
                           horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.grey.withOpacity(0.2),
+                          color: Colors.grey.withValues(alpha: 0.2),
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(20),
@@ -149,7 +149,7 @@ class AuthorCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Colors.grey.withValues(alpha: 0.2),
                     width: 1,
                   ),
                   shape: BoxShape.circle,

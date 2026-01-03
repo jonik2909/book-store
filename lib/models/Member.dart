@@ -1,3 +1,4 @@
+// ignore_for_file: constant_identifier_names
 // Member Type and Status enums
 import 'package:book_store/models/book.dart';
 

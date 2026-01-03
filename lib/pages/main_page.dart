@@ -16,82 +16,86 @@ import 'package:get/get.dart';
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
+  // Getters to allowing dynamic checking of memberType
+  // while keeping the structure clean as requested
+  List<Widget> get _widgetOptions {
+    final MemberController memberController = Get.find<MemberController>();
+    final baseScreens = <Widget>[
+      HomePage(),
+      BooksPage(),
+      AuthorsPage(),
+      ProfilePage(),
+    ];
+
+    if (memberController.authMember.value?.memberType == MemberType.ADMIN) {
+      baseScreens.add(AdminPanel());
+    } else if (memberController.authMember.value?.memberType ==
+        MemberType.AUTHOR) {
+      baseScreens.add(AuthorPanel());
+    }
+    return baseScreens;
+  }
+
+  List<BottomNavigationBarItem> _items(BuildContext context) {
+    final MemberController memberController = Get.find<MemberController>();
+    final list = <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        label: AppLocalizations.of(context)!.home,
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.library_books),
+        label: AppLocalizations.of(context)!.books,
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.people_alt),
+        label: AppLocalizations.of(context)!.authors,
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.person),
+        label: AppLocalizations.of(context)!.profile,
+      ),
+    ];
+
+    if (memberController.authMember.value?.memberType == MemberType.ADMIN) {
+      list.add(
+        BottomNavigationBarItem(
+          icon: Icon(Icons.admin_panel_settings),
+          label: AppLocalizations.of(context)!.admin,
+        ),
+      );
+    } else if (memberController.authMember.value?.memberType ==
+        MemberType.AUTHOR) {
+      list.add(
+        BottomNavigationBarItem(
+          icon: Icon(Icons.admin_panel_settings),
+          label: AppLocalizations.of(context)!.author,
+        ),
+      );
+    }
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Controller controller = Get.put(Controller());
-    final MemberController memberController = Get.put(MemberController());
-
-    List<Widget> getScreens() {
-      final baseScreens = [
-        HomePage(),
-        BooksPage(),
-        AuthorsPage(),
-        ProfilePage(),
-      ];
-
-      if (memberController.authMember.value?.memberType == MemberType.ADMIN) {
-        baseScreens.add(AdminPanel());
-      } else if (memberController.authMember.value?.memberType ==
-          MemberType.AUTHOR) {
-        baseScreens.add(AuthorPanel());
-      }
-
-      return baseScreens;
-    }
+    final Controller controller = Get.find<Controller>();
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(() => getScreens()[controller.currentScreen.value]),
-      bottomNavigationBar: Obx(() {
-        final items = <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: AppLocalizations.of(context)!.home,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
-            label: AppLocalizations.of(context)!.books,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people_alt),
-            label: AppLocalizations.of(context)!.authors,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: AppLocalizations.of(context)!.profile,
-          ),
-        ];
-
-        // Add the appropriate panel based on user type
-        if (memberController.authMember.value?.memberType == MemberType.ADMIN) {
-          items.add(
-            BottomNavigationBarItem(
-              icon: Icon(Icons.admin_panel_settings),
-              label: AppLocalizations.of(context)!.admin,
-            ),
-          );
-        } else if (memberController.authMember.value?.memberType ==
-            MemberType.AUTHOR) {
-          items.add(
-            BottomNavigationBarItem(
-              icon: Icon(Icons.admin_panel_settings),
-              label: AppLocalizations.of(context)!.author,
-            ),
-          );
-        }
-
-        return BottomNavigationBar(
+      body: Obx(() => _widgetOptions[controller.currentScreen.value]),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
           showUnselectedLabels: true,
           elevation: 0,
-          items: items,
+          items: _items(context),
           currentIndex: controller.currentScreen.value,
           selectedItemColor: Color(0xffEB5757),
           unselectedItemColor: Color(0xff959CB0),
           onTap: (value) => controller.changeScreen(value),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

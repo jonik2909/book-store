@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  final MemberController memberController = Get.put(MemberController());
-  final Controller controller = Get.put(Controller());
+  final MemberController memberController = Get.find<MemberController>();
+  final Controller controller = Get.find<Controller>();
 
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

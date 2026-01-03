@@ -49,7 +49,6 @@ class EditBookPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('category: ${book.bookCategory}');
     // Initialize values on build
     bookName.value = book.bookName;
     bookPrice.value = book.bookPrice.toString();
@@ -113,7 +112,7 @@ class EditBookPage extends StatelessWidget {
                       // Book Category Dropdown - BU YERDA XATOLIK BOR EDI
                       Obx(
                         () => DropdownButtonFormField<BookCategory>(
-                          value: selectedCategory.value,
+                          initialValue: selectedCategory.value,
                           decoration: InputDecoration(
                             labelText: 'Category',
                             border: OutlineInputBorder(),
@@ -264,7 +263,8 @@ class EditBookPage extends StatelessWidget {
                                       child: Container(
                                         padding: EdgeInsets.all(4),
                                         decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.5),
+                                          color: Colors.black
+                                              .withValues(alpha: 0.5),
                                           shape: BoxShape.circle,
                                         ),
                                         child: Icon(

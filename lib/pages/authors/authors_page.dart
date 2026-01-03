@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 class AuthorsPage extends StatelessWidget {
   AuthorsPage({super.key});
 
-  final MemberController memberController = Get.put(MemberController());
+  final MemberController memberController = Get.find<MemberController>();
 
   Future<void> refreshData() async {
     // Convert the void return type to Future<void>

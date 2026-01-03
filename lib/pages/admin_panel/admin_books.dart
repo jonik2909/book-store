@@ -12,7 +12,7 @@ class AdminBooks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AdminController adminController = Get.put(AdminController());
+    final AdminController adminController = Get.find<AdminController>();
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
@@ -44,7 +44,7 @@ class AdminBooks extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: Offset(0, 2),
                     ),

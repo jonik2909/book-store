@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:book_store/models/book.dart';
-import 'package:book_store/services/auth_service.dart';
+
 import 'package:book_store/utils/client.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,8 +9,7 @@ import 'package:book_store/utils/utils.dart';
 
 class BookService {
   final String _baseUrl = dotenv.env['API_URL']!;
-  final http.Client _client = Client();
-  final AuthService authService = AuthService();
+  final Client _client = Client();
 
   BookService();
 
@@ -101,12 +100,8 @@ class BookService {
       }
 
       // Add headers
-      var headers = await authService.getHeaders();
-      headers.forEach((key, value) {
-        request.headers[key] = value;
-      });
-
-      var streamedResponse = await request.send();
+      // Headers are now handled by _client.sendMultipart
+      var streamedResponse = await _client.sendMultipart(request);
       var response = await http.Response.fromStream(streamedResponse);
 
       final body = jsonDecode(response.body);
@@ -199,12 +194,8 @@ class BookService {
       }
 
       // Add headers
-      var headers = await authService.getHeaders();
-      headers.forEach((key, value) {
-        request.headers[key] = value;
-      });
-
-      var streamedResponse = await request.send();
+      // Headers are now handled by _client.sendMultipart
+      var streamedResponse = await _client.sendMultipart(request);
       var response = await http.Response.fromStream(streamedResponse);
 
       final body = jsonDecode(response.body);

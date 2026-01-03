@@ -14,7 +14,7 @@ import 'package:share_plus/share_plus.dart';
 class AuthorDetailPage extends StatelessWidget {
   AuthorDetailPage({super.key});
 
-  final MemberController memberController = Get.put(MemberController());
+  final MemberController memberController = Get.find<MemberController>();
 
   void _shareAuthorProfile(
       String authorName, String email, int books, int views) {

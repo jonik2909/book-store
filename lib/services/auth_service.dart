@@ -4,7 +4,7 @@ import 'package:book_store/models/member.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthService extends GetxController {
+class AuthService extends GetxService {
   Future<Map<String, String>> getHeaders([String? token]) async {
     final token = await getToken();
 

@@ -11,8 +11,8 @@ import 'package:get/get.dart';
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
 
-  final Controller controller = Get.put(Controller());
-  final MemberController memberController = Get.put(MemberController());
+  final Controller controller = Get.find<Controller>();
+  final MemberController memberController = Get.find<MemberController>();
   final _formKey = GlobalKey<FormState>();
 
   @override

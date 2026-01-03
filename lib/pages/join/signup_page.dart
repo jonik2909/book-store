@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
 
-  final MemberController memberController = Get.put(MemberController());
-  final Controller controller = Get.put(Controller());
+  final MemberController memberController = Get.find<MemberController>();
+  final Controller controller = Get.find<Controller>();
 
   final TextEditingController nickController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -130,10 +130,10 @@ class SignupPage extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
                       border:
-                          Border.all(color: Color(0xff8E8E93).withOpacity(0.2)),
+                          Border.all(color: Color(0xff8E8E93).withValues(alpha: 0.2)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
+                          color: Colors.black.withValues(alpha: 0.04),
                           spreadRadius: 1,
                           blurRadius: 8,
                           offset: Offset(0, 2),
@@ -164,7 +164,7 @@ class SignupPage extends StatelessWidget {
                         Obx(() => Switch(
                               value: isAuthor.value,
                               onChanged: (value) => isAuthor.value = value,
-                              activeColor: Color(0xffEB5757),
+                              activeThumbColor: Color(0xffEB5757),
                             )),
                       ],
                     ),

@@ -37,7 +37,7 @@ class AuthorHomeCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withValues(alpha: 0.2),
                   spreadRadius: 1,
                   blurRadius: 4,
                   offset: Offset(0, 0),
@@ -55,11 +55,11 @@ class AuthorHomeCard extends StatelessWidget {
                     height: 60,
                     decoration: BoxDecoration(
                       color: memberImage == null
-                          ? const Color(0xffEB5757).withOpacity(0.1)
+                          ? const Color(0xffEB5757).withValues(alpha: 0.1)
                           : null,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: const Color(0xffEB5757).withOpacity(0.2),
+                        color: const Color(0xffEB5757).withValues(alpha: 0.2),
                         width: 2,
                       ),
                     ),

@@ -13,7 +13,7 @@ class AuthorBooks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthorController authorController = Get.put(AuthorController());
+    final AuthorController authorController = Get.find<AuthorController>();
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
@@ -45,7 +45,7 @@ class AuthorBooks extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: Offset(0, 2),
                     ),

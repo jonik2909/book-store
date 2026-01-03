@@ -56,7 +56,6 @@ class AuthorController extends GetxController {
 
   Future<void> getAuthorBooks() async {
     try {
-      print("request getAuthorBooks");
       final books = await bookService.getAuthorBooks();
 
       authorBooks.assignAll(books);

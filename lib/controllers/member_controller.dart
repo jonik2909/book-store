@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MemberController extends GetxController {
   final memberService = MemberService();
-  final authController = AuthService();
+  final authController = Get.find<AuthService>();
 
   final RxBool isLoading = false.obs;
 

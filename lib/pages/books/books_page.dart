@@ -14,7 +14,7 @@ class BooksPage extends StatelessWidget {
   BooksPage({super.key});
 
   final List<BookCategory> _categories = BookCategory.values;
-  final BookController bookController = Get.put(BookController());
+  final BookController bookController = Get.find<BookController>();
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
+// ignore_for_file: constant_identifier_names
 // Enum definitions
 
-import 'package:book_store/models/Member.dart';
+import 'package:book_store/models/member.dart';
 
 enum BookCategory {
   FANTASY,
