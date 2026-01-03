@@ -1,16 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
+
 import 'package:book_store/models/book.dart';
-
-import 'package:book_store/utils/client.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:book_store/services/base_service.dart';
 import 'package:book_store/utils/utils.dart';
+import 'package:http/http.dart' as http;
 
-class BookService {
-  final String _baseUrl = dotenv.env['API_URL']!;
-  final Client _client = Client();
-
+class BookService extends BaseService {
   BookService();
 
   // getBooks
@@ -22,22 +17,18 @@ class BookService {
     String? search,
   }) async {
     try {
-      final queryParams = {
-        if (order != null) 'order': order,
-        if (page != null) 'page': page.toString(),
-        if (limit != null) 'limit': limit.toString(),
-        if (bookCategory != null)
-          'bookCategory': bookCategory.toString().split('.').last,
-        if (search != null) 'search': search,
-      };
-
-      final uri =
-          Uri.parse('$_baseUrl/book/all').replace(queryParameters: queryParams);
-
-      final response = await _client.get(
-        uri,
+      final response = await get(
+        '/book/all',
+        query: {
+          if (order != null) 'order': order,
+          if (page != null) 'page': page.toString(),
+          if (limit != null) 'limit': limit.toString(),
+          if (bookCategory != null) 'bookCategory': bookCategory.name,
+          if (search != null) 'search': search,
+        },
       );
-      final List<dynamic> jsonData = await handleListResponse(response);
+      final List<dynamic> jsonData =
+          await handleResponse(response) as List<dynamic>;
 
       return jsonData.map((book) => Book.fromJson(book)).toList();
     } catch (e) {
@@ -48,18 +39,11 @@ class BookService {
   // getBook
   Future<Book> getBook(String bookId) async {
     try {
-      final response = await _client.get(
-        Uri.parse('$_baseUrl/book/$bookId'),
-      );
+      final response = await get('/book/$bookId');
 
-      final body = jsonDecode(response.body);
+      final body = await handleResponse(response) as Map<String, dynamic>;
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Book.fromJson(body);
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      return Book.fromJson(body);
     } catch (e) {
       throw e.toString();
     }
@@ -76,7 +60,7 @@ class BookService {
     try {
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('$_baseUrl/book/create'),
+        Uri.parse('$baseUrl/book/create'),
       );
 
       // Add text fields
@@ -84,7 +68,7 @@ class BookService {
         'bookName': bookName,
         'bookPrice': bookPrice.toString(),
         'bookDesc': bookDesc,
-        'bookCategory': bookCategory.toString().split('.').last,
+        'bookCategory': bookCategory.name,
       });
 
       // Add multiple images if they exist
@@ -100,18 +84,13 @@ class BookService {
       }
 
       // Add headers
-      // Headers are now handled by _client.sendMultipart
-      var streamedResponse = await _client.sendMultipart(request);
+      // Headers are now handled by client.sendMultipart
+      var streamedResponse = await client.sendMultipart(request);
       var response = await http.Response.fromStream(streamedResponse);
 
-      final body = jsonDecode(response.body);
+      final body = await handleResponse(response) as Map<String, dynamic>;
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Book.fromJson(body);
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      return Book.fromJson(body);
     } catch (e) {
       throw Exception('Failed to create book: ${e.toString()}');
     }
@@ -119,18 +98,11 @@ class BookService {
 
   Future<List<Book>> getAuthorBooks() async {
     try {
-      final response = await _client.get(
-        Uri.parse('$_baseUrl/book/my'),
-      );
+      final response = await get('/book/my');
 
-      final body = jsonDecode(response.body);
+      final body = await handleResponse(response) as List<dynamic>;
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return body.map<Book>((book) => Book.fromJson(book)).toList();
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      return body.map<Book>((book) => Book.fromJson(book)).toList();
     } catch (e) {
       throw e.toString();
     }
@@ -138,19 +110,13 @@ class BookService {
 
   Future<bool> deleteBook(String bookId) async {
     try {
-      final response = await _client.post(
-        Uri.parse('$_baseUrl/book/delete'),
-        body: jsonEncode({'_id': bookId}),
+      final response = await post(
+        '/book/delete',
+        {'_id': bookId},
       );
 
-      final body = jsonDecode(response.body);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return true;
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      await handleResponse(response);
+      return true;
     } catch (e) {
       throw e.toString();
     }
@@ -167,7 +133,7 @@ class BookService {
     try {
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('$_baseUrl/book/update'),
+        Uri.parse('$baseUrl/book/update'),
       );
 
       // Add text fields
@@ -176,8 +142,7 @@ class BookService {
       if (bookPrice != null) request.fields['bookPrice'] = bookPrice;
       if (bookDesc != null) request.fields['bookDesc'] = bookDesc;
       if (bookCategory != null) {
-        request.fields['bookCategory'] =
-            bookCategory.toString().split('.').last;
+        request.fields['bookCategory'] = bookCategory.name;
       }
 
       // Add the image if it exists
@@ -194,18 +159,13 @@ class BookService {
       }
 
       // Add headers
-      // Headers are now handled by _client.sendMultipart
-      var streamedResponse = await _client.sendMultipart(request);
+      // Headers are now handled by client.sendMultipart
+      var streamedResponse = await client.sendMultipart(request);
       var response = await http.Response.fromStream(streamedResponse);
 
-      final body = jsonDecode(response.body);
+      final body = await handleResponse(response) as Map<String, dynamic>;
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return Book.fromJson(body);
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      return Book.fromJson(body);
     } catch (e) {
       throw Exception('Failed to update book data: ${e.toString()}');
     }
@@ -214,18 +174,11 @@ class BookService {
   // ADMIN API
   Future<List<Book>> getAllBooks() async {
     try {
-      final response = await _client.get(
-        Uri.parse('$_baseUrl/admin/book/all'),
-      );
+      final response = await get('/admin/book/all');
 
-      final body = jsonDecode(response.body);
+      final body = await handleResponse(response) as List<dynamic>;
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return body.map<Book>((book) => Book.fromJson(book)).toList();
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      return body.map<Book>((book) => Book.fromJson(book)).toList();
     } catch (e) {
       throw e.toString();
     }
@@ -233,19 +186,13 @@ class BookService {
 
   Future<bool> removeBook(String bookId) async {
     try {
-      final response = await _client.post(
-        Uri.parse('$_baseUrl/admin/book/delete'),
-        body: jsonEncode({'_id': bookId}),
+      final response = await post(
+        '/admin/book/delete',
+        {'_id': bookId},
       );
 
-      final body = jsonDecode(response.body);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return true;
-      } else {
-        final errorMessage = body['message'] ?? 'Something went wrong!';
-        throw errorMessage;
-      }
+      await handleResponse(response);
+      return true;
     } catch (e) {
       throw e.toString();
     }

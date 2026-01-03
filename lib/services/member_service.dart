@@ -1,36 +1,27 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:book_store/models/member.dart';
 
-import 'package:book_store/utils/client.dart';
+import 'package:book_store/models/member.dart';
+import 'package:book_store/services/base_service.dart';
 import 'package:book_store/utils/utils.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class MemberService {
-  final String _baseUrl = dotenv.env['API_URL']!;
-  final Client _client = Client();
-
+class MemberService extends BaseService {
   MemberService();
-
-  void dispose() {
-    _client.close();
-  }
 
   // Login
   Future<Map<String, dynamic>> login(String username, String password) async {
     try {
-      final response = await _client.post(
-        Uri.parse('$_baseUrl/member/login'),
-        body: jsonEncode({
+      final response = await post(
+        '/member/login',
+        {
           'memberNick': username,
           'memberPassword': password,
-        }),
+        },
       );
 
-      return handleResponse(response);
+      return await handleResponse(response) as Map<String, dynamic>;
     } catch (e) {
-      throw Exception('Login failed: ${e.toString()}');
+      rethrow;
     }
   }
 
@@ -42,47 +33,41 @@ class MemberService {
     required bool isAuthor,
   }) async {
     try {
-      final response = await _client.post(
-        Uri.parse('$_baseUrl/member/signup'),
-        body: jsonEncode({
+      final response = await post(
+        '/member/signup',
+        {
           'memberNick': username,
           'memberEmail': email,
           'memberPassword': password,
-          'memberType': isAuthor
-              ? MemberType.AUTHOR.toString().split('.').last
-              : MemberType.USER.toString().split('.').last
-        }),
+          'memberType': isAuthor ? 'AUTHOR' : 'USER',
+        },
       );
 
-      return handleResponse(response);
+      return await handleResponse(response) as Map<String, dynamic>;
     } catch (e) {
-      throw Exception('Signup failed: ${e.toString()}');
+      rethrow;
     }
   }
 
   // logout
   Future<Map<String, dynamic>> logout(String token) async {
     try {
-      final response = await _client.get(
-        Uri.parse('$_baseUrl/member/logout'),
-      );
+      final response = await get('/member/logout');
 
-      return handleResponse(response);
+      return await handleResponse(response) as Map<String, dynamic>;
     } catch (e) {
-      throw Exception('Login failed: ${e.toString()}');
+      rethrow;
     }
   }
 
   // getUserDetails
   Future<Map<String, dynamic>> getUserDetails(String token) async {
     try {
-      final response = await _client.get(
-        Uri.parse('$_baseUrl/auth/me'),
-      );
+      final response = await get('/auth/me');
 
-      return handleResponse(response);
+      return await handleResponse(response) as Map<String, dynamic>;
     } catch (e) {
-      throw Exception('Failed to get user details: ${e.toString()}');
+      rethrow;
     }
   }
 
@@ -96,7 +81,7 @@ class MemberService {
     try {
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('$_baseUrl/member/update'),
+        Uri.parse('$baseUrl/member/update'),
       );
 
       // Add text fields
@@ -114,11 +99,11 @@ class MemberService {
         );
       }
 
-      // Headers are now handled by _client.sendMultipart
-      var streamedResponse = await _client.sendMultipart(request);
+      // Headers are now handled by client.sendMultipart
+      var streamedResponse = await client.sendMultipart(request);
       var response = await http.Response.fromStream(streamedResponse);
 
-      return handleResponse(response);
+      return await handleResponse(response) as Map<String, dynamic>;
     } catch (e) {
       throw Exception('Failed to update user data: ${e.toString()}');
     }
@@ -132,22 +117,19 @@ class MemberService {
     String? search,
   }) async {
     try {
-      final queryParams = {
-        if (order != null) 'order': order,
-        if (page != null) 'page': page.toString(),
-        if (limit != null) 'limit': limit.toString(),
-        if (memberType != null)
-          'memberType': memberType.toString().split('.').last,
-        if (search != null) 'search': search,
-      };
-
-      final uri = Uri.parse('$_baseUrl/member/all')
-          .replace(queryParameters: queryParams);
-
-      final response = await _client.get(
-        uri,
+      final response = await get(
+        '/member/all',
+        query: {
+          if (order != null) 'order': order,
+          if (page != null) 'page': page.toString(),
+          if (limit != null) 'limit': limit.toString(),
+          if (memberType != null)
+            'memberType': memberType.toString().split('.').last,
+          if (search != null) 'search': search,
+        },
       );
-      final List<dynamic> jsonData = await handleListResponse(response);
+      final List<dynamic> jsonData =
+          await handleResponse(response) as List<dynamic>;
 
       return jsonData.map((book) => Member.fromJson(book)).toList();
     } catch (e) {
@@ -157,11 +139,9 @@ class MemberService {
 
   Future<Member> getMember(String memberId) async {
     try {
-      final response = await _client.get(
-        Uri.parse('$_baseUrl/member/$memberId'),
-      );
+      final response = await get('/member/$memberId');
 
-      final body = await handleResponse(response);
+      final body = await handleResponse(response) as Map<String, dynamic>;
 
       return Member.fromJson(body);
     } catch (e) {
@@ -172,11 +152,9 @@ class MemberService {
   // ADMIN API
   Future<List<Member>> getAllBooks() async {
     try {
-      final response = await _client.get(
-        Uri.parse('$_baseUrl/admin/member/all'),
-      );
+      final response = await get('/admin/member/all');
 
-      final body = await handleListResponse(response);
+      final body = await handleResponse(response) as List<dynamic>;
 
       return body.map<Member>((book) => Member.fromJson(book)).toList();
     } catch (e) {
@@ -186,16 +164,15 @@ class MemberService {
 
   Future<bool> removeMember(String memberId) async {
     try {
-      final response = await _client.post(
-        Uri.parse('$_baseUrl/admin/member/delete'),
-        body: jsonEncode({'_id': memberId}),
+      final response = await post(
+        '/admin/member/delete',
+        {'_id': memberId},
       );
 
       await handleResponse(response);
-
       return true;
     } catch (e) {
-      throw e.toString();
+      rethrow;
     }
   }
 }
