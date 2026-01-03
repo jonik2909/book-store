@@ -23,16 +23,16 @@ class MemberController extends GetxController {
   var isAuthenticated = false.obs;
   final Rx<Member?> authMember = Rx<Member?>(null);
 
-  // Home Page
+  /* HOME PAGE */
   final RxList<Member> topAuthors = <Member>[].obs;
 
-  // Authors Page
+  /* AUTHORS PAGE */
   final RxList<Member> authorList = <Member>[].obs;
 
-  // Chosen Author Page
+  /* CHOSEN AUTHOR PAGE */
   final Rx<Member?> chosenAuthor = Rx<Member?>(null);
 
-  // Profile page
+  /* PROFILE PAGE */
   Rx<File?> get thumnailImage => Rx<File?>(null);
 
   Future pickMemberImage() async {
@@ -146,6 +146,7 @@ class MemberController extends GetxController {
     }
   }
 
+  /* PROFILE PAGE */
   Future<void> updateUserData({
     required String? memberNick,
     required String? memberEmail,
@@ -179,6 +180,7 @@ class MemberController extends GetxController {
     }
   }
 
+  /* HOME PAGE */
   Future<void> getAuthorList({
     required RxList<Member> targetList,
     String? order,
@@ -206,6 +208,7 @@ class MemberController extends GetxController {
     }
   }
 
+  /* CHOSEN AUTHOR PAGE */
   Future<void> getMember(String memberId) async {
     isLoading.value = true;
 

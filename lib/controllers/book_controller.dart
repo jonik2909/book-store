@@ -8,17 +8,17 @@ class BookController extends GetxController {
 
   final RxBool isLoading = false.obs;
 
-  // Home Page
+  /* HOME PAGE */
   final RxList<Book> topBooks = <Book>[].obs;
 
-  // Books Page
+  /* BOOKS PAGE */
   final RxList<Book> books = <Book>[].obs;
   final Rx<BookCategory> selectedCategory = BookCategory.FANTASY.obs;
   void changeCategory(BookCategory category) {
     selectedCategory.value = category;
   }
 
-  // Chosen Book Page
+  /* CHOSEN BOOK PAGE */
   final Rx<Book?> chosenBook = Rx<Book?>(null);
 
   @override
@@ -29,6 +29,7 @@ class BookController extends GetxController {
     getBookPagedata(BookCategory.FANTASY);
   }
 
+  /* HOME PAGE */
   Future<void> refreshHomePageData() async {
     getBooks(
       targetList: topBooks,
@@ -38,6 +39,7 @@ class BookController extends GetxController {
     );
   }
 
+  /* BOOKS PAGE */
   Future<void> getBookPagedata(BookCategory category) async {
     getBooks(
       targetList: books,
@@ -75,6 +77,7 @@ class BookController extends GetxController {
     }
   }
 
+  /* CHOSEN BOOK PAGE */
   Future<void> getBook(String bookId) async {
     isLoading.value = true;
 
