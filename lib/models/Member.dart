@@ -40,8 +40,8 @@ class Member {
     return Member(
       id: json['_id'],
       memberNick: json['memberNick'],
-      memberType: parseMemberType(json['memberType']),
-      memberStatus: parseMemberStatus(json['memberStatus']),
+      memberType: MemberType.values.byName(json['memberType']),
+      memberStatus: MemberStatus.values.byName(json['memberStatus']),
       memberEmail: json['memberEmail'],
       memberDesc: json['memberDesc'] ?? '',
       memberImage: json['memberImage'] ?? '',
@@ -59,8 +59,8 @@ class Member {
     return {
       '_id': id,
       'memberNick': memberNick,
-      'memberType': memberType.toString().split('.').last,
-      'memberStatus': memberStatus.toString().split('.').last,
+      'memberType': memberType.name,
+      'memberStatus': memberStatus.name,
       'memberEmail': memberEmail,
       'memberDesc': memberDesc,
       'memberImage': memberImage,
@@ -68,27 +68,6 @@ class Member {
       'memberBooks': memberBooks,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
-      'bookData': bookData?.map((book) => book.toJson()).toList()
     };
-  }
-
-  static MemberType parseMemberType(String type) {
-    try {
-      return MemberType.values.firstWhere(
-        (e) => e.name == type,
-      );
-    } catch (e) {
-      return MemberType.USER;
-    }
-  }
-
-  static MemberStatus parseMemberStatus(String type) {
-    try {
-      return MemberStatus.values.firstWhere(
-        (e) => e.name == type,
-      );
-    } catch (e) {
-      return MemberStatus.ACTIVE;
-    }
   }
 }

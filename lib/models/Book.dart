@@ -48,9 +48,10 @@ class Book {
       bookPrice: json['bookPrice'],
       bookDesc: json['bookDesc'],
       bookImages: List<String>.from(json['bookImages']),
-      bookCategory:
-          _parseBookCategory(json['bookCategory']), // Parse string to enum
-      bookStatus: _parseBookStatus(json['bookStatus']), // Parse string to enum
+      bookCategory: BookCategory.values
+          .byName(json['bookCategory']), // Parse string to enum
+      bookStatus:
+          BookStatus.values.byName(json['bookStatus']), // Parse string to enum
       memberId: json['memberId'],
       bookViews: json['bookViews'] ?? 0,
       createdAt:
@@ -61,47 +62,5 @@ class Book {
           ? Member.fromJson(json['authorData'] as Map<String, dynamic>)
           : null,
     );
-  }
-
-  // Helper method to parse BookCategory
-  static BookCategory _parseBookCategory(String category) {
-    try {
-      return BookCategory.values.firstWhere(
-        (e) => e.name == category, // Use .name instead of toString().split()
-        orElse: () => BookCategory.OTHER,
-      );
-    } catch (e) {
-      return BookCategory.OTHER;
-    }
-  }
-
-  // Helper method to parse BookStatus
-  static BookStatus _parseBookStatus(String status) {
-    try {
-      return BookStatus.values.firstWhere(
-        (e) => e.name == status,
-        orElse: () => BookStatus.PROCESS,
-      );
-    } catch (e) {
-      return BookStatus.PROCESS;
-    }
-  }
-
-  // Convert to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'bookName': bookName,
-      'bookPrice': bookPrice,
-      'bookDesc': bookDesc,
-      'bookImages': bookImages,
-      'bookCategory': bookCategory.index,
-      'bookStatus': bookStatus.index,
-      'memberId': memberId,
-      'bookViews': bookViews,
-      'createdAt': createdAt?.toIso8601String(),
-      'updatedAt': updatedAt?.toIso8601String(),
-      'authorData': authorData?.toJson(),
-    };
   }
 }
