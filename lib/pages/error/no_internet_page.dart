@@ -2,7 +2,6 @@
 import 'package:book_store/services/connectivity_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoInternetPage extends StatelessWidget {
   NoInternetPage({super.key});

@@ -2,6 +2,7 @@
 
 import 'package:book_store/controllers/controller.dart';
 import 'package:book_store/controllers/member_controller.dart';
+import 'package:book_store/l10n/app_localizations.dart';
 import 'package:book_store/models/member.dart';
 import 'package:book_store/pages/admin_panel/admin_panel.dart';
 import 'package:book_store/pages/author_panel/author_panel.dart';
@@ -11,7 +12,6 @@ import 'package:book_store/pages/home/home_page.dart';
 import 'package:book_store/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});

@@ -41,7 +41,7 @@ dependencies:
   dotenv: ^4.2.0
   flutter_dotenv: ^5.1.0
   shared_preferences: ^2.2.0
-  carousel_slider: ^4.2.1
+  carousel_slider: ^5.0.0
   epub_view: ^3.2.0
   path_provider: ^2.1.1
   insta_image_viewer: ^1.0.4
@@ -55,9 +55,10 @@ dependencies:
   # language
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
   logger: ^2.6.0
   connectivity_plus: ^6.1.4
+  flutter_gen: ^5.10.0
 
 dev_dependencies:
   flutter_test:

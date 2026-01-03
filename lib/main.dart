@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:book_store/controllers/language_controller.dart';
+import 'package:book_store/l10n/app_localizations.dart';
 import 'package:book_store/pages/error/no_internet_page.dart';
 import 'package:book_store/pages/main_page.dart';
 import 'package:book_store/services/connectivity_service.dart';
@@ -10,7 +11,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   Get.put(ConnectivityService());
