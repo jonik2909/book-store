@@ -7,7 +7,7 @@ import 'package:book_store/controllers/book_controller.dart';
 import 'package:book_store/models/book.dart';
 import 'package:book_store/pages/books/chosen_book_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:book_store/utils/utils.dart';
 import 'package:get/get.dart';
 
 class BooksPage extends StatelessWidget {
@@ -50,7 +50,7 @@ class BooksPage extends StatelessWidget {
                         },
                         child: Obx(() {
                           return CategoryCard(
-                            name: category.toString().split('.').last,
+                            name: category.simpleName,
                             selected: category ==
                                 bookController.selectedCategory.value,
                           );
@@ -102,12 +102,10 @@ class BooksPage extends StatelessWidget {
                         bookAuthor: '${book.authorData?.memberNick}',
                         bookPrice: book.bookPrice,
                         bookViews: book.bookViews,
-                        bookCategory:
-                            book.bookCategory.toString().split('.').last,
+                        bookCategory: book.bookCategory.simpleName,
                         width: (MediaQuery.of(context).size.width - 60) / 2,
                         height: 200,
-                        imageNetwork:
-                            '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
+                        imageNetwork: getImageUrl(book.bookImages[0]),
                       );
                     }).toList(),
                   );

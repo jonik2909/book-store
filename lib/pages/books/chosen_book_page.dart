@@ -6,10 +6,10 @@ import 'package:book_store/components/app_bar/detail_bar.dart';
 import 'package:book_store/controllers/book_controller.dart';
 import 'package:book_store/pages/books/file_reader.dart';
 import 'package:book_store/utils/custom_bar.dart';
+import 'package:book_store/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:insta_image_viewer/insta_image_viewer.dart';
@@ -52,7 +52,7 @@ $description
             _shareBookDetails(
               book.bookName,
               book.authorData?.memberNick ?? 'Unknown Author',
-              book.bookCategory.toString().split('.').last,
+              book.bookCategory.simpleName,
               book.bookPrice.toString(),
               book.bookDesc,
             );
@@ -102,12 +102,11 @@ $description
                             margin: const EdgeInsets.symmetric(horizontal: 5.0),
                             child: Stack(fit: StackFit.expand, children: [
                               InstaImageViewer(
-                                imageUrl: '${dotenv.env['UPLOAD_URL']}/$img',
+                                imageUrl: getImageUrl(img),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: CachedNetworkImage(
-                                    imageUrl:
-                                        '${dotenv.env['UPLOAD_URL']}/$img',
+                                    imageUrl: getImageUrl(img),
                                     fit: BoxFit.fill,
                                     placeholder: (context, url) => Container(
                                       color: Colors.grey[200],
@@ -206,7 +205,7 @@ $description
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      book.bookCategory.toString().split('.').last,
+                      book.bookCategory.simpleName,
                       style: const TextStyle(
                         color: Color(0xffEB5757),
                         fontSize: 14,

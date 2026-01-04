@@ -4,6 +4,7 @@ import 'package:book_store/components/app_bar/custom_bar.dart';
 import 'package:book_store/components/home/video_section.dart';
 import 'package:book_store/components/home/author_home_card.dart';
 import 'package:book_store/components/book/book_card.dart';
+import 'package:book_store/utils/utils.dart';
 import 'package:book_store/components/home/events_section.dart';
 import 'package:book_store/controllers/controller.dart';
 import 'package:book_store/controllers/language_controller.dart';
@@ -13,7 +14,6 @@ import 'package:book_store/pages/authors/chosen_author_page.dart';
 import 'package:book_store/pages/books/chosen_book_page.dart';
 import 'package:book_store/controllers/book_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
@@ -98,13 +98,11 @@ class HomePage extends StatelessWidget {
                             bookAuthor: '${book.authorData?.memberNick}',
                             bookPrice: book.bookPrice,
                             bookViews: book.bookViews,
-                            bookCategory:
-                                book.bookCategory.toString().split('.').last,
+                            bookCategory: book.bookCategory.simpleName,
                             width:
                                 (MediaQuery.of(context).size.width - 100) / 2,
                             height: 200,
-                            imageNetwork:
-                                '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}',
+                            imageNetwork: getImageUrl(book.bookImages[0]),
                           );
                         },
                       ),

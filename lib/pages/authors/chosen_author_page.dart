@@ -7,8 +7,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:book_store/controllers/member_controller.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
+import 'package:book_store/utils/utils.dart';
 import 'package:share_plus/share_plus.dart';
 
 class AuthorDetailPage extends StatelessWidget {
@@ -73,16 +73,14 @@ Check out this author on Book Store!
                       if (author.memberImage != null &&
                           author.memberImage!.isNotEmpty)
                         InstaImageViewer(
-                          imageUrl:
-                              '${dotenv.env['UPLOAD_URL']}/${author.memberImage}',
+                          imageUrl: getImageUrl(author.memberImage),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(60),
                             child: SizedBox(
                               width: 120,
                               height: 120,
                               child: CachedNetworkImage(
-                                imageUrl:
-                                    '${dotenv.env['UPLOAD_URL']}/${author.memberImage}',
+                                imageUrl: getImageUrl(author.memberImage),
                                 fit: BoxFit.cover,
                                 placeholder: (context, url) => Container(
                                   color: Colors.grey[200],
@@ -214,12 +212,11 @@ Check out this author on Book Store!
                         bookAuthor: author.memberNick,
                         bookPrice: book.bookPrice,
                         bookViews: book.bookViews,
-                        bookCategory:
-                            book.bookCategory.toString().split('.').last,
+                        bookCategory: book.bookCategory.simpleName,
                         width: (MediaQuery.of(context).size.width - 60) / 2,
                         height: 200,
                         imageNetwork: book.bookImages.isNotEmpty
-                            ? '${dotenv.env['UPLOAD_URL']}/${book.bookImages[0]}'
+                            ? getImageUrl(book.bookImages[0])
                             : '',
                       );
                     }).toList(),
