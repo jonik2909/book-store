@@ -20,7 +20,7 @@ class MemberController extends GetxController {
   var authToken = ''.obs;
   var loginErrorMessage = ''.obs;
   var signupErrorMessage = ''.obs;
-  var isAuthenticated = false.obs;
+
   final Rx<Member?> authMember = Rx<Member?>(null);
 
   /* HOME PAGE */
@@ -75,13 +75,9 @@ class MemberController extends GetxController {
       if (token != null && token.isNotEmpty) {
         authToken.value = token;
         await getMyData();
-        isAuthenticated.value = true;
         Get.offAll(() => const MainPage());
-      } else {
-        isAuthenticated.value = false;
-      }
+      } else {}
     } catch (e) {
-      isAuthenticated.value = false;
       Get.offAll(() => SplashPage());
     }
   }
